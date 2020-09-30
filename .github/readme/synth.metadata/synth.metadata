@@ -1,0 +1,18 @@
+{
+  "sources": [
+    {
+      "git": {
+        "name": ".",
+        "remote": "https://github.com/googleapis/java-security-private-ca.git",
+        "sha": "704fc9c1a4307d7b0d2cfd93c16169089e96055e"
+      }
+    },
+    {
+      "git": {
+        "name": "synthtool",
+        "remote": "https://github.com/googleapis/synthtool.git",
+        "sha": "e6168630be3e31eede633ba2c6f1cd64248dec1c"
+      }
+    }
+  ]
+}
