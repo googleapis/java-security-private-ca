@@ -4,15 +4,15 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/java-security-private-ca.git",
-        "sha": "17c1c9e016801102d17e8ac8b1c25a518feb4b04"
+        "sha": "88ed1592a45701a23bff9718eb2fa4418435f8e7"
       }
     },
     {
       "git": {
         "name": "googleapis",
         "remote": "https://github.com/googleapis/googleapis.git",
-        "sha": "7ab31c71fd81b85dc4b5a439fe654dbd6578c858",
-        "internalRef": "334847962"
+        "sha": "542acf20a76fc223ca5ee12b6aa7e94613dcd8ee",
+        "internalRef": "336902689"
       }
     },
     {
