@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     https://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.cloud.security.privateca.v1beta1;
 
 import com.google.api.core.ApiFunction;
@@ -35,10 +36,11 @@ import com.google.longrunning.OperationsClient;
 import com.google.protobuf.FieldMask;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Generated;
 
-// AUTO-GENERATED DOCUMENTATION AND SERVICE
+// AUTO-GENERATED DOCUMENTATION AND CLASS.
 /**
  * Service Description: [Certificate Authority
  * Service][google.cloud.security.privateca.v1beta1.CertificateAuthorityService] manages private
@@ -47,18 +49,7 @@ import javax.annotation.Generated;
  * <p>This class provides the ability to make remote calls to the backing service through method
  * calls that map to API methods. Sample code to get started:
  *
- * <pre>
- * <code>
- * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
- *   CertificateAuthorityName parent = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
- *   Certificate certificate = Certificate.newBuilder().build();
- *   String certificateId = "";
- *   Certificate response = certificateAuthorityServiceClient.createCertificate(parent, certificate, certificateId);
- * }
- * </code>
- * </pre>
- *
- * <p>Note: close() needs to be called on the certificateAuthorityServiceClient object to clean up
+ * <p>Note: close() needs to be called on the CertificateAuthorityServiceClient object to clean up
  * resources such as threads. In the example above, try-with-resources is used, which automatically
  * calls close().
  *
@@ -87,30 +78,28 @@ import javax.annotation.Generated;
  *
  * <p>To customize credentials:
  *
- * <pre>
- * <code>
+ * <pre>{@code
  * CertificateAuthorityServiceSettings certificateAuthorityServiceSettings =
  *     CertificateAuthorityServiceSettings.newBuilder()
  *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
  *         .build();
  * CertificateAuthorityServiceClient certificateAuthorityServiceClient =
  *     CertificateAuthorityServiceClient.create(certificateAuthorityServiceSettings);
- * </code>
- * </pre>
+ * }</pre>
  *
- * To customize the endpoint:
+ * <p>To customize the endpoint:
  *
- * <pre>
- * <code>
+ * <pre>{@code
  * CertificateAuthorityServiceSettings certificateAuthorityServiceSettings =
  *     CertificateAuthorityServiceSettings.newBuilder().setEndpoint(myEndpoint).build();
  * CertificateAuthorityServiceClient certificateAuthorityServiceClient =
  *     CertificateAuthorityServiceClient.create(certificateAuthorityServiceSettings);
- * </code>
- * </pre>
+ * }</pre>
+ *
+ * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
  */
-@Generated("by gapic-generator")
 @BetaApi
+@Generated("by gapic-generator")
 public class CertificateAuthorityServiceClient implements BackgroundResource {
   private final CertificateAuthorityServiceSettings settings;
   private final CertificateAuthorityServiceStub stub;
@@ -133,7 +122,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
 
   /**
    * Constructs an instance of CertificateAuthorityServiceClient, using the given stub for making
-   * calls. This is for advanced usage - prefer to use CertificateAuthorityServiceSettings}.
+   * calls. This is for advanced usage - prefer using create(CertificateAuthorityServiceSettings).
    */
   @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public static final CertificateAuthorityServiceClient create(
@@ -173,28 +162,15 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * Returns the OperationsClient that can be used to query the status of a long-running operation
    * returned by another API method call.
    */
-  @BetaApi(
-      "The surface for long-running operations is not stable yet and may change in the future.")
   public final OperationsClient getOperationsClient() {
     return operationsClient;
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Create a new [Certificate][google.cloud.security.privateca.v1beta1.Certificate] in a given
    * Project, Location from a particular
    * [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName parent = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   Certificate certificate = Certificate.newBuilder().build();
-   *   String certificateId = "";
-   *   Certificate response = certificateAuthorityServiceClient.createCertificate(parent, certificate, certificateId);
-   * }
-   * </code></pre>
    *
    * @param parent Required. The resource name of the location and
    *     [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority]
@@ -203,7 +179,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * @param certificate Required. A
    *     [Certificate][google.cloud.security.privateca.v1beta1.Certificate] with initial field
    *     values.
-   * @param certificateId Optional. It must be unique within a location and match the regular
+   * @param certificate_id Optional. It must be unique within a location and match the regular
    *     expression `[a-zA-Z0-9_-]{1,63}`. This field is required when using a
    *     [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] in the
    *     Enterprise
@@ -215,29 +191,18 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
       CertificateAuthorityName parent, Certificate certificate, String certificateId) {
     CreateCertificateRequest request =
         CreateCertificateRequest.newBuilder()
-            .setParent(parent == null ? null : parent.toString())
+            .setParent(Objects.isNull(parent) ? null : parent.toString())
             .setCertificate(certificate)
             .setCertificateId(certificateId)
             .build();
     return createCertificate(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Create a new [Certificate][google.cloud.security.privateca.v1beta1.Certificate] in a given
    * Project, Location from a particular
    * [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName parent = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   Certificate certificate = Certificate.newBuilder().build();
-   *   String certificateId = "";
-   *   Certificate response = certificateAuthorityServiceClient.createCertificate(parent.toString(), certificate, certificateId);
-   * }
-   * </code></pre>
    *
    * @param parent Required. The resource name of the location and
    *     [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority]
@@ -246,7 +211,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * @param certificate Required. A
    *     [Certificate][google.cloud.security.privateca.v1beta1.Certificate] with initial field
    *     values.
-   * @param certificateId Optional. It must be unique within a location and match the regular
+   * @param certificate_id Optional. It must be unique within a location and match the regular
    *     expression `[a-zA-Z0-9_-]{1,63}`. This field is required when using a
    *     [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] in the
    *     Enterprise
@@ -265,25 +230,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return createCertificate(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Create a new [Certificate][google.cloud.security.privateca.v1beta1.Certificate] in a given
    * Project, Location from a particular
    * [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName parent = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   Certificate certificate = Certificate.newBuilder().build();
-   *   CreateCertificateRequest request = CreateCertificateRequest.newBuilder()
-   *     .setParent(parent.toString())
-   *     .setCertificate(certificate)
-   *     .build();
-   *   Certificate response = certificateAuthorityServiceClient.createCertificate(request);
-   * }
-   * </code></pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -292,44 +243,21 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return createCertificateCallable().call(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Create a new [Certificate][google.cloud.security.privateca.v1beta1.Certificate] in a given
    * Project, Location from a particular
    * [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName parent = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   Certificate certificate = Certificate.newBuilder().build();
-   *   CreateCertificateRequest request = CreateCertificateRequest.newBuilder()
-   *     .setParent(parent.toString())
-   *     .setCertificate(certificate)
-   *     .build();
-   *   ApiFuture&lt;Certificate&gt; future = certificateAuthorityServiceClient.createCertificateCallable().futureCall(request);
-   *   // Do something
-   *   Certificate response = future.get();
-   * }
-   * </code></pre>
    */
   public final UnaryCallable<CreateCertificateRequest, Certificate> createCertificateCallable() {
     return stub.createCertificateCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Returns a [Certificate][google.cloud.security.privateca.v1beta1.Certificate].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateName name = CertificateName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]", "[CERTIFICATE]");
-   *   Certificate response = certificateAuthorityServiceClient.getCertificate(name);
-   * }
-   * </code></pre>
    *
    * @param name Required. The [name][google.cloud.security.privateca.v1beta1.Certificate.name] of
    *     the [Certificate][google.cloud.security.privateca.v1beta1.Certificate] to get.
@@ -337,22 +265,15 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    */
   public final Certificate getCertificate(CertificateName name) {
     GetCertificateRequest request =
-        GetCertificateRequest.newBuilder().setName(name == null ? null : name.toString()).build();
+        GetCertificateRequest.newBuilder()
+            .setName(Objects.isNull(name) ? null : name.toString())
+            .build();
     return getCertificate(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Returns a [Certificate][google.cloud.security.privateca.v1beta1.Certificate].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateName name = CertificateName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]", "[CERTIFICATE]");
-   *   Certificate response = certificateAuthorityServiceClient.getCertificate(name.toString());
-   * }
-   * </code></pre>
    *
    * @param name Required. The [name][google.cloud.security.privateca.v1beta1.Certificate.name] of
    *     the [Certificate][google.cloud.security.privateca.v1beta1.Certificate] to get.
@@ -363,21 +284,9 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return getCertificate(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Returns a [Certificate][google.cloud.security.privateca.v1beta1.Certificate].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateName name = CertificateName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]", "[CERTIFICATE]");
-   *   GetCertificateRequest request = GetCertificateRequest.newBuilder()
-   *     .setName(name.toString())
-   *     .build();
-   *   Certificate response = certificateAuthorityServiceClient.getCertificate(request);
-   * }
-   * </code></pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -386,42 +295,19 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return getCertificateCallable().call(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Returns a [Certificate][google.cloud.security.privateca.v1beta1.Certificate].
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateName name = CertificateName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]", "[CERTIFICATE]");
-   *   GetCertificateRequest request = GetCertificateRequest.newBuilder()
-   *     .setName(name.toString())
-   *     .build();
-   *   ApiFuture&lt;Certificate&gt; future = certificateAuthorityServiceClient.getCertificateCallable().futureCall(request);
-   *   // Do something
-   *   Certificate response = future.get();
-   * }
-   * </code></pre>
    */
   public final UnaryCallable<GetCertificateRequest, Certificate> getCertificateCallable() {
     return stub.getCertificateCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists [Certificates][google.cloud.security.privateca.v1beta1.Certificate].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName parent = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   for (Certificate element : certificateAuthorityServiceClient.listCertificates(parent).iterateAll()) {
-   *     // doThingsWith(element);
-   *   }
-   * }
-   * </code></pre>
    *
    * @param parent Required. The resource name of the location associated with the
    *     [Certificates][google.cloud.security.privateca.v1beta1.Certificate], in the format
@@ -431,25 +317,14 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
   public final ListCertificatesPagedResponse listCertificates(CertificateAuthorityName parent) {
     ListCertificatesRequest request =
         ListCertificatesRequest.newBuilder()
-            .setParent(parent == null ? null : parent.toString())
+            .setParent(Objects.isNull(parent) ? null : parent.toString())
             .build();
     return listCertificates(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists [Certificates][google.cloud.security.privateca.v1beta1.Certificate].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName parent = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   for (Certificate element : certificateAuthorityServiceClient.listCertificates(parent.toString()).iterateAll()) {
-   *     // doThingsWith(element);
-   *   }
-   * }
-   * </code></pre>
    *
    * @param parent Required. The resource name of the location associated with the
    *     [Certificates][google.cloud.security.privateca.v1beta1.Certificate], in the format
@@ -462,23 +337,9 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return listCertificates(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists [Certificates][google.cloud.security.privateca.v1beta1.Certificate].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName parent = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   ListCertificatesRequest request = ListCertificatesRequest.newBuilder()
-   *     .setParent(parent.toString())
-   *     .build();
-   *   for (Certificate element : certificateAuthorityServiceClient.listCertificates(request).iterateAll()) {
-   *     // doThingsWith(element);
-   *   }
-   * }
-   * </code></pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -487,75 +348,31 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return listCertificatesPagedCallable().call(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists [Certificates][google.cloud.security.privateca.v1beta1.Certificate].
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName parent = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   ListCertificatesRequest request = ListCertificatesRequest.newBuilder()
-   *     .setParent(parent.toString())
-   *     .build();
-   *   ApiFuture&lt;ListCertificatesPagedResponse&gt; future = certificateAuthorityServiceClient.listCertificatesPagedCallable().futureCall(request);
-   *   // Do something
-   *   for (Certificate element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
-   *   }
-   * }
-   * </code></pre>
    */
   public final UnaryCallable<ListCertificatesRequest, ListCertificatesPagedResponse>
       listCertificatesPagedCallable() {
     return stub.listCertificatesPagedCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists [Certificates][google.cloud.security.privateca.v1beta1.Certificate].
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName parent = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   ListCertificatesRequest request = ListCertificatesRequest.newBuilder()
-   *     .setParent(parent.toString())
-   *     .build();
-   *   while (true) {
-   *     ListCertificatesResponse response = certificateAuthorityServiceClient.listCertificatesCallable().call(request);
-   *     for (Certificate element : response.getCertificatesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
-   *     }
-   *   }
-   * }
-   * </code></pre>
    */
   public final UnaryCallable<ListCertificatesRequest, ListCertificatesResponse>
       listCertificatesCallable() {
     return stub.listCertificatesCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Revoke a [Certificate][google.cloud.security.privateca.v1beta1.Certificate].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateName name = CertificateName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]", "[CERTIFICATE]");
-   *   Certificate response = certificateAuthorityServiceClient.revokeCertificate(name);
-   * }
-   * </code></pre>
    *
    * @param name Required. The resource name for this
    *     [Certificate][google.cloud.security.privateca.v1beta1.Certificate] in the format
@@ -565,23 +382,14 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
   public final Certificate revokeCertificate(CertificateName name) {
     RevokeCertificateRequest request =
         RevokeCertificateRequest.newBuilder()
-            .setName(name == null ? null : name.toString())
+            .setName(Objects.isNull(name) ? null : name.toString())
             .build();
     return revokeCertificate(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Revoke a [Certificate][google.cloud.security.privateca.v1beta1.Certificate].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateName name = CertificateName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]", "[CERTIFICATE]");
-   *   Certificate response = certificateAuthorityServiceClient.revokeCertificate(name.toString());
-   * }
-   * </code></pre>
    *
    * @param name Required. The resource name for this
    *     [Certificate][google.cloud.security.privateca.v1beta1.Certificate] in the format
@@ -593,23 +401,9 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return revokeCertificate(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Revoke a [Certificate][google.cloud.security.privateca.v1beta1.Certificate].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateName name = CertificateName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]", "[CERTIFICATE]");
-   *   RevocationReason reason = RevocationReason.REVOCATION_REASON_UNSPECIFIED;
-   *   RevokeCertificateRequest request = RevokeCertificateRequest.newBuilder()
-   *     .setName(name.toString())
-   *     .setReason(reason)
-   *     .build();
-   *   Certificate response = certificateAuthorityServiceClient.revokeCertificate(request);
-   * }
-   * </code></pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -618,49 +412,25 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return revokeCertificateCallable().call(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Revoke a [Certificate][google.cloud.security.privateca.v1beta1.Certificate].
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateName name = CertificateName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]", "[CERTIFICATE]");
-   *   RevocationReason reason = RevocationReason.REVOCATION_REASON_UNSPECIFIED;
-   *   RevokeCertificateRequest request = RevokeCertificateRequest.newBuilder()
-   *     .setName(name.toString())
-   *     .setReason(reason)
-   *     .build();
-   *   ApiFuture&lt;Certificate&gt; future = certificateAuthorityServiceClient.revokeCertificateCallable().futureCall(request);
-   *   // Do something
-   *   Certificate response = future.get();
-   * }
-   * </code></pre>
    */
   public final UnaryCallable<RevokeCertificateRequest, Certificate> revokeCertificateCallable() {
     return stub.revokeCertificateCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Update a [Certificate][google.cloud.security.privateca.v1beta1.Certificate]. Currently, the
    * only field you can update is the
    * [labels][google.cloud.security.privateca.v1beta1.Certificate.labels] field.
    *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   Certificate certificate = Certificate.newBuilder().build();
-   *   FieldMask updateMask = FieldMask.newBuilder().build();
-   *   Certificate response = certificateAuthorityServiceClient.updateCertificate(certificate, updateMask);
-   * }
-   * </code></pre>
-   *
    * @param certificate Required. [Certificate][google.cloud.security.privateca.v1beta1.Certificate]
    *     with updated values.
-   * @param updateMask Required. A list of fields to be updated in this request.
+   * @param update_mask Required. A list of fields to be updated in this request.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Certificate updateCertificate(Certificate certificate, FieldMask updateMask) {
@@ -672,25 +442,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return updateCertificate(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Update a [Certificate][google.cloud.security.privateca.v1beta1.Certificate]. Currently, the
    * only field you can update is the
    * [labels][google.cloud.security.privateca.v1beta1.Certificate.labels] field.
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   Certificate certificate = Certificate.newBuilder().build();
-   *   FieldMask updateMask = FieldMask.newBuilder().build();
-   *   UpdateCertificateRequest request = UpdateCertificateRequest.newBuilder()
-   *     .setCertificate(certificate)
-   *     .setUpdateMask(updateMask)
-   *     .build();
-   *   Certificate response = certificateAuthorityServiceClient.updateCertificate(request);
-   * }
-   * </code></pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -699,33 +455,19 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return updateCertificateCallable().call(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Update a [Certificate][google.cloud.security.privateca.v1beta1.Certificate]. Currently, the
    * only field you can update is the
    * [labels][google.cloud.security.privateca.v1beta1.Certificate.labels] field.
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   Certificate certificate = Certificate.newBuilder().build();
-   *   FieldMask updateMask = FieldMask.newBuilder().build();
-   *   UpdateCertificateRequest request = UpdateCertificateRequest.newBuilder()
-   *     .setCertificate(certificate)
-   *     .setUpdateMask(updateMask)
-   *     .build();
-   *   ApiFuture&lt;Certificate&gt; future = certificateAuthorityServiceClient.updateCertificateCallable().futureCall(request);
-   *   // Do something
-   *   Certificate response = future.get();
-   * }
-   * </code></pre>
    */
   public final UnaryCallable<UpdateCertificateRequest, Certificate> updateCertificateCallable() {
     return stub.updateCertificateCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Activate a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority]
    * that is in state
@@ -736,32 +478,21 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * [FetchCertificateAuthorityCsr][google.cloud.security.privateca.v1beta1.CertificateAuthorityService.FetchCertificateAuthorityCsr],
    * this method can complete the activation process.
    *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   CertificateAuthority response = certificateAuthorityServiceClient.activateCertificateAuthorityAsync(name).get();
-   * }
-   * </code></pre>
-   *
    * @param name Required. The resource name for this
    *     [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] in the
    *     format `projects/&#42;/locations/&#42;/certificateAuthorities/&#42;`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  @BetaApi(
-      "The surface for long-running operations is not stable yet and may change in the future.")
   public final OperationFuture<CertificateAuthority, OperationMetadata>
       activateCertificateAuthorityAsync(CertificateAuthorityName name) {
     ActivateCertificateAuthorityRequest request =
         ActivateCertificateAuthorityRequest.newBuilder()
-            .setName(name == null ? null : name.toString())
+            .setName(Objects.isNull(name) ? null : name.toString())
             .build();
     return activateCertificateAuthorityAsync(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Activate a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority]
    * that is in state
@@ -772,22 +503,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * [FetchCertificateAuthorityCsr][google.cloud.security.privateca.v1beta1.CertificateAuthorityService.FetchCertificateAuthorityCsr],
    * this method can complete the activation process.
    *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   CertificateAuthority response = certificateAuthorityServiceClient.activateCertificateAuthorityAsync(name.toString()).get();
-   * }
-   * </code></pre>
-   *
    * @param name Required. The resource name for this
    *     [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] in the
    *     format `projects/&#42;/locations/&#42;/certificateAuthorities/&#42;`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  @BetaApi(
-      "The surface for long-running operations is not stable yet and may change in the future.")
   public final OperationFuture<CertificateAuthority, OperationMetadata>
       activateCertificateAuthorityAsync(String name) {
     ActivateCertificateAuthorityRequest request =
@@ -795,7 +515,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return activateCertificateAuthorityAsync(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Activate a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority]
    * that is in state
@@ -806,33 +526,15 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * [FetchCertificateAuthorityCsr][google.cloud.security.privateca.v1beta1.CertificateAuthorityService.FetchCertificateAuthorityCsr],
    * this method can complete the activation process.
    *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   String pemCaCertificate = "";
-   *   SubordinateConfig subordinateConfig = SubordinateConfig.newBuilder().build();
-   *   ActivateCertificateAuthorityRequest request = ActivateCertificateAuthorityRequest.newBuilder()
-   *     .setName(name.toString())
-   *     .setPemCaCertificate(pemCaCertificate)
-   *     .setSubordinateConfig(subordinateConfig)
-   *     .build();
-   *   CertificateAuthority response = certificateAuthorityServiceClient.activateCertificateAuthorityAsync(request).get();
-   * }
-   * </code></pre>
-   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  @BetaApi(
-      "The surface for long-running operations is not stable yet and may change in the future.")
   public final OperationFuture<CertificateAuthority, OperationMetadata>
       activateCertificateAuthorityAsync(ActivateCertificateAuthorityRequest request) {
     return activateCertificateAuthorityOperationCallable().futureCall(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Activate a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority]
    * that is in state
@@ -844,31 +546,14 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * this method can complete the activation process.
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   String pemCaCertificate = "";
-   *   SubordinateConfig subordinateConfig = SubordinateConfig.newBuilder().build();
-   *   ActivateCertificateAuthorityRequest request = ActivateCertificateAuthorityRequest.newBuilder()
-   *     .setName(name.toString())
-   *     .setPemCaCertificate(pemCaCertificate)
-   *     .setSubordinateConfig(subordinateConfig)
-   *     .build();
-   *   OperationFuture&lt;CertificateAuthority, OperationMetadata&gt; future = certificateAuthorityServiceClient.activateCertificateAuthorityOperationCallable().futureCall(request);
-   *   // Do something
-   *   CertificateAuthority response = future.get();
-   * }
-   * </code></pre>
    */
-  @BetaApi("The surface for use by generated code is not stable yet and may change in the future.")
   public final OperationCallable<
           ActivateCertificateAuthorityRequest, CertificateAuthority, OperationMetadata>
       activateCertificateAuthorityOperationCallable() {
     return stub.activateCertificateAuthorityOperationCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Activate a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority]
    * that is in state
@@ -880,57 +565,28 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * this method can complete the activation process.
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   String pemCaCertificate = "";
-   *   SubordinateConfig subordinateConfig = SubordinateConfig.newBuilder().build();
-   *   ActivateCertificateAuthorityRequest request = ActivateCertificateAuthorityRequest.newBuilder()
-   *     .setName(name.toString())
-   *     .setPemCaCertificate(pemCaCertificate)
-   *     .setSubordinateConfig(subordinateConfig)
-   *     .build();
-   *   ApiFuture&lt;Operation&gt; future = certificateAuthorityServiceClient.activateCertificateAuthorityCallable().futureCall(request);
-   *   // Do something
-   *   Operation response = future.get();
-   * }
-   * </code></pre>
    */
   public final UnaryCallable<ActivateCertificateAuthorityRequest, Operation>
       activateCertificateAuthorityCallable() {
     return stub.activateCertificateAuthorityCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Create a new
    * [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] in a given
    * Project and Location.
    *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
-   *   CertificateAuthority certificateAuthority = CertificateAuthority.newBuilder().build();
-   *   String certificateAuthorityId = "";
-   *   CertificateAuthority response = certificateAuthorityServiceClient.createCertificateAuthorityAsync(parent, certificateAuthority, certificateAuthorityId).get();
-   * }
-   * </code></pre>
-   *
    * @param parent Required. The resource name of the location associated with the
    *     [CertificateAuthorities][google.cloud.security.privateca.v1beta1.CertificateAuthority], in
    *     the format `projects/&#42;/locations/&#42;`.
-   * @param certificateAuthority Required. A
+   * @param certificate_authority Required. A
    *     [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] with
    *     initial field values.
-   * @param certificateAuthorityId Required. It must be unique within a location and match the
+   * @param certificate_authority_id Required. It must be unique within a location and match the
    *     regular expression `[a-zA-Z0-9_-]{1,63}`
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  @BetaApi(
-      "The surface for long-running operations is not stable yet and may change in the future.")
   public final OperationFuture<CertificateAuthority, OperationMetadata>
       createCertificateAuthorityAsync(
           LocationName parent,
@@ -938,42 +594,29 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
           String certificateAuthorityId) {
     CreateCertificateAuthorityRequest request =
         CreateCertificateAuthorityRequest.newBuilder()
-            .setParent(parent == null ? null : parent.toString())
+            .setParent(Objects.isNull(parent) ? null : parent.toString())
             .setCertificateAuthority(certificateAuthority)
             .setCertificateAuthorityId(certificateAuthorityId)
             .build();
     return createCertificateAuthorityAsync(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Create a new
    * [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] in a given
    * Project and Location.
    *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
-   *   CertificateAuthority certificateAuthority = CertificateAuthority.newBuilder().build();
-   *   String certificateAuthorityId = "";
-   *   CertificateAuthority response = certificateAuthorityServiceClient.createCertificateAuthorityAsync(parent.toString(), certificateAuthority, certificateAuthorityId).get();
-   * }
-   * </code></pre>
-   *
    * @param parent Required. The resource name of the location associated with the
    *     [CertificateAuthorities][google.cloud.security.privateca.v1beta1.CertificateAuthority], in
    *     the format `projects/&#42;/locations/&#42;`.
-   * @param certificateAuthority Required. A
+   * @param certificate_authority Required. A
    *     [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] with
    *     initial field values.
-   * @param certificateAuthorityId Required. It must be unique within a location and match the
+   * @param certificate_authority_id Required. It must be unique within a location and match the
    *     regular expression `[a-zA-Z0-9_-]{1,63}`
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  @BetaApi(
-      "The surface for long-running operations is not stable yet and may change in the future.")
   public final OperationFuture<CertificateAuthority, OperationMetadata>
       createCertificateAuthorityAsync(
           String parent, CertificateAuthority certificateAuthority, String certificateAuthorityId) {
@@ -986,147 +629,74 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return createCertificateAuthorityAsync(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Create a new
    * [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] in a given
    * Project and Location.
    *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
-   *   String certificateAuthorityId = "";
-   *   CertificateAuthority certificateAuthority = CertificateAuthority.newBuilder().build();
-   *   CreateCertificateAuthorityRequest request = CreateCertificateAuthorityRequest.newBuilder()
-   *     .setParent(parent.toString())
-   *     .setCertificateAuthorityId(certificateAuthorityId)
-   *     .setCertificateAuthority(certificateAuthority)
-   *     .build();
-   *   CertificateAuthority response = certificateAuthorityServiceClient.createCertificateAuthorityAsync(request).get();
-   * }
-   * </code></pre>
-   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  @BetaApi(
-      "The surface for long-running operations is not stable yet and may change in the future.")
   public final OperationFuture<CertificateAuthority, OperationMetadata>
       createCertificateAuthorityAsync(CreateCertificateAuthorityRequest request) {
     return createCertificateAuthorityOperationCallable().futureCall(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Create a new
    * [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] in a given
    * Project and Location.
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
-   *   String certificateAuthorityId = "";
-   *   CertificateAuthority certificateAuthority = CertificateAuthority.newBuilder().build();
-   *   CreateCertificateAuthorityRequest request = CreateCertificateAuthorityRequest.newBuilder()
-   *     .setParent(parent.toString())
-   *     .setCertificateAuthorityId(certificateAuthorityId)
-   *     .setCertificateAuthority(certificateAuthority)
-   *     .build();
-   *   OperationFuture&lt;CertificateAuthority, OperationMetadata&gt; future = certificateAuthorityServiceClient.createCertificateAuthorityOperationCallable().futureCall(request);
-   *   // Do something
-   *   CertificateAuthority response = future.get();
-   * }
-   * </code></pre>
    */
-  @BetaApi("The surface for use by generated code is not stable yet and may change in the future.")
   public final OperationCallable<
           CreateCertificateAuthorityRequest, CertificateAuthority, OperationMetadata>
       createCertificateAuthorityOperationCallable() {
     return stub.createCertificateAuthorityOperationCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Create a new
    * [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] in a given
    * Project and Location.
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
-   *   String certificateAuthorityId = "";
-   *   CertificateAuthority certificateAuthority = CertificateAuthority.newBuilder().build();
-   *   CreateCertificateAuthorityRequest request = CreateCertificateAuthorityRequest.newBuilder()
-   *     .setParent(parent.toString())
-   *     .setCertificateAuthorityId(certificateAuthorityId)
-   *     .setCertificateAuthority(certificateAuthority)
-   *     .build();
-   *   ApiFuture&lt;Operation&gt; future = certificateAuthorityServiceClient.createCertificateAuthorityCallable().futureCall(request);
-   *   // Do something
-   *   Operation response = future.get();
-   * }
-   * </code></pre>
    */
   public final UnaryCallable<CreateCertificateAuthorityRequest, Operation>
       createCertificateAuthorityCallable() {
     return stub.createCertificateAuthorityCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Disable a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   CertificateAuthority response = certificateAuthorityServiceClient.disableCertificateAuthorityAsync(name).get();
-   * }
-   * </code></pre>
    *
    * @param name Required. The resource name for this
    *     [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] in the
    *     format `projects/&#42;/locations/&#42;/certificateAuthorities/&#42;`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  @BetaApi(
-      "The surface for long-running operations is not stable yet and may change in the future.")
   public final OperationFuture<CertificateAuthority, OperationMetadata>
       disableCertificateAuthorityAsync(CertificateAuthorityName name) {
     DisableCertificateAuthorityRequest request =
         DisableCertificateAuthorityRequest.newBuilder()
-            .setName(name == null ? null : name.toString())
+            .setName(Objects.isNull(name) ? null : name.toString())
             .build();
     return disableCertificateAuthorityAsync(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Disable a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   CertificateAuthority response = certificateAuthorityServiceClient.disableCertificateAuthorityAsync(name.toString()).get();
-   * }
-   * </code></pre>
    *
    * @param name Required. The resource name for this
    *     [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] in the
    *     format `projects/&#42;/locations/&#42;/certificateAuthorities/&#42;`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  @BetaApi(
-      "The surface for long-running operations is not stable yet and may change in the future.")
   public final OperationFuture<CertificateAuthority, OperationMetadata>
       disableCertificateAuthorityAsync(String name) {
     DisableCertificateAuthorityRequest request =
@@ -1134,129 +704,68 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return disableCertificateAuthorityAsync(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Disable a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   DisableCertificateAuthorityRequest request = DisableCertificateAuthorityRequest.newBuilder()
-   *     .setName(name.toString())
-   *     .build();
-   *   CertificateAuthority response = certificateAuthorityServiceClient.disableCertificateAuthorityAsync(request).get();
-   * }
-   * </code></pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  @BetaApi(
-      "The surface for long-running operations is not stable yet and may change in the future.")
   public final OperationFuture<CertificateAuthority, OperationMetadata>
       disableCertificateAuthorityAsync(DisableCertificateAuthorityRequest request) {
     return disableCertificateAuthorityOperationCallable().futureCall(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Disable a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   DisableCertificateAuthorityRequest request = DisableCertificateAuthorityRequest.newBuilder()
-   *     .setName(name.toString())
-   *     .build();
-   *   OperationFuture&lt;CertificateAuthority, OperationMetadata&gt; future = certificateAuthorityServiceClient.disableCertificateAuthorityOperationCallable().futureCall(request);
-   *   // Do something
-   *   CertificateAuthority response = future.get();
-   * }
-   * </code></pre>
    */
-  @BetaApi("The surface for use by generated code is not stable yet and may change in the future.")
   public final OperationCallable<
           DisableCertificateAuthorityRequest, CertificateAuthority, OperationMetadata>
       disableCertificateAuthorityOperationCallable() {
     return stub.disableCertificateAuthorityOperationCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Disable a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   DisableCertificateAuthorityRequest request = DisableCertificateAuthorityRequest.newBuilder()
-   *     .setName(name.toString())
-   *     .build();
-   *   ApiFuture&lt;Operation&gt; future = certificateAuthorityServiceClient.disableCertificateAuthorityCallable().futureCall(request);
-   *   // Do something
-   *   Operation response = future.get();
-   * }
-   * </code></pre>
    */
   public final UnaryCallable<DisableCertificateAuthorityRequest, Operation>
       disableCertificateAuthorityCallable() {
     return stub.disableCertificateAuthorityCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Enable a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   CertificateAuthority response = certificateAuthorityServiceClient.enableCertificateAuthorityAsync(name).get();
-   * }
-   * </code></pre>
    *
    * @param name Required. The resource name for this
    *     [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] in the
    *     format `projects/&#42;/locations/&#42;/certificateAuthorities/&#42;`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  @BetaApi(
-      "The surface for long-running operations is not stable yet and may change in the future.")
   public final OperationFuture<CertificateAuthority, OperationMetadata>
       enableCertificateAuthorityAsync(CertificateAuthorityName name) {
     EnableCertificateAuthorityRequest request =
         EnableCertificateAuthorityRequest.newBuilder()
-            .setName(name == null ? null : name.toString())
+            .setName(Objects.isNull(name) ? null : name.toString())
             .build();
     return enableCertificateAuthorityAsync(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Enable a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   CertificateAuthority response = certificateAuthorityServiceClient.enableCertificateAuthorityAsync(name.toString()).get();
-   * }
-   * </code></pre>
    *
    * @param name Required. The resource name for this
    *     [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] in the
    *     format `projects/&#42;/locations/&#42;/certificateAuthorities/&#42;`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  @BetaApi(
-      "The surface for long-running operations is not stable yet and may change in the future.")
   public final OperationFuture<CertificateAuthority, OperationMetadata>
       enableCertificateAuthorityAsync(String name) {
     EnableCertificateAuthorityRequest request =
@@ -1264,81 +773,42 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return enableCertificateAuthorityAsync(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Enable a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   EnableCertificateAuthorityRequest request = EnableCertificateAuthorityRequest.newBuilder()
-   *     .setName(name.toString())
-   *     .build();
-   *   CertificateAuthority response = certificateAuthorityServiceClient.enableCertificateAuthorityAsync(request).get();
-   * }
-   * </code></pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  @BetaApi(
-      "The surface for long-running operations is not stable yet and may change in the future.")
   public final OperationFuture<CertificateAuthority, OperationMetadata>
       enableCertificateAuthorityAsync(EnableCertificateAuthorityRequest request) {
     return enableCertificateAuthorityOperationCallable().futureCall(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Enable a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   EnableCertificateAuthorityRequest request = EnableCertificateAuthorityRequest.newBuilder()
-   *     .setName(name.toString())
-   *     .build();
-   *   OperationFuture&lt;CertificateAuthority, OperationMetadata&gt; future = certificateAuthorityServiceClient.enableCertificateAuthorityOperationCallable().futureCall(request);
-   *   // Do something
-   *   CertificateAuthority response = future.get();
-   * }
-   * </code></pre>
    */
-  @BetaApi("The surface for use by generated code is not stable yet and may change in the future.")
   public final OperationCallable<
           EnableCertificateAuthorityRequest, CertificateAuthority, OperationMetadata>
       enableCertificateAuthorityOperationCallable() {
     return stub.enableCertificateAuthorityOperationCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Enable a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   EnableCertificateAuthorityRequest request = EnableCertificateAuthorityRequest.newBuilder()
-   *     .setName(name.toString())
-   *     .build();
-   *   ApiFuture&lt;Operation&gt; future = certificateAuthorityServiceClient.enableCertificateAuthorityCallable().futureCall(request);
-   *   // Do something
-   *   Operation response = future.get();
-   * }
-   * </code></pre>
    */
   public final UnaryCallable<EnableCertificateAuthorityRequest, Operation>
       enableCertificateAuthorityCallable() {
     return stub.enableCertificateAuthorityCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Fetch a certificate signing request (CSR) from a
    * [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] that is in
@@ -1350,15 +820,6 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] resource,
    * or could be an on-prem certificate authority. See also
    * [ActivateCertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthorityService.ActivateCertificateAuthority].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   FetchCertificateAuthorityCsrResponse response = certificateAuthorityServiceClient.fetchCertificateAuthorityCsr(name);
-   * }
-   * </code></pre>
    *
    * @param name Required. The resource name for this
    *     [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] in the
@@ -1369,12 +830,12 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
       CertificateAuthorityName name) {
     FetchCertificateAuthorityCsrRequest request =
         FetchCertificateAuthorityCsrRequest.newBuilder()
-            .setName(name == null ? null : name.toString())
+            .setName(Objects.isNull(name) ? null : name.toString())
             .build();
     return fetchCertificateAuthorityCsr(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Fetch a certificate signing request (CSR) from a
    * [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] that is in
@@ -1386,15 +847,6 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] resource,
    * or could be an on-prem certificate authority. See also
    * [ActivateCertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthorityService.ActivateCertificateAuthority].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   FetchCertificateAuthorityCsrResponse response = certificateAuthorityServiceClient.fetchCertificateAuthorityCsr(name.toString());
-   * }
-   * </code></pre>
    *
    * @param name Required. The resource name for this
    *     [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] in the
@@ -1407,7 +859,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return fetchCertificateAuthorityCsr(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Fetch a certificate signing request (CSR) from a
    * [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] that is in
@@ -1419,18 +871,6 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] resource,
    * or could be an on-prem certificate authority. See also
    * [ActivateCertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthorityService.ActivateCertificateAuthority].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   FetchCertificateAuthorityCsrRequest request = FetchCertificateAuthorityCsrRequest.newBuilder()
-   *     .setName(name.toString())
-   *     .build();
-   *   FetchCertificateAuthorityCsrResponse response = certificateAuthorityServiceClient.fetchCertificateAuthorityCsr(request);
-   * }
-   * </code></pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -1440,7 +880,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return fetchCertificateAuthorityCsrCallable().call(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Fetch a certificate signing request (CSR) from a
    * [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] that is in
@@ -1454,18 +894,6 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * [ActivateCertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthorityService.ActivateCertificateAuthority].
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   FetchCertificateAuthorityCsrRequest request = FetchCertificateAuthorityCsrRequest.newBuilder()
-   *     .setName(name.toString())
-   *     .build();
-   *   ApiFuture&lt;FetchCertificateAuthorityCsrResponse&gt; future = certificateAuthorityServiceClient.fetchCertificateAuthorityCsrCallable().futureCall(request);
-   *   // Do something
-   *   FetchCertificateAuthorityCsrResponse response = future.get();
-   * }
-   * </code></pre>
    */
   public final UnaryCallable<
           FetchCertificateAuthorityCsrRequest, FetchCertificateAuthorityCsrResponse>
@@ -1473,18 +901,9 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return stub.fetchCertificateAuthorityCsrCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Returns a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   CertificateAuthority response = certificateAuthorityServiceClient.getCertificateAuthority(name);
-   * }
-   * </code></pre>
    *
    * @param name Required. The
    *     [name][google.cloud.security.privateca.v1beta1.CertificateAuthority.name] of the
@@ -1495,23 +914,14 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
   public final CertificateAuthority getCertificateAuthority(CertificateAuthorityName name) {
     GetCertificateAuthorityRequest request =
         GetCertificateAuthorityRequest.newBuilder()
-            .setName(name == null ? null : name.toString())
+            .setName(Objects.isNull(name) ? null : name.toString())
             .build();
     return getCertificateAuthority(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Returns a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   CertificateAuthority response = certificateAuthorityServiceClient.getCertificateAuthority(name.toString());
-   * }
-   * </code></pre>
    *
    * @param name Required. The
    *     [name][google.cloud.security.privateca.v1beta1.CertificateAuthority.name] of the
@@ -1525,21 +935,9 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return getCertificateAuthority(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Returns a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   GetCertificateAuthorityRequest request = GetCertificateAuthorityRequest.newBuilder()
-   *     .setName(name.toString())
-   *     .build();
-   *   CertificateAuthority response = certificateAuthorityServiceClient.getCertificateAuthority(request);
-   * }
-   * </code></pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -1549,43 +947,20 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return getCertificateAuthorityCallable().call(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Returns a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   GetCertificateAuthorityRequest request = GetCertificateAuthorityRequest.newBuilder()
-   *     .setName(name.toString())
-   *     .build();
-   *   ApiFuture&lt;CertificateAuthority&gt; future = certificateAuthorityServiceClient.getCertificateAuthorityCallable().futureCall(request);
-   *   // Do something
-   *   CertificateAuthority response = future.get();
-   * }
-   * </code></pre>
    */
   public final UnaryCallable<GetCertificateAuthorityRequest, CertificateAuthority>
       getCertificateAuthorityCallable() {
     return stub.getCertificateAuthorityCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists [CertificateAuthorities][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
-   *   for (CertificateAuthority element : certificateAuthorityServiceClient.listCertificateAuthorities(parent).iterateAll()) {
-   *     // doThingsWith(element);
-   *   }
-   * }
-   * </code></pre>
    *
    * @param parent Required. The resource name of the location associated with the
    *     [CertificateAuthorities][google.cloud.security.privateca.v1beta1.CertificateAuthority], in
@@ -1596,25 +971,14 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
       LocationName parent) {
     ListCertificateAuthoritiesRequest request =
         ListCertificateAuthoritiesRequest.newBuilder()
-            .setParent(parent == null ? null : parent.toString())
+            .setParent(Objects.isNull(parent) ? null : parent.toString())
             .build();
     return listCertificateAuthorities(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists [CertificateAuthorities][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
-   *   for (CertificateAuthority element : certificateAuthorityServiceClient.listCertificateAuthorities(parent.toString()).iterateAll()) {
-   *     // doThingsWith(element);
-   *   }
-   * }
-   * </code></pre>
    *
    * @param parent Required. The resource name of the location associated with the
    *     [CertificateAuthorities][google.cloud.security.privateca.v1beta1.CertificateAuthority], in
@@ -1627,23 +991,9 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return listCertificateAuthorities(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists [CertificateAuthorities][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
-   *   ListCertificateAuthoritiesRequest request = ListCertificateAuthoritiesRequest.newBuilder()
-   *     .setParent(parent.toString())
-   *     .build();
-   *   for (CertificateAuthority element : certificateAuthorityServiceClient.listCertificateAuthorities(request).iterateAll()) {
-   *     // doThingsWith(element);
-   *   }
-   * }
-   * </code></pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -1653,25 +1003,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return listCertificateAuthoritiesPagedCallable().call(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists [CertificateAuthorities][google.cloud.security.privateca.v1beta1.CertificateAuthority].
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
-   *   ListCertificateAuthoritiesRequest request = ListCertificateAuthoritiesRequest.newBuilder()
-   *     .setParent(parent.toString())
-   *     .build();
-   *   ApiFuture&lt;ListCertificateAuthoritiesPagedResponse&gt; future = certificateAuthorityServiceClient.listCertificateAuthoritiesPagedCallable().futureCall(request);
-   *   // Do something
-   *   for (CertificateAuthority element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
-   *   }
-   * }
-   * </code></pre>
    */
   public final UnaryCallable<
           ListCertificateAuthoritiesRequest, ListCertificateAuthoritiesPagedResponse>
@@ -1679,89 +1015,46 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return stub.listCertificateAuthoritiesPagedCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists [CertificateAuthorities][google.cloud.security.privateca.v1beta1.CertificateAuthority].
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
-   *   ListCertificateAuthoritiesRequest request = ListCertificateAuthoritiesRequest.newBuilder()
-   *     .setParent(parent.toString())
-   *     .build();
-   *   while (true) {
-   *     ListCertificateAuthoritiesResponse response = certificateAuthorityServiceClient.listCertificateAuthoritiesCallable().call(request);
-   *     for (CertificateAuthority element : response.getCertificateAuthoritiesList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
-   *     }
-   *   }
-   * }
-   * </code></pre>
    */
   public final UnaryCallable<ListCertificateAuthoritiesRequest, ListCertificateAuthoritiesResponse>
       listCertificateAuthoritiesCallable() {
     return stub.listCertificateAuthoritiesCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Restore a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority]
    * that is scheduled for deletion.
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   CertificateAuthority response = certificateAuthorityServiceClient.restoreCertificateAuthorityAsync(name).get();
-   * }
-   * </code></pre>
    *
    * @param name Required. The resource name for this
    *     [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] in the
    *     format `projects/&#42;/locations/&#42;/certificateAuthorities/&#42;`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  @BetaApi(
-      "The surface for long-running operations is not stable yet and may change in the future.")
   public final OperationFuture<CertificateAuthority, OperationMetadata>
       restoreCertificateAuthorityAsync(CertificateAuthorityName name) {
     RestoreCertificateAuthorityRequest request =
         RestoreCertificateAuthorityRequest.newBuilder()
-            .setName(name == null ? null : name.toString())
+            .setName(Objects.isNull(name) ? null : name.toString())
             .build();
     return restoreCertificateAuthorityAsync(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Restore a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority]
    * that is scheduled for deletion.
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   CertificateAuthority response = certificateAuthorityServiceClient.restoreCertificateAuthorityAsync(name.toString()).get();
-   * }
-   * </code></pre>
    *
    * @param name Required. The resource name for this
    *     [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] in the
    *     format `projects/&#42;/locations/&#42;/certificateAuthorities/&#42;`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  @BetaApi(
-      "The surface for long-running operations is not stable yet and may change in the future.")
   public final OperationFuture<CertificateAuthority, OperationMetadata>
       restoreCertificateAuthorityAsync(String name) {
     RestoreCertificateAuthorityRequest request =
@@ -1769,134 +1062,73 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return restoreCertificateAuthorityAsync(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Restore a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority]
    * that is scheduled for deletion.
    *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   RestoreCertificateAuthorityRequest request = RestoreCertificateAuthorityRequest.newBuilder()
-   *     .setName(name.toString())
-   *     .build();
-   *   CertificateAuthority response = certificateAuthorityServiceClient.restoreCertificateAuthorityAsync(request).get();
-   * }
-   * </code></pre>
-   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  @BetaApi(
-      "The surface for long-running operations is not stable yet and may change in the future.")
   public final OperationFuture<CertificateAuthority, OperationMetadata>
       restoreCertificateAuthorityAsync(RestoreCertificateAuthorityRequest request) {
     return restoreCertificateAuthorityOperationCallable().futureCall(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Restore a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority]
    * that is scheduled for deletion.
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   RestoreCertificateAuthorityRequest request = RestoreCertificateAuthorityRequest.newBuilder()
-   *     .setName(name.toString())
-   *     .build();
-   *   OperationFuture&lt;CertificateAuthority, OperationMetadata&gt; future = certificateAuthorityServiceClient.restoreCertificateAuthorityOperationCallable().futureCall(request);
-   *   // Do something
-   *   CertificateAuthority response = future.get();
-   * }
-   * </code></pre>
    */
-  @BetaApi("The surface for use by generated code is not stable yet and may change in the future.")
   public final OperationCallable<
           RestoreCertificateAuthorityRequest, CertificateAuthority, OperationMetadata>
       restoreCertificateAuthorityOperationCallable() {
     return stub.restoreCertificateAuthorityOperationCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Restore a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority]
    * that is scheduled for deletion.
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   RestoreCertificateAuthorityRequest request = RestoreCertificateAuthorityRequest.newBuilder()
-   *     .setName(name.toString())
-   *     .build();
-   *   ApiFuture&lt;Operation&gt; future = certificateAuthorityServiceClient.restoreCertificateAuthorityCallable().futureCall(request);
-   *   // Do something
-   *   Operation response = future.get();
-   * }
-   * </code></pre>
    */
   public final UnaryCallable<RestoreCertificateAuthorityRequest, Operation>
       restoreCertificateAuthorityCallable() {
     return stub.restoreCertificateAuthorityCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Schedule a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority]
    * for deletion.
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   CertificateAuthority response = certificateAuthorityServiceClient.scheduleDeleteCertificateAuthorityAsync(name).get();
-   * }
-   * </code></pre>
    *
    * @param name Required. The resource name for this
    *     [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] in the
    *     format `projects/&#42;/locations/&#42;/certificateAuthorities/&#42;`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  @BetaApi(
-      "The surface for long-running operations is not stable yet and may change in the future.")
   public final OperationFuture<CertificateAuthority, OperationMetadata>
       scheduleDeleteCertificateAuthorityAsync(CertificateAuthorityName name) {
     ScheduleDeleteCertificateAuthorityRequest request =
         ScheduleDeleteCertificateAuthorityRequest.newBuilder()
-            .setName(name == null ? null : name.toString())
+            .setName(Objects.isNull(name) ? null : name.toString())
             .build();
     return scheduleDeleteCertificateAuthorityAsync(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Schedule a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority]
    * for deletion.
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   CertificateAuthority response = certificateAuthorityServiceClient.scheduleDeleteCertificateAuthorityAsync(name.toString()).get();
-   * }
-   * </code></pre>
    *
    * @param name Required. The resource name for this
    *     [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] in the
    *     format `projects/&#42;/locations/&#42;/certificateAuthorities/&#42;`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  @BetaApi(
-      "The surface for long-running operations is not stable yet and may change in the future.")
   public final OperationFuture<CertificateAuthority, OperationMetadata>
       scheduleDeleteCertificateAuthorityAsync(String name) {
     ScheduleDeleteCertificateAuthorityRequest request =
@@ -1904,105 +1136,54 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return scheduleDeleteCertificateAuthorityAsync(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Schedule a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority]
    * for deletion.
    *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   ScheduleDeleteCertificateAuthorityRequest request = ScheduleDeleteCertificateAuthorityRequest.newBuilder()
-   *     .setName(name.toString())
-   *     .build();
-   *   CertificateAuthority response = certificateAuthorityServiceClient.scheduleDeleteCertificateAuthorityAsync(request).get();
-   * }
-   * </code></pre>
-   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  @BetaApi(
-      "The surface for long-running operations is not stable yet and may change in the future.")
   public final OperationFuture<CertificateAuthority, OperationMetadata>
       scheduleDeleteCertificateAuthorityAsync(ScheduleDeleteCertificateAuthorityRequest request) {
     return scheduleDeleteCertificateAuthorityOperationCallable().futureCall(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Schedule a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority]
    * for deletion.
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   ScheduleDeleteCertificateAuthorityRequest request = ScheduleDeleteCertificateAuthorityRequest.newBuilder()
-   *     .setName(name.toString())
-   *     .build();
-   *   OperationFuture&lt;CertificateAuthority, OperationMetadata&gt; future = certificateAuthorityServiceClient.scheduleDeleteCertificateAuthorityOperationCallable().futureCall(request);
-   *   // Do something
-   *   CertificateAuthority response = future.get();
-   * }
-   * </code></pre>
    */
-  @BetaApi("The surface for use by generated code is not stable yet and may change in the future.")
   public final OperationCallable<
           ScheduleDeleteCertificateAuthorityRequest, CertificateAuthority, OperationMetadata>
       scheduleDeleteCertificateAuthorityOperationCallable() {
     return stub.scheduleDeleteCertificateAuthorityOperationCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Schedule a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority]
    * for deletion.
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName name = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   ScheduleDeleteCertificateAuthorityRequest request = ScheduleDeleteCertificateAuthorityRequest.newBuilder()
-   *     .setName(name.toString())
-   *     .build();
-   *   ApiFuture&lt;Operation&gt; future = certificateAuthorityServiceClient.scheduleDeleteCertificateAuthorityCallable().futureCall(request);
-   *   // Do something
-   *   Operation response = future.get();
-   * }
-   * </code></pre>
    */
   public final UnaryCallable<ScheduleDeleteCertificateAuthorityRequest, Operation>
       scheduleDeleteCertificateAuthorityCallable() {
     return stub.scheduleDeleteCertificateAuthorityCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Update a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
    *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthority certificateAuthority = CertificateAuthority.newBuilder().build();
-   *   FieldMask updateMask = FieldMask.newBuilder().build();
-   *   CertificateAuthority response = certificateAuthorityServiceClient.updateCertificateAuthorityAsync(certificateAuthority, updateMask).get();
-   * }
-   * </code></pre>
-   *
-   * @param certificateAuthority Required.
+   * @param certificate_authority Required.
    *     [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] with
    *     updated values.
-   * @param updateMask Required. A list of fields to be updated in this request.
+   * @param update_mask Required. A list of fields to be updated in this request.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  @BetaApi(
-      "The surface for long-running operations is not stable yet and may change in the future.")
   public final OperationFuture<CertificateAuthority, OperationMetadata>
       updateCertificateAuthorityAsync(
           CertificateAuthority certificateAuthority, FieldMask updateMask) {
@@ -2014,99 +1195,45 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return updateCertificateAuthorityAsync(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Update a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthority certificateAuthority = CertificateAuthority.newBuilder().build();
-   *   FieldMask updateMask = FieldMask.newBuilder().build();
-   *   UpdateCertificateAuthorityRequest request = UpdateCertificateAuthorityRequest.newBuilder()
-   *     .setCertificateAuthority(certificateAuthority)
-   *     .setUpdateMask(updateMask)
-   *     .build();
-   *   CertificateAuthority response = certificateAuthorityServiceClient.updateCertificateAuthorityAsync(request).get();
-   * }
-   * </code></pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  @BetaApi(
-      "The surface for long-running operations is not stable yet and may change in the future.")
   public final OperationFuture<CertificateAuthority, OperationMetadata>
       updateCertificateAuthorityAsync(UpdateCertificateAuthorityRequest request) {
     return updateCertificateAuthorityOperationCallable().futureCall(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Update a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthority certificateAuthority = CertificateAuthority.newBuilder().build();
-   *   FieldMask updateMask = FieldMask.newBuilder().build();
-   *   UpdateCertificateAuthorityRequest request = UpdateCertificateAuthorityRequest.newBuilder()
-   *     .setCertificateAuthority(certificateAuthority)
-   *     .setUpdateMask(updateMask)
-   *     .build();
-   *   OperationFuture&lt;CertificateAuthority, OperationMetadata&gt; future = certificateAuthorityServiceClient.updateCertificateAuthorityOperationCallable().futureCall(request);
-   *   // Do something
-   *   CertificateAuthority response = future.get();
-   * }
-   * </code></pre>
    */
-  @BetaApi("The surface for use by generated code is not stable yet and may change in the future.")
   public final OperationCallable<
           UpdateCertificateAuthorityRequest, CertificateAuthority, OperationMetadata>
       updateCertificateAuthorityOperationCallable() {
     return stub.updateCertificateAuthorityOperationCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Update a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthority certificateAuthority = CertificateAuthority.newBuilder().build();
-   *   FieldMask updateMask = FieldMask.newBuilder().build();
-   *   UpdateCertificateAuthorityRequest request = UpdateCertificateAuthorityRequest.newBuilder()
-   *     .setCertificateAuthority(certificateAuthority)
-   *     .setUpdateMask(updateMask)
-   *     .build();
-   *   ApiFuture&lt;Operation&gt; future = certificateAuthorityServiceClient.updateCertificateAuthorityCallable().futureCall(request);
-   *   // Do something
-   *   Operation response = future.get();
-   * }
-   * </code></pre>
    */
   public final UnaryCallable<UpdateCertificateAuthorityRequest, Operation>
       updateCertificateAuthorityCallable() {
     return stub.updateCertificateAuthorityCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Returns a
    * [CertificateRevocationList][google.cloud.security.privateca.v1beta1.CertificateRevocationList].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateRevocationListName name = CertificateRevocationListName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]", "[CERTIFICATE_REVOCATION_LIST]");
-   *   CertificateRevocationList response = certificateAuthorityServiceClient.getCertificateRevocationList(name);
-   * }
-   * </code></pre>
    *
    * @param name Required. The
    *     [name][google.cloud.security.privateca.v1beta1.CertificateRevocationList.name] of the
@@ -2118,24 +1245,15 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
       CertificateRevocationListName name) {
     GetCertificateRevocationListRequest request =
         GetCertificateRevocationListRequest.newBuilder()
-            .setName(name == null ? null : name.toString())
+            .setName(Objects.isNull(name) ? null : name.toString())
             .build();
     return getCertificateRevocationList(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Returns a
    * [CertificateRevocationList][google.cloud.security.privateca.v1beta1.CertificateRevocationList].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateRevocationListName name = CertificateRevocationListName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]", "[CERTIFICATE_REVOCATION_LIST]");
-   *   CertificateRevocationList response = certificateAuthorityServiceClient.getCertificateRevocationList(name.toString());
-   * }
-   * </code></pre>
    *
    * @param name Required. The
    *     [name][google.cloud.security.privateca.v1beta1.CertificateRevocationList.name] of the
@@ -2149,22 +1267,10 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return getCertificateRevocationList(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Returns a
    * [CertificateRevocationList][google.cloud.security.privateca.v1beta1.CertificateRevocationList].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateRevocationListName name = CertificateRevocationListName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]", "[CERTIFICATE_REVOCATION_LIST]");
-   *   GetCertificateRevocationListRequest request = GetCertificateRevocationListRequest.newBuilder()
-   *     .setName(name.toString())
-   *     .build();
-   *   CertificateRevocationList response = certificateAuthorityServiceClient.getCertificateRevocationList(request);
-   * }
-   * </code></pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -2174,45 +1280,22 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return getCertificateRevocationListCallable().call(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Returns a
    * [CertificateRevocationList][google.cloud.security.privateca.v1beta1.CertificateRevocationList].
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateRevocationListName name = CertificateRevocationListName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]", "[CERTIFICATE_REVOCATION_LIST]");
-   *   GetCertificateRevocationListRequest request = GetCertificateRevocationListRequest.newBuilder()
-   *     .setName(name.toString())
-   *     .build();
-   *   ApiFuture&lt;CertificateRevocationList&gt; future = certificateAuthorityServiceClient.getCertificateRevocationListCallable().futureCall(request);
-   *   // Do something
-   *   CertificateRevocationList response = future.get();
-   * }
-   * </code></pre>
    */
   public final UnaryCallable<GetCertificateRevocationListRequest, CertificateRevocationList>
       getCertificateRevocationListCallable() {
     return stub.getCertificateRevocationListCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists
    * [CertificateRevocationLists][google.cloud.security.privateca.v1beta1.CertificateRevocationList].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName parent = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   for (CertificateRevocationList element : certificateAuthorityServiceClient.listCertificateRevocationLists(parent).iterateAll()) {
-   *     // doThingsWith(element);
-   *   }
-   * }
-   * </code></pre>
    *
    * @param parent Required. The resource name of the location associated with the
    *     [CertificateRevocationLists][google.cloud.security.privateca.v1beta1.CertificateRevocationList],
@@ -2223,26 +1306,15 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
       CertificateAuthorityName parent) {
     ListCertificateRevocationListsRequest request =
         ListCertificateRevocationListsRequest.newBuilder()
-            .setParent(parent == null ? null : parent.toString())
+            .setParent(Objects.isNull(parent) ? null : parent.toString())
             .build();
     return listCertificateRevocationLists(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists
    * [CertificateRevocationLists][google.cloud.security.privateca.v1beta1.CertificateRevocationList].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName parent = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   for (CertificateRevocationList element : certificateAuthorityServiceClient.listCertificateRevocationLists(parent.toString()).iterateAll()) {
-   *     // doThingsWith(element);
-   *   }
-   * }
-   * </code></pre>
    *
    * @param parent Required. The resource name of the location associated with the
    *     [CertificateRevocationLists][google.cloud.security.privateca.v1beta1.CertificateRevocationList],
@@ -2256,24 +1328,10 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return listCertificateRevocationLists(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists
    * [CertificateRevocationLists][google.cloud.security.privateca.v1beta1.CertificateRevocationList].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName parent = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   ListCertificateRevocationListsRequest request = ListCertificateRevocationListsRequest.newBuilder()
-   *     .setParent(parent.toString())
-   *     .build();
-   *   for (CertificateRevocationList element : certificateAuthorityServiceClient.listCertificateRevocationLists(request).iterateAll()) {
-   *     // doThingsWith(element);
-   *   }
-   * }
-   * </code></pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -2283,26 +1341,12 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return listCertificateRevocationListsPagedCallable().call(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists
    * [CertificateRevocationLists][google.cloud.security.privateca.v1beta1.CertificateRevocationList].
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName parent = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   ListCertificateRevocationListsRequest request = ListCertificateRevocationListsRequest.newBuilder()
-   *     .setParent(parent.toString())
-   *     .build();
-   *   ApiFuture&lt;ListCertificateRevocationListsPagedResponse&gt; future = certificateAuthorityServiceClient.listCertificateRevocationListsPagedCallable().futureCall(request);
-   *   // Do something
-   *   for (CertificateRevocationList element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
-   *   }
-   * }
-   * </code></pre>
    */
   public final UnaryCallable<
           ListCertificateRevocationListsRequest, ListCertificateRevocationListsPagedResponse>
@@ -2310,33 +1354,12 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return stub.listCertificateRevocationListsPagedCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists
    * [CertificateRevocationLists][google.cloud.security.privateca.v1beta1.CertificateRevocationList].
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateAuthorityName parent = CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
-   *   ListCertificateRevocationListsRequest request = ListCertificateRevocationListsRequest.newBuilder()
-   *     .setParent(parent.toString())
-   *     .build();
-   *   while (true) {
-   *     ListCertificateRevocationListsResponse response = certificateAuthorityServiceClient.listCertificateRevocationListsCallable().call(request);
-   *     for (CertificateRevocationList element : response.getCertificateRevocationListsList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
-   *     }
-   *   }
-   * }
-   * </code></pre>
    */
   public final UnaryCallable<
           ListCertificateRevocationListsRequest, ListCertificateRevocationListsResponse>
@@ -2344,29 +1367,17 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return stub.listCertificateRevocationListsCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Update a
    * [CertificateRevocationList][google.cloud.security.privateca.v1beta1.CertificateRevocationList].
    *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateRevocationList certificateRevocationList = CertificateRevocationList.newBuilder().build();
-   *   FieldMask updateMask = FieldMask.newBuilder().build();
-   *   CertificateRevocationList response = certificateAuthorityServiceClient.updateCertificateRevocationListAsync(certificateRevocationList, updateMask).get();
-   * }
-   * </code></pre>
-   *
-   * @param certificateRevocationList Required.
+   * @param certificate_revocation_list Required.
    *     [CertificateRevocationList][google.cloud.security.privateca.v1beta1.CertificateRevocationList]
    *     with updated values.
-   * @param updateMask Required. A list of fields to be updated in this request.
+   * @param update_mask Required. A list of fields to be updated in this request.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  @BetaApi(
-      "The surface for long-running operations is not stable yet and may change in the future.")
   public final OperationFuture<CertificateRevocationList, OperationMetadata>
       updateCertificateRevocationListAsync(
           CertificateRevocationList certificateRevocationList, FieldMask updateMask) {
@@ -2378,101 +1389,47 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return updateCertificateRevocationListAsync(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Update a
    * [CertificateRevocationList][google.cloud.security.privateca.v1beta1.CertificateRevocationList].
    *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateRevocationList certificateRevocationList = CertificateRevocationList.newBuilder().build();
-   *   FieldMask updateMask = FieldMask.newBuilder().build();
-   *   UpdateCertificateRevocationListRequest request = UpdateCertificateRevocationListRequest.newBuilder()
-   *     .setCertificateRevocationList(certificateRevocationList)
-   *     .setUpdateMask(updateMask)
-   *     .build();
-   *   CertificateRevocationList response = certificateAuthorityServiceClient.updateCertificateRevocationListAsync(request).get();
-   * }
-   * </code></pre>
-   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  @BetaApi(
-      "The surface for long-running operations is not stable yet and may change in the future.")
   public final OperationFuture<CertificateRevocationList, OperationMetadata>
       updateCertificateRevocationListAsync(UpdateCertificateRevocationListRequest request) {
     return updateCertificateRevocationListOperationCallable().futureCall(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Update a
    * [CertificateRevocationList][google.cloud.security.privateca.v1beta1.CertificateRevocationList].
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateRevocationList certificateRevocationList = CertificateRevocationList.newBuilder().build();
-   *   FieldMask updateMask = FieldMask.newBuilder().build();
-   *   UpdateCertificateRevocationListRequest request = UpdateCertificateRevocationListRequest.newBuilder()
-   *     .setCertificateRevocationList(certificateRevocationList)
-   *     .setUpdateMask(updateMask)
-   *     .build();
-   *   OperationFuture&lt;CertificateRevocationList, OperationMetadata&gt; future = certificateAuthorityServiceClient.updateCertificateRevocationListOperationCallable().futureCall(request);
-   *   // Do something
-   *   CertificateRevocationList response = future.get();
-   * }
-   * </code></pre>
    */
-  @BetaApi("The surface for use by generated code is not stable yet and may change in the future.")
   public final OperationCallable<
           UpdateCertificateRevocationListRequest, CertificateRevocationList, OperationMetadata>
       updateCertificateRevocationListOperationCallable() {
     return stub.updateCertificateRevocationListOperationCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Update a
    * [CertificateRevocationList][google.cloud.security.privateca.v1beta1.CertificateRevocationList].
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   CertificateRevocationList certificateRevocationList = CertificateRevocationList.newBuilder().build();
-   *   FieldMask updateMask = FieldMask.newBuilder().build();
-   *   UpdateCertificateRevocationListRequest request = UpdateCertificateRevocationListRequest.newBuilder()
-   *     .setCertificateRevocationList(certificateRevocationList)
-   *     .setUpdateMask(updateMask)
-   *     .build();
-   *   ApiFuture&lt;Operation&gt; future = certificateAuthorityServiceClient.updateCertificateRevocationListCallable().futureCall(request);
-   *   // Do something
-   *   Operation response = future.get();
-   * }
-   * </code></pre>
    */
   public final UnaryCallable<UpdateCertificateRevocationListRequest, Operation>
       updateCertificateRevocationListCallable() {
     return stub.updateCertificateRevocationListCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Returns a [ReusableConfig][google.cloud.security.privateca.v1beta1.ReusableConfig].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   ReusableConfigName name = ReusableConfigName.of("[PROJECT]", "[LOCATION]", "[REUSABLE_CONFIG]");
-   *   ReusableConfig response = certificateAuthorityServiceClient.getReusableConfig(name);
-   * }
-   * </code></pre>
    *
    * @param name Required. The [name][ReusableConfigs.name] of the [ReusableConfigs][] to get.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -2480,23 +1437,14 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
   public final ReusableConfig getReusableConfig(ReusableConfigName name) {
     GetReusableConfigRequest request =
         GetReusableConfigRequest.newBuilder()
-            .setName(name == null ? null : name.toString())
+            .setName(Objects.isNull(name) ? null : name.toString())
             .build();
     return getReusableConfig(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Returns a [ReusableConfig][google.cloud.security.privateca.v1beta1.ReusableConfig].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   ReusableConfigName name = ReusableConfigName.of("[PROJECT]", "[LOCATION]", "[REUSABLE_CONFIG]");
-   *   ReusableConfig response = certificateAuthorityServiceClient.getReusableConfig(name.toString());
-   * }
-   * </code></pre>
    *
    * @param name Required. The [name][ReusableConfigs.name] of the [ReusableConfigs][] to get.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -2506,21 +1454,9 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return getReusableConfig(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Returns a [ReusableConfig][google.cloud.security.privateca.v1beta1.ReusableConfig].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   ReusableConfigName name = ReusableConfigName.of("[PROJECT]", "[LOCATION]", "[REUSABLE_CONFIG]");
-   *   GetReusableConfigRequest request = GetReusableConfigRequest.newBuilder()
-   *     .setName(name.toString())
-   *     .build();
-   *   ReusableConfig response = certificateAuthorityServiceClient.getReusableConfig(request);
-   * }
-   * </code></pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -2529,42 +1465,19 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return getReusableConfigCallable().call(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Returns a [ReusableConfig][google.cloud.security.privateca.v1beta1.ReusableConfig].
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   ReusableConfigName name = ReusableConfigName.of("[PROJECT]", "[LOCATION]", "[REUSABLE_CONFIG]");
-   *   GetReusableConfigRequest request = GetReusableConfigRequest.newBuilder()
-   *     .setName(name.toString())
-   *     .build();
-   *   ApiFuture&lt;ReusableConfig&gt; future = certificateAuthorityServiceClient.getReusableConfigCallable().futureCall(request);
-   *   // Do something
-   *   ReusableConfig response = future.get();
-   * }
-   * </code></pre>
    */
   public final UnaryCallable<GetReusableConfigRequest, ReusableConfig> getReusableConfigCallable() {
     return stub.getReusableConfigCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists [ReusableConfigs][google.cloud.security.privateca.v1beta1.ReusableConfig].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
-   *   for (ReusableConfig element : certificateAuthorityServiceClient.listReusableConfigs(parent).iterateAll()) {
-   *     // doThingsWith(element);
-   *   }
-   * }
-   * </code></pre>
    *
    * @param parent Required. The resource name of the location associated with the
    *     [ReusableConfigs][google.cloud.security.privateca.v1beta1.ReusableConfig], in the format
@@ -2574,25 +1487,14 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
   public final ListReusableConfigsPagedResponse listReusableConfigs(LocationName parent) {
     ListReusableConfigsRequest request =
         ListReusableConfigsRequest.newBuilder()
-            .setParent(parent == null ? null : parent.toString())
+            .setParent(Objects.isNull(parent) ? null : parent.toString())
             .build();
     return listReusableConfigs(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists [ReusableConfigs][google.cloud.security.privateca.v1beta1.ReusableConfig].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
-   *   for (ReusableConfig element : certificateAuthorityServiceClient.listReusableConfigs(parent.toString()).iterateAll()) {
-   *     // doThingsWith(element);
-   *   }
-   * }
-   * </code></pre>
    *
    * @param parent Required. The resource name of the location associated with the
    *     [ReusableConfigs][google.cloud.security.privateca.v1beta1.ReusableConfig], in the format
@@ -2605,23 +1507,9 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return listReusableConfigs(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists [ReusableConfigs][google.cloud.security.privateca.v1beta1.ReusableConfig].
-   *
-   * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
-   *   ListReusableConfigsRequest request = ListReusableConfigsRequest.newBuilder()
-   *     .setParent(parent.toString())
-   *     .build();
-   *   for (ReusableConfig element : certificateAuthorityServiceClient.listReusableConfigs(request).iterateAll()) {
-   *     // doThingsWith(element);
-   *   }
-   * }
-   * </code></pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -2631,57 +1519,22 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     return listReusableConfigsPagedCallable().call(request);
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists [ReusableConfigs][google.cloud.security.privateca.v1beta1.ReusableConfig].
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
-   *   ListReusableConfigsRequest request = ListReusableConfigsRequest.newBuilder()
-   *     .setParent(parent.toString())
-   *     .build();
-   *   ApiFuture&lt;ListReusableConfigsPagedResponse&gt; future = certificateAuthorityServiceClient.listReusableConfigsPagedCallable().futureCall(request);
-   *   // Do something
-   *   for (ReusableConfig element : future.get().iterateAll()) {
-   *     // doThingsWith(element);
-   *   }
-   * }
-   * </code></pre>
    */
   public final UnaryCallable<ListReusableConfigsRequest, ListReusableConfigsPagedResponse>
       listReusableConfigsPagedCallable() {
     return stub.listReusableConfigsPagedCallable();
   }
 
-  // AUTO-GENERATED DOCUMENTATION AND METHOD
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists [ReusableConfigs][google.cloud.security.privateca.v1beta1.ReusableConfig].
    *
    * <p>Sample code:
-   *
-   * <pre><code>
-   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient.create()) {
-   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
-   *   ListReusableConfigsRequest request = ListReusableConfigsRequest.newBuilder()
-   *     .setParent(parent.toString())
-   *     .build();
-   *   while (true) {
-   *     ListReusableConfigsResponse response = certificateAuthorityServiceClient.listReusableConfigsCallable().call(request);
-   *     for (ReusableConfig element : response.getReusableConfigsList()) {
-   *       // doThingsWith(element);
-   *     }
-   *     String nextPageToken = response.getNextPageToken();
-   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
-   *       request = request.toBuilder().setPageToken(nextPageToken).build();
-   *     } else {
-   *       break;
-   *     }
-   *   }
-   * }
-   * </code></pre>
    */
   public final UnaryCallable<ListReusableConfigsRequest, ListReusableConfigsResponse>
       listReusableConfigsCallable() {
