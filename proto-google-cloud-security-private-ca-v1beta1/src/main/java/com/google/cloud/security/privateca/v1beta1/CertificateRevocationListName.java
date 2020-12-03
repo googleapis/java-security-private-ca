@@ -131,7 +131,7 @@ public class CertificateRevocationListName implements ResourceName {
   public static List<String> toStringList(List<CertificateRevocationListName> values) {
     List<String> list = new ArrayList<>(values.size());
     for (CertificateRevocationListName value : values) {
-      if (Objects.isNull(value)) {
+      if (value == null) {
         list.add("");
       } else {
         list.add(value.toString());
@@ -147,20 +147,20 @@ public class CertificateRevocationListName implements ResourceName {
 
   @Override
   public Map<String, String> getFieldValuesMap() {
-    if (Objects.isNull(fieldValuesMap)) {
+    if (fieldValuesMap == null) {
       synchronized (this) {
-        if (Objects.isNull(fieldValuesMap)) {
+        if (fieldValuesMap == null) {
           ImmutableMap.Builder<String, String> fieldMapBuilder = ImmutableMap.builder();
-          if (!Objects.isNull(project)) {
+          if (project != null) {
             fieldMapBuilder.put("project", project);
           }
-          if (!Objects.isNull(location)) {
+          if (location != null) {
             fieldMapBuilder.put("location", location);
           }
-          if (!Objects.isNull(certificateAuthority)) {
+          if (certificateAuthority != null) {
             fieldMapBuilder.put("certificate_authority", certificateAuthority);
           }
-          if (!Objects.isNull(certificateRevocationList)) {
+          if (certificateRevocationList != null) {
             fieldMapBuilder.put("certificate_revocation_list", certificateRevocationList);
           }
           fieldValuesMap = fieldMapBuilder.build();

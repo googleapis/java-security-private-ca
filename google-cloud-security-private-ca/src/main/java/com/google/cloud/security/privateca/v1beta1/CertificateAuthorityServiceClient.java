@@ -36,7 +36,6 @@ import com.google.longrunning.OperationsClient;
 import com.google.protobuf.FieldMask;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Generated;
 
@@ -191,7 +190,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
       CertificateAuthorityName parent, Certificate certificate, String certificateId) {
     CreateCertificateRequest request =
         CreateCertificateRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
+            .setParent(parent == null ? null : parent.toString())
             .setCertificate(certificate)
             .setCertificateId(certificateId)
             .build();
@@ -265,9 +264,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    */
   public final Certificate getCertificate(CertificateName name) {
     GetCertificateRequest request =
-        GetCertificateRequest.newBuilder()
-            .setName(Objects.isNull(name) ? null : name.toString())
-            .build();
+        GetCertificateRequest.newBuilder().setName(name == null ? null : name.toString()).build();
     return getCertificate(request);
   }
 
@@ -317,7 +314,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
   public final ListCertificatesPagedResponse listCertificates(CertificateAuthorityName parent) {
     ListCertificatesRequest request =
         ListCertificatesRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
+            .setParent(parent == null ? null : parent.toString())
             .build();
     return listCertificates(request);
   }
@@ -382,7 +379,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
   public final Certificate revokeCertificate(CertificateName name) {
     RevokeCertificateRequest request =
         RevokeCertificateRequest.newBuilder()
-            .setName(Objects.isNull(name) ? null : name.toString())
+            .setName(name == null ? null : name.toString())
             .build();
     return revokeCertificate(request);
   }
@@ -487,7 +484,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
       activateCertificateAuthorityAsync(CertificateAuthorityName name) {
     ActivateCertificateAuthorityRequest request =
         ActivateCertificateAuthorityRequest.newBuilder()
-            .setName(Objects.isNull(name) ? null : name.toString())
+            .setName(name == null ? null : name.toString())
             .build();
     return activateCertificateAuthorityAsync(request);
   }
@@ -594,7 +591,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
           String certificateAuthorityId) {
     CreateCertificateAuthorityRequest request =
         CreateCertificateAuthorityRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
+            .setParent(parent == null ? null : parent.toString())
             .setCertificateAuthority(certificateAuthority)
             .setCertificateAuthorityId(certificateAuthorityId)
             .build();
@@ -683,7 +680,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
       disableCertificateAuthorityAsync(CertificateAuthorityName name) {
     DisableCertificateAuthorityRequest request =
         DisableCertificateAuthorityRequest.newBuilder()
-            .setName(Objects.isNull(name) ? null : name.toString())
+            .setName(name == null ? null : name.toString())
             .build();
     return disableCertificateAuthorityAsync(request);
   }
@@ -752,7 +749,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
       enableCertificateAuthorityAsync(CertificateAuthorityName name) {
     EnableCertificateAuthorityRequest request =
         EnableCertificateAuthorityRequest.newBuilder()
-            .setName(Objects.isNull(name) ? null : name.toString())
+            .setName(name == null ? null : name.toString())
             .build();
     return enableCertificateAuthorityAsync(request);
   }
@@ -830,7 +827,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
       CertificateAuthorityName name) {
     FetchCertificateAuthorityCsrRequest request =
         FetchCertificateAuthorityCsrRequest.newBuilder()
-            .setName(Objects.isNull(name) ? null : name.toString())
+            .setName(name == null ? null : name.toString())
             .build();
     return fetchCertificateAuthorityCsr(request);
   }
@@ -914,7 +911,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
   public final CertificateAuthority getCertificateAuthority(CertificateAuthorityName name) {
     GetCertificateAuthorityRequest request =
         GetCertificateAuthorityRequest.newBuilder()
-            .setName(Objects.isNull(name) ? null : name.toString())
+            .setName(name == null ? null : name.toString())
             .build();
     return getCertificateAuthority(request);
   }
@@ -971,7 +968,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
       LocationName parent) {
     ListCertificateAuthoritiesRequest request =
         ListCertificateAuthoritiesRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
+            .setParent(parent == null ? null : parent.toString())
             .build();
     return listCertificateAuthorities(request);
   }
@@ -1040,7 +1037,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
       restoreCertificateAuthorityAsync(CertificateAuthorityName name) {
     RestoreCertificateAuthorityRequest request =
         RestoreCertificateAuthorityRequest.newBuilder()
-            .setName(Objects.isNull(name) ? null : name.toString())
+            .setName(name == null ? null : name.toString())
             .build();
     return restoreCertificateAuthorityAsync(request);
   }
@@ -1114,7 +1111,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
       scheduleDeleteCertificateAuthorityAsync(CertificateAuthorityName name) {
     ScheduleDeleteCertificateAuthorityRequest request =
         ScheduleDeleteCertificateAuthorityRequest.newBuilder()
-            .setName(Objects.isNull(name) ? null : name.toString())
+            .setName(name == null ? null : name.toString())
             .build();
     return scheduleDeleteCertificateAuthorityAsync(request);
   }
@@ -1245,7 +1242,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
       CertificateRevocationListName name) {
     GetCertificateRevocationListRequest request =
         GetCertificateRevocationListRequest.newBuilder()
-            .setName(Objects.isNull(name) ? null : name.toString())
+            .setName(name == null ? null : name.toString())
             .build();
     return getCertificateRevocationList(request);
   }
@@ -1306,7 +1303,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
       CertificateAuthorityName parent) {
     ListCertificateRevocationListsRequest request =
         ListCertificateRevocationListsRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
+            .setParent(parent == null ? null : parent.toString())
             .build();
     return listCertificateRevocationLists(request);
   }
@@ -1437,7 +1434,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
   public final ReusableConfig getReusableConfig(ReusableConfigName name) {
     GetReusableConfigRequest request =
         GetReusableConfigRequest.newBuilder()
-            .setName(Objects.isNull(name) ? null : name.toString())
+            .setName(name == null ? null : name.toString())
             .build();
     return getReusableConfig(request);
   }
@@ -1487,7 +1484,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
   public final ListReusableConfigsPagedResponse listReusableConfigs(LocationName parent) {
     ListReusableConfigsRequest request =
         ListReusableConfigsRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
+            .setParent(parent == null ? null : parent.toString())
             .build();
     return listReusableConfigs(request);
   }
