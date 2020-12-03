@@ -22,14 +22,7 @@ import static io.grpc.stub.ClientCalls.futureUnaryCall;
 import static io.grpc.stub.ServerCalls.asyncUnaryCall;
 import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
 
-/**
- *
- *
- * <pre>
- * [Certificate Authority Service][google.cloud.security.privateca.v1beta1.CertificateAuthorityService] manages private
- * certificate authorities and issued certificates.
- * </pre>
- */
+/** */
 @javax.annotation.Generated(
     value = "by gRPC proto compiler",
     comments = "Source: google/cloud/security/privateca/v1beta1/service.proto")
@@ -1152,25 +1145,11 @@ public final class CertificateAuthorityServiceGrpc {
     return CertificateAuthorityServiceFutureStub.newStub(factory, channel);
   }
 
-  /**
-   *
-   *
-   * <pre>
-   * [Certificate Authority Service][google.cloud.security.privateca.v1beta1.CertificateAuthorityService] manages private
-   * certificate authorities and issued certificates.
-   * </pre>
-   */
+  /** */
   public abstract static class CertificateAuthorityServiceImplBase
       implements io.grpc.BindableService {
 
-    /**
-     *
-     *
-     * <pre>
-     * Create a new [Certificate][google.cloud.security.privateca.v1beta1.Certificate] in a given Project, Location from a particular
-     * [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-     * </pre>
-     */
+    /** */
     public void createCertificate(
         com.google.cloud.security.privateca.v1beta1.CreateCertificateRequest request,
         io.grpc.stub.StreamObserver<com.google.cloud.security.privateca.v1beta1.Certificate>
@@ -1178,13 +1157,7 @@ public final class CertificateAuthorityServiceGrpc {
       asyncUnimplementedUnaryCall(getCreateCertificateMethod(), responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Returns a [Certificate][google.cloud.security.privateca.v1beta1.Certificate].
-     * </pre>
-     */
+    /** */
     public void getCertificate(
         com.google.cloud.security.privateca.v1beta1.GetCertificateRequest request,
         io.grpc.stub.StreamObserver<com.google.cloud.security.privateca.v1beta1.Certificate>
@@ -1192,13 +1165,7 @@ public final class CertificateAuthorityServiceGrpc {
       asyncUnimplementedUnaryCall(getGetCertificateMethod(), responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Lists [Certificates][google.cloud.security.privateca.v1beta1.Certificate].
-     * </pre>
-     */
+    /** */
     public void listCertificates(
         com.google.cloud.security.privateca.v1beta1.ListCertificatesRequest request,
         io.grpc.stub.StreamObserver<
@@ -1207,13 +1174,7 @@ public final class CertificateAuthorityServiceGrpc {
       asyncUnimplementedUnaryCall(getListCertificatesMethod(), responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Revoke a [Certificate][google.cloud.security.privateca.v1beta1.Certificate].
-     * </pre>
-     */
+    /** */
     public void revokeCertificate(
         com.google.cloud.security.privateca.v1beta1.RevokeCertificateRequest request,
         io.grpc.stub.StreamObserver<com.google.cloud.security.privateca.v1beta1.Certificate>
@@ -1221,14 +1182,7 @@ public final class CertificateAuthorityServiceGrpc {
       asyncUnimplementedUnaryCall(getRevokeCertificateMethod(), responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Update a [Certificate][google.cloud.security.privateca.v1beta1.Certificate]. Currently, the only field you can update is the
-     * [labels][google.cloud.security.privateca.v1beta1.Certificate.labels] field.
-     * </pre>
-     */
+    /** */
     public void updateCertificate(
         com.google.cloud.security.privateca.v1beta1.UpdateCertificateRequest request,
         io.grpc.stub.StreamObserver<com.google.cloud.security.privateca.v1beta1.Certificate>
@@ -1236,76 +1190,35 @@ public final class CertificateAuthorityServiceGrpc {
       asyncUnimplementedUnaryCall(getUpdateCertificateMethod(), responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Activate a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] that is in state
-     * [PENDING_ACTIVATION][google.cloud.security.privateca.v1beta1.CertificateAuthority.State.PENDING_ACTIVATION] and is
-     * of type [SUBORDINATE][google.cloud.security.privateca.v1beta1.CertificateAuthority.Type.SUBORDINATE]. After the
-     * parent Certificate Authority signs a certificate signing request from
-     * [FetchCertificateAuthorityCsr][google.cloud.security.privateca.v1beta1.CertificateAuthorityService.FetchCertificateAuthorityCsr], this method can complete the activation
-     * process.
-     * </pre>
-     */
+    /** */
     public void activateCertificateAuthority(
         com.google.cloud.security.privateca.v1beta1.ActivateCertificateAuthorityRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.Operation> responseObserver) {
       asyncUnimplementedUnaryCall(getActivateCertificateAuthorityMethod(), responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Create a new [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] in a given Project and Location.
-     * </pre>
-     */
+    /** */
     public void createCertificateAuthority(
         com.google.cloud.security.privateca.v1beta1.CreateCertificateAuthorityRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.Operation> responseObserver) {
       asyncUnimplementedUnaryCall(getCreateCertificateAuthorityMethod(), responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Disable a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-     * </pre>
-     */
+    /** */
     public void disableCertificateAuthority(
         com.google.cloud.security.privateca.v1beta1.DisableCertificateAuthorityRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.Operation> responseObserver) {
       asyncUnimplementedUnaryCall(getDisableCertificateAuthorityMethod(), responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Enable a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-     * </pre>
-     */
+    /** */
     public void enableCertificateAuthority(
         com.google.cloud.security.privateca.v1beta1.EnableCertificateAuthorityRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.Operation> responseObserver) {
       asyncUnimplementedUnaryCall(getEnableCertificateAuthorityMethod(), responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Fetch a certificate signing request (CSR) from a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority]
-     * that is in state
-     * [PENDING_ACTIVATION][google.cloud.security.privateca.v1beta1.CertificateAuthority.State.PENDING_ACTIVATION] and is
-     * of type [SUBORDINATE][google.cloud.security.privateca.v1beta1.CertificateAuthority.Type.SUBORDINATE]. The CSR must
-     * then be signed by the desired parent Certificate Authority, which could be
-     * another [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] resource, or could be an on-prem
-     * certificate authority. See also [ActivateCertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthorityService.ActivateCertificateAuthority].
-     * </pre>
-     */
+    /** */
     public void fetchCertificateAuthorityCsr(
         com.google.cloud.security.privateca.v1beta1.FetchCertificateAuthorityCsrRequest request,
         io.grpc.stub.StreamObserver<
@@ -1314,13 +1227,7 @@ public final class CertificateAuthorityServiceGrpc {
       asyncUnimplementedUnaryCall(getFetchCertificateAuthorityCsrMethod(), responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Returns a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-     * </pre>
-     */
+    /** */
     public void getCertificateAuthority(
         com.google.cloud.security.privateca.v1beta1.GetCertificateAuthorityRequest request,
         io.grpc.stub.StreamObserver<
@@ -1329,13 +1236,7 @@ public final class CertificateAuthorityServiceGrpc {
       asyncUnimplementedUnaryCall(getGetCertificateAuthorityMethod(), responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Lists [CertificateAuthorities][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-     * </pre>
-     */
+    /** */
     public void listCertificateAuthorities(
         com.google.cloud.security.privateca.v1beta1.ListCertificateAuthoritiesRequest request,
         io.grpc.stub.StreamObserver<
@@ -1344,26 +1245,14 @@ public final class CertificateAuthorityServiceGrpc {
       asyncUnimplementedUnaryCall(getListCertificateAuthoritiesMethod(), responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Restore a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] that is scheduled for deletion.
-     * </pre>
-     */
+    /** */
     public void restoreCertificateAuthority(
         com.google.cloud.security.privateca.v1beta1.RestoreCertificateAuthorityRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.Operation> responseObserver) {
       asyncUnimplementedUnaryCall(getRestoreCertificateAuthorityMethod(), responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Schedule a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] for deletion.
-     * </pre>
-     */
+    /** */
     public void scheduleDeleteCertificateAuthority(
         com.google.cloud.security.privateca.v1beta1.ScheduleDeleteCertificateAuthorityRequest
             request,
@@ -1371,26 +1260,14 @@ public final class CertificateAuthorityServiceGrpc {
       asyncUnimplementedUnaryCall(getScheduleDeleteCertificateAuthorityMethod(), responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Update a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-     * </pre>
-     */
+    /** */
     public void updateCertificateAuthority(
         com.google.cloud.security.privateca.v1beta1.UpdateCertificateAuthorityRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.Operation> responseObserver) {
       asyncUnimplementedUnaryCall(getUpdateCertificateAuthorityMethod(), responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Returns a [CertificateRevocationList][google.cloud.security.privateca.v1beta1.CertificateRevocationList].
-     * </pre>
-     */
+    /** */
     public void getCertificateRevocationList(
         com.google.cloud.security.privateca.v1beta1.GetCertificateRevocationListRequest request,
         io.grpc.stub.StreamObserver<
@@ -1399,13 +1276,7 @@ public final class CertificateAuthorityServiceGrpc {
       asyncUnimplementedUnaryCall(getGetCertificateRevocationListMethod(), responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Lists [CertificateRevocationLists][google.cloud.security.privateca.v1beta1.CertificateRevocationList].
-     * </pre>
-     */
+    /** */
     public void listCertificateRevocationLists(
         com.google.cloud.security.privateca.v1beta1.ListCertificateRevocationListsRequest request,
         io.grpc.stub.StreamObserver<
@@ -1414,26 +1285,14 @@ public final class CertificateAuthorityServiceGrpc {
       asyncUnimplementedUnaryCall(getListCertificateRevocationListsMethod(), responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Update a [CertificateRevocationList][google.cloud.security.privateca.v1beta1.CertificateRevocationList].
-     * </pre>
-     */
+    /** */
     public void updateCertificateRevocationList(
         com.google.cloud.security.privateca.v1beta1.UpdateCertificateRevocationListRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.Operation> responseObserver) {
       asyncUnimplementedUnaryCall(getUpdateCertificateRevocationListMethod(), responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Returns a [ReusableConfig][google.cloud.security.privateca.v1beta1.ReusableConfig].
-     * </pre>
-     */
+    /** */
     public void getReusableConfig(
         com.google.cloud.security.privateca.v1beta1.GetReusableConfigRequest request,
         io.grpc.stub.StreamObserver<com.google.cloud.security.privateca.v1beta1.ReusableConfig>
@@ -1441,13 +1300,7 @@ public final class CertificateAuthorityServiceGrpc {
       asyncUnimplementedUnaryCall(getGetReusableConfigMethod(), responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Lists [ReusableConfigs][google.cloud.security.privateca.v1beta1.ReusableConfig].
-     * </pre>
-     */
+    /** */
     public void listReusableConfigs(
         com.google.cloud.security.privateca.v1beta1.ListReusableConfigsRequest request,
         io.grpc.stub.StreamObserver<
@@ -1614,14 +1467,7 @@ public final class CertificateAuthorityServiceGrpc {
     }
   }
 
-  /**
-   *
-   *
-   * <pre>
-   * [Certificate Authority Service][google.cloud.security.privateca.v1beta1.CertificateAuthorityService] manages private
-   * certificate authorities and issued certificates.
-   * </pre>
-   */
+  /** */
   public static final class CertificateAuthorityServiceStub
       extends io.grpc.stub.AbstractAsyncStub<CertificateAuthorityServiceStub> {
     private CertificateAuthorityServiceStub(
@@ -1635,14 +1481,7 @@ public final class CertificateAuthorityServiceGrpc {
       return new CertificateAuthorityServiceStub(channel, callOptions);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Create a new [Certificate][google.cloud.security.privateca.v1beta1.Certificate] in a given Project, Location from a particular
-     * [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-     * </pre>
-     */
+    /** */
     public void createCertificate(
         com.google.cloud.security.privateca.v1beta1.CreateCertificateRequest request,
         io.grpc.stub.StreamObserver<com.google.cloud.security.privateca.v1beta1.Certificate>
@@ -1653,13 +1492,7 @@ public final class CertificateAuthorityServiceGrpc {
           responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Returns a [Certificate][google.cloud.security.privateca.v1beta1.Certificate].
-     * </pre>
-     */
+    /** */
     public void getCertificate(
         com.google.cloud.security.privateca.v1beta1.GetCertificateRequest request,
         io.grpc.stub.StreamObserver<com.google.cloud.security.privateca.v1beta1.Certificate>
@@ -1670,13 +1503,7 @@ public final class CertificateAuthorityServiceGrpc {
           responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Lists [Certificates][google.cloud.security.privateca.v1beta1.Certificate].
-     * </pre>
-     */
+    /** */
     public void listCertificates(
         com.google.cloud.security.privateca.v1beta1.ListCertificatesRequest request,
         io.grpc.stub.StreamObserver<
@@ -1688,13 +1515,7 @@ public final class CertificateAuthorityServiceGrpc {
           responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Revoke a [Certificate][google.cloud.security.privateca.v1beta1.Certificate].
-     * </pre>
-     */
+    /** */
     public void revokeCertificate(
         com.google.cloud.security.privateca.v1beta1.RevokeCertificateRequest request,
         io.grpc.stub.StreamObserver<com.google.cloud.security.privateca.v1beta1.Certificate>
@@ -1705,14 +1526,7 @@ public final class CertificateAuthorityServiceGrpc {
           responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Update a [Certificate][google.cloud.security.privateca.v1beta1.Certificate]. Currently, the only field you can update is the
-     * [labels][google.cloud.security.privateca.v1beta1.Certificate.labels] field.
-     * </pre>
-     */
+    /** */
     public void updateCertificate(
         com.google.cloud.security.privateca.v1beta1.UpdateCertificateRequest request,
         io.grpc.stub.StreamObserver<com.google.cloud.security.privateca.v1beta1.Certificate>
@@ -1723,18 +1537,7 @@ public final class CertificateAuthorityServiceGrpc {
           responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Activate a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] that is in state
-     * [PENDING_ACTIVATION][google.cloud.security.privateca.v1beta1.CertificateAuthority.State.PENDING_ACTIVATION] and is
-     * of type [SUBORDINATE][google.cloud.security.privateca.v1beta1.CertificateAuthority.Type.SUBORDINATE]. After the
-     * parent Certificate Authority signs a certificate signing request from
-     * [FetchCertificateAuthorityCsr][google.cloud.security.privateca.v1beta1.CertificateAuthorityService.FetchCertificateAuthorityCsr], this method can complete the activation
-     * process.
-     * </pre>
-     */
+    /** */
     public void activateCertificateAuthority(
         com.google.cloud.security.privateca.v1beta1.ActivateCertificateAuthorityRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.Operation> responseObserver) {
@@ -1744,13 +1547,7 @@ public final class CertificateAuthorityServiceGrpc {
           responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Create a new [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] in a given Project and Location.
-     * </pre>
-     */
+    /** */
     public void createCertificateAuthority(
         com.google.cloud.security.privateca.v1beta1.CreateCertificateAuthorityRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.Operation> responseObserver) {
@@ -1760,13 +1557,7 @@ public final class CertificateAuthorityServiceGrpc {
           responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Disable a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-     * </pre>
-     */
+    /** */
     public void disableCertificateAuthority(
         com.google.cloud.security.privateca.v1beta1.DisableCertificateAuthorityRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.Operation> responseObserver) {
@@ -1776,13 +1567,7 @@ public final class CertificateAuthorityServiceGrpc {
           responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Enable a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-     * </pre>
-     */
+    /** */
     public void enableCertificateAuthority(
         com.google.cloud.security.privateca.v1beta1.EnableCertificateAuthorityRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.Operation> responseObserver) {
@@ -1792,19 +1577,7 @@ public final class CertificateAuthorityServiceGrpc {
           responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Fetch a certificate signing request (CSR) from a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority]
-     * that is in state
-     * [PENDING_ACTIVATION][google.cloud.security.privateca.v1beta1.CertificateAuthority.State.PENDING_ACTIVATION] and is
-     * of type [SUBORDINATE][google.cloud.security.privateca.v1beta1.CertificateAuthority.Type.SUBORDINATE]. The CSR must
-     * then be signed by the desired parent Certificate Authority, which could be
-     * another [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] resource, or could be an on-prem
-     * certificate authority. See also [ActivateCertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthorityService.ActivateCertificateAuthority].
-     * </pre>
-     */
+    /** */
     public void fetchCertificateAuthorityCsr(
         com.google.cloud.security.privateca.v1beta1.FetchCertificateAuthorityCsrRequest request,
         io.grpc.stub.StreamObserver<
@@ -1816,13 +1589,7 @@ public final class CertificateAuthorityServiceGrpc {
           responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Returns a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-     * </pre>
-     */
+    /** */
     public void getCertificateAuthority(
         com.google.cloud.security.privateca.v1beta1.GetCertificateAuthorityRequest request,
         io.grpc.stub.StreamObserver<
@@ -1834,13 +1601,7 @@ public final class CertificateAuthorityServiceGrpc {
           responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Lists [CertificateAuthorities][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-     * </pre>
-     */
+    /** */
     public void listCertificateAuthorities(
         com.google.cloud.security.privateca.v1beta1.ListCertificateAuthoritiesRequest request,
         io.grpc.stub.StreamObserver<
@@ -1852,13 +1613,7 @@ public final class CertificateAuthorityServiceGrpc {
           responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Restore a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] that is scheduled for deletion.
-     * </pre>
-     */
+    /** */
     public void restoreCertificateAuthority(
         com.google.cloud.security.privateca.v1beta1.RestoreCertificateAuthorityRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.Operation> responseObserver) {
@@ -1868,13 +1623,7 @@ public final class CertificateAuthorityServiceGrpc {
           responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Schedule a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] for deletion.
-     * </pre>
-     */
+    /** */
     public void scheduleDeleteCertificateAuthority(
         com.google.cloud.security.privateca.v1beta1.ScheduleDeleteCertificateAuthorityRequest
             request,
@@ -1885,13 +1634,7 @@ public final class CertificateAuthorityServiceGrpc {
           responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Update a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-     * </pre>
-     */
+    /** */
     public void updateCertificateAuthority(
         com.google.cloud.security.privateca.v1beta1.UpdateCertificateAuthorityRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.Operation> responseObserver) {
@@ -1901,13 +1644,7 @@ public final class CertificateAuthorityServiceGrpc {
           responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Returns a [CertificateRevocationList][google.cloud.security.privateca.v1beta1.CertificateRevocationList].
-     * </pre>
-     */
+    /** */
     public void getCertificateRevocationList(
         com.google.cloud.security.privateca.v1beta1.GetCertificateRevocationListRequest request,
         io.grpc.stub.StreamObserver<
@@ -1919,13 +1656,7 @@ public final class CertificateAuthorityServiceGrpc {
           responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Lists [CertificateRevocationLists][google.cloud.security.privateca.v1beta1.CertificateRevocationList].
-     * </pre>
-     */
+    /** */
     public void listCertificateRevocationLists(
         com.google.cloud.security.privateca.v1beta1.ListCertificateRevocationListsRequest request,
         io.grpc.stub.StreamObserver<
@@ -1937,13 +1668,7 @@ public final class CertificateAuthorityServiceGrpc {
           responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Update a [CertificateRevocationList][google.cloud.security.privateca.v1beta1.CertificateRevocationList].
-     * </pre>
-     */
+    /** */
     public void updateCertificateRevocationList(
         com.google.cloud.security.privateca.v1beta1.UpdateCertificateRevocationListRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.Operation> responseObserver) {
@@ -1953,13 +1678,7 @@ public final class CertificateAuthorityServiceGrpc {
           responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Returns a [ReusableConfig][google.cloud.security.privateca.v1beta1.ReusableConfig].
-     * </pre>
-     */
+    /** */
     public void getReusableConfig(
         com.google.cloud.security.privateca.v1beta1.GetReusableConfigRequest request,
         io.grpc.stub.StreamObserver<com.google.cloud.security.privateca.v1beta1.ReusableConfig>
@@ -1970,13 +1689,7 @@ public final class CertificateAuthorityServiceGrpc {
           responseObserver);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Lists [ReusableConfigs][google.cloud.security.privateca.v1beta1.ReusableConfig].
-     * </pre>
-     */
+    /** */
     public void listReusableConfigs(
         com.google.cloud.security.privateca.v1beta1.ListReusableConfigsRequest request,
         io.grpc.stub.StreamObserver<
@@ -1989,14 +1702,7 @@ public final class CertificateAuthorityServiceGrpc {
     }
   }
 
-  /**
-   *
-   *
-   * <pre>
-   * [Certificate Authority Service][google.cloud.security.privateca.v1beta1.CertificateAuthorityService] manages private
-   * certificate authorities and issued certificates.
-   * </pre>
-   */
+  /** */
   public static final class CertificateAuthorityServiceBlockingStub
       extends io.grpc.stub.AbstractBlockingStub<CertificateAuthorityServiceBlockingStub> {
     private CertificateAuthorityServiceBlockingStub(
@@ -2010,142 +1716,69 @@ public final class CertificateAuthorityServiceGrpc {
       return new CertificateAuthorityServiceBlockingStub(channel, callOptions);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Create a new [Certificate][google.cloud.security.privateca.v1beta1.Certificate] in a given Project, Location from a particular
-     * [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-     * </pre>
-     */
+    /** */
     public com.google.cloud.security.privateca.v1beta1.Certificate createCertificate(
         com.google.cloud.security.privateca.v1beta1.CreateCertificateRequest request) {
       return blockingUnaryCall(
           getChannel(), getCreateCertificateMethod(), getCallOptions(), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Returns a [Certificate][google.cloud.security.privateca.v1beta1.Certificate].
-     * </pre>
-     */
+    /** */
     public com.google.cloud.security.privateca.v1beta1.Certificate getCertificate(
         com.google.cloud.security.privateca.v1beta1.GetCertificateRequest request) {
       return blockingUnaryCall(getChannel(), getGetCertificateMethod(), getCallOptions(), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Lists [Certificates][google.cloud.security.privateca.v1beta1.Certificate].
-     * </pre>
-     */
+    /** */
     public com.google.cloud.security.privateca.v1beta1.ListCertificatesResponse listCertificates(
         com.google.cloud.security.privateca.v1beta1.ListCertificatesRequest request) {
       return blockingUnaryCall(
           getChannel(), getListCertificatesMethod(), getCallOptions(), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Revoke a [Certificate][google.cloud.security.privateca.v1beta1.Certificate].
-     * </pre>
-     */
+    /** */
     public com.google.cloud.security.privateca.v1beta1.Certificate revokeCertificate(
         com.google.cloud.security.privateca.v1beta1.RevokeCertificateRequest request) {
       return blockingUnaryCall(
           getChannel(), getRevokeCertificateMethod(), getCallOptions(), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Update a [Certificate][google.cloud.security.privateca.v1beta1.Certificate]. Currently, the only field you can update is the
-     * [labels][google.cloud.security.privateca.v1beta1.Certificate.labels] field.
-     * </pre>
-     */
+    /** */
     public com.google.cloud.security.privateca.v1beta1.Certificate updateCertificate(
         com.google.cloud.security.privateca.v1beta1.UpdateCertificateRequest request) {
       return blockingUnaryCall(
           getChannel(), getUpdateCertificateMethod(), getCallOptions(), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Activate a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] that is in state
-     * [PENDING_ACTIVATION][google.cloud.security.privateca.v1beta1.CertificateAuthority.State.PENDING_ACTIVATION] and is
-     * of type [SUBORDINATE][google.cloud.security.privateca.v1beta1.CertificateAuthority.Type.SUBORDINATE]. After the
-     * parent Certificate Authority signs a certificate signing request from
-     * [FetchCertificateAuthorityCsr][google.cloud.security.privateca.v1beta1.CertificateAuthorityService.FetchCertificateAuthorityCsr], this method can complete the activation
-     * process.
-     * </pre>
-     */
+    /** */
     public com.google.longrunning.Operation activateCertificateAuthority(
         com.google.cloud.security.privateca.v1beta1.ActivateCertificateAuthorityRequest request) {
       return blockingUnaryCall(
           getChannel(), getActivateCertificateAuthorityMethod(), getCallOptions(), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Create a new [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] in a given Project and Location.
-     * </pre>
-     */
+    /** */
     public com.google.longrunning.Operation createCertificateAuthority(
         com.google.cloud.security.privateca.v1beta1.CreateCertificateAuthorityRequest request) {
       return blockingUnaryCall(
           getChannel(), getCreateCertificateAuthorityMethod(), getCallOptions(), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Disable a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-     * </pre>
-     */
+    /** */
     public com.google.longrunning.Operation disableCertificateAuthority(
         com.google.cloud.security.privateca.v1beta1.DisableCertificateAuthorityRequest request) {
       return blockingUnaryCall(
           getChannel(), getDisableCertificateAuthorityMethod(), getCallOptions(), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Enable a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-     * </pre>
-     */
+    /** */
     public com.google.longrunning.Operation enableCertificateAuthority(
         com.google.cloud.security.privateca.v1beta1.EnableCertificateAuthorityRequest request) {
       return blockingUnaryCall(
           getChannel(), getEnableCertificateAuthorityMethod(), getCallOptions(), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Fetch a certificate signing request (CSR) from a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority]
-     * that is in state
-     * [PENDING_ACTIVATION][google.cloud.security.privateca.v1beta1.CertificateAuthority.State.PENDING_ACTIVATION] and is
-     * of type [SUBORDINATE][google.cloud.security.privateca.v1beta1.CertificateAuthority.Type.SUBORDINATE]. The CSR must
-     * then be signed by the desired parent Certificate Authority, which could be
-     * another [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] resource, or could be an on-prem
-     * certificate authority. See also [ActivateCertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthorityService.ActivateCertificateAuthority].
-     * </pre>
-     */
+    /** */
     public com.google.cloud.security.privateca.v1beta1.FetchCertificateAuthorityCsrResponse
         fetchCertificateAuthorityCsr(
             com.google.cloud.security.privateca.v1beta1.FetchCertificateAuthorityCsrRequest
@@ -2154,26 +1787,14 @@ public final class CertificateAuthorityServiceGrpc {
           getChannel(), getFetchCertificateAuthorityCsrMethod(), getCallOptions(), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Returns a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-     * </pre>
-     */
+    /** */
     public com.google.cloud.security.privateca.v1beta1.CertificateAuthority getCertificateAuthority(
         com.google.cloud.security.privateca.v1beta1.GetCertificateAuthorityRequest request) {
       return blockingUnaryCall(
           getChannel(), getGetCertificateAuthorityMethod(), getCallOptions(), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Lists [CertificateAuthorities][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-     * </pre>
-     */
+    /** */
     public com.google.cloud.security.privateca.v1beta1.ListCertificateAuthoritiesResponse
         listCertificateAuthorities(
             com.google.cloud.security.privateca.v1beta1.ListCertificateAuthoritiesRequest request) {
@@ -2181,26 +1802,14 @@ public final class CertificateAuthorityServiceGrpc {
           getChannel(), getListCertificateAuthoritiesMethod(), getCallOptions(), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Restore a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] that is scheduled for deletion.
-     * </pre>
-     */
+    /** */
     public com.google.longrunning.Operation restoreCertificateAuthority(
         com.google.cloud.security.privateca.v1beta1.RestoreCertificateAuthorityRequest request) {
       return blockingUnaryCall(
           getChannel(), getRestoreCertificateAuthorityMethod(), getCallOptions(), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Schedule a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] for deletion.
-     * </pre>
-     */
+    /** */
     public com.google.longrunning.Operation scheduleDeleteCertificateAuthority(
         com.google.cloud.security.privateca.v1beta1.ScheduleDeleteCertificateAuthorityRequest
             request) {
@@ -2208,26 +1817,14 @@ public final class CertificateAuthorityServiceGrpc {
           getChannel(), getScheduleDeleteCertificateAuthorityMethod(), getCallOptions(), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Update a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-     * </pre>
-     */
+    /** */
     public com.google.longrunning.Operation updateCertificateAuthority(
         com.google.cloud.security.privateca.v1beta1.UpdateCertificateAuthorityRequest request) {
       return blockingUnaryCall(
           getChannel(), getUpdateCertificateAuthorityMethod(), getCallOptions(), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Returns a [CertificateRevocationList][google.cloud.security.privateca.v1beta1.CertificateRevocationList].
-     * </pre>
-     */
+    /** */
     public com.google.cloud.security.privateca.v1beta1.CertificateRevocationList
         getCertificateRevocationList(
             com.google.cloud.security.privateca.v1beta1.GetCertificateRevocationListRequest
@@ -2236,13 +1833,7 @@ public final class CertificateAuthorityServiceGrpc {
           getChannel(), getGetCertificateRevocationListMethod(), getCallOptions(), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Lists [CertificateRevocationLists][google.cloud.security.privateca.v1beta1.CertificateRevocationList].
-     * </pre>
-     */
+    /** */
     public com.google.cloud.security.privateca.v1beta1.ListCertificateRevocationListsResponse
         listCertificateRevocationLists(
             com.google.cloud.security.privateca.v1beta1.ListCertificateRevocationListsRequest
@@ -2251,13 +1842,7 @@ public final class CertificateAuthorityServiceGrpc {
           getChannel(), getListCertificateRevocationListsMethod(), getCallOptions(), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Update a [CertificateRevocationList][google.cloud.security.privateca.v1beta1.CertificateRevocationList].
-     * </pre>
-     */
+    /** */
     public com.google.longrunning.Operation updateCertificateRevocationList(
         com.google.cloud.security.privateca.v1beta1.UpdateCertificateRevocationListRequest
             request) {
@@ -2265,26 +1850,14 @@ public final class CertificateAuthorityServiceGrpc {
           getChannel(), getUpdateCertificateRevocationListMethod(), getCallOptions(), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Returns a [ReusableConfig][google.cloud.security.privateca.v1beta1.ReusableConfig].
-     * </pre>
-     */
+    /** */
     public com.google.cloud.security.privateca.v1beta1.ReusableConfig getReusableConfig(
         com.google.cloud.security.privateca.v1beta1.GetReusableConfigRequest request) {
       return blockingUnaryCall(
           getChannel(), getGetReusableConfigMethod(), getCallOptions(), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Lists [ReusableConfigs][google.cloud.security.privateca.v1beta1.ReusableConfig].
-     * </pre>
-     */
+    /** */
     public com.google.cloud.security.privateca.v1beta1.ListReusableConfigsResponse
         listReusableConfigs(
             com.google.cloud.security.privateca.v1beta1.ListReusableConfigsRequest request) {
@@ -2293,14 +1866,7 @@ public final class CertificateAuthorityServiceGrpc {
     }
   }
 
-  /**
-   *
-   *
-   * <pre>
-   * [Certificate Authority Service][google.cloud.security.privateca.v1beta1.CertificateAuthorityService] manages private
-   * certificate authorities and issued certificates.
-   * </pre>
-   */
+  /** */
   public static final class CertificateAuthorityServiceFutureStub
       extends io.grpc.stub.AbstractFutureStub<CertificateAuthorityServiceFutureStub> {
     private CertificateAuthorityServiceFutureStub(
@@ -2314,14 +1880,7 @@ public final class CertificateAuthorityServiceGrpc {
       return new CertificateAuthorityServiceFutureStub(channel, callOptions);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Create a new [Certificate][google.cloud.security.privateca.v1beta1.Certificate] in a given Project, Location from a particular
-     * [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-     * </pre>
-     */
+    /** */
     public com.google.common.util.concurrent.ListenableFuture<
             com.google.cloud.security.privateca.v1beta1.Certificate>
         createCertificate(
@@ -2330,13 +1889,7 @@ public final class CertificateAuthorityServiceGrpc {
           getChannel().newCall(getCreateCertificateMethod(), getCallOptions()), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Returns a [Certificate][google.cloud.security.privateca.v1beta1.Certificate].
-     * </pre>
-     */
+    /** */
     public com.google.common.util.concurrent.ListenableFuture<
             com.google.cloud.security.privateca.v1beta1.Certificate>
         getCertificate(com.google.cloud.security.privateca.v1beta1.GetCertificateRequest request) {
@@ -2344,13 +1897,7 @@ public final class CertificateAuthorityServiceGrpc {
           getChannel().newCall(getGetCertificateMethod(), getCallOptions()), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Lists [Certificates][google.cloud.security.privateca.v1beta1.Certificate].
-     * </pre>
-     */
+    /** */
     public com.google.common.util.concurrent.ListenableFuture<
             com.google.cloud.security.privateca.v1beta1.ListCertificatesResponse>
         listCertificates(
@@ -2359,13 +1906,7 @@ public final class CertificateAuthorityServiceGrpc {
           getChannel().newCall(getListCertificatesMethod(), getCallOptions()), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Revoke a [Certificate][google.cloud.security.privateca.v1beta1.Certificate].
-     * </pre>
-     */
+    /** */
     public com.google.common.util.concurrent.ListenableFuture<
             com.google.cloud.security.privateca.v1beta1.Certificate>
         revokeCertificate(
@@ -2374,14 +1915,7 @@ public final class CertificateAuthorityServiceGrpc {
           getChannel().newCall(getRevokeCertificateMethod(), getCallOptions()), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Update a [Certificate][google.cloud.security.privateca.v1beta1.Certificate]. Currently, the only field you can update is the
-     * [labels][google.cloud.security.privateca.v1beta1.Certificate.labels] field.
-     * </pre>
-     */
+    /** */
     public com.google.common.util.concurrent.ListenableFuture<
             com.google.cloud.security.privateca.v1beta1.Certificate>
         updateCertificate(
@@ -2390,18 +1924,7 @@ public final class CertificateAuthorityServiceGrpc {
           getChannel().newCall(getUpdateCertificateMethod(), getCallOptions()), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Activate a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] that is in state
-     * [PENDING_ACTIVATION][google.cloud.security.privateca.v1beta1.CertificateAuthority.State.PENDING_ACTIVATION] and is
-     * of type [SUBORDINATE][google.cloud.security.privateca.v1beta1.CertificateAuthority.Type.SUBORDINATE]. After the
-     * parent Certificate Authority signs a certificate signing request from
-     * [FetchCertificateAuthorityCsr][google.cloud.security.privateca.v1beta1.CertificateAuthorityService.FetchCertificateAuthorityCsr], this method can complete the activation
-     * process.
-     * </pre>
-     */
+    /** */
     public com.google.common.util.concurrent.ListenableFuture<com.google.longrunning.Operation>
         activateCertificateAuthority(
             com.google.cloud.security.privateca.v1beta1.ActivateCertificateAuthorityRequest
@@ -2410,13 +1933,7 @@ public final class CertificateAuthorityServiceGrpc {
           getChannel().newCall(getActivateCertificateAuthorityMethod(), getCallOptions()), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Create a new [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] in a given Project and Location.
-     * </pre>
-     */
+    /** */
     public com.google.common.util.concurrent.ListenableFuture<com.google.longrunning.Operation>
         createCertificateAuthority(
             com.google.cloud.security.privateca.v1beta1.CreateCertificateAuthorityRequest request) {
@@ -2424,13 +1941,7 @@ public final class CertificateAuthorityServiceGrpc {
           getChannel().newCall(getCreateCertificateAuthorityMethod(), getCallOptions()), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Disable a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-     * </pre>
-     */
+    /** */
     public com.google.common.util.concurrent.ListenableFuture<com.google.longrunning.Operation>
         disableCertificateAuthority(
             com.google.cloud.security.privateca.v1beta1.DisableCertificateAuthorityRequest
@@ -2439,13 +1950,7 @@ public final class CertificateAuthorityServiceGrpc {
           getChannel().newCall(getDisableCertificateAuthorityMethod(), getCallOptions()), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Enable a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-     * </pre>
-     */
+    /** */
     public com.google.common.util.concurrent.ListenableFuture<com.google.longrunning.Operation>
         enableCertificateAuthority(
             com.google.cloud.security.privateca.v1beta1.EnableCertificateAuthorityRequest request) {
@@ -2453,19 +1958,7 @@ public final class CertificateAuthorityServiceGrpc {
           getChannel().newCall(getEnableCertificateAuthorityMethod(), getCallOptions()), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Fetch a certificate signing request (CSR) from a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority]
-     * that is in state
-     * [PENDING_ACTIVATION][google.cloud.security.privateca.v1beta1.CertificateAuthority.State.PENDING_ACTIVATION] and is
-     * of type [SUBORDINATE][google.cloud.security.privateca.v1beta1.CertificateAuthority.Type.SUBORDINATE]. The CSR must
-     * then be signed by the desired parent Certificate Authority, which could be
-     * another [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] resource, or could be an on-prem
-     * certificate authority. See also [ActivateCertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthorityService.ActivateCertificateAuthority].
-     * </pre>
-     */
+    /** */
     public com.google.common.util.concurrent.ListenableFuture<
             com.google.cloud.security.privateca.v1beta1.FetchCertificateAuthorityCsrResponse>
         fetchCertificateAuthorityCsr(
@@ -2475,13 +1968,7 @@ public final class CertificateAuthorityServiceGrpc {
           getChannel().newCall(getFetchCertificateAuthorityCsrMethod(), getCallOptions()), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Returns a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-     * </pre>
-     */
+    /** */
     public com.google.common.util.concurrent.ListenableFuture<
             com.google.cloud.security.privateca.v1beta1.CertificateAuthority>
         getCertificateAuthority(
@@ -2490,13 +1977,7 @@ public final class CertificateAuthorityServiceGrpc {
           getChannel().newCall(getGetCertificateAuthorityMethod(), getCallOptions()), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Lists [CertificateAuthorities][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-     * </pre>
-     */
+    /** */
     public com.google.common.util.concurrent.ListenableFuture<
             com.google.cloud.security.privateca.v1beta1.ListCertificateAuthoritiesResponse>
         listCertificateAuthorities(
@@ -2505,13 +1986,7 @@ public final class CertificateAuthorityServiceGrpc {
           getChannel().newCall(getListCertificateAuthoritiesMethod(), getCallOptions()), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Restore a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] that is scheduled for deletion.
-     * </pre>
-     */
+    /** */
     public com.google.common.util.concurrent.ListenableFuture<com.google.longrunning.Operation>
         restoreCertificateAuthority(
             com.google.cloud.security.privateca.v1beta1.RestoreCertificateAuthorityRequest
@@ -2520,13 +1995,7 @@ public final class CertificateAuthorityServiceGrpc {
           getChannel().newCall(getRestoreCertificateAuthorityMethod(), getCallOptions()), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Schedule a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] for deletion.
-     * </pre>
-     */
+    /** */
     public com.google.common.util.concurrent.ListenableFuture<com.google.longrunning.Operation>
         scheduleDeleteCertificateAuthority(
             com.google.cloud.security.privateca.v1beta1.ScheduleDeleteCertificateAuthorityRequest
@@ -2536,13 +2005,7 @@ public final class CertificateAuthorityServiceGrpc {
           request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Update a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
-     * </pre>
-     */
+    /** */
     public com.google.common.util.concurrent.ListenableFuture<com.google.longrunning.Operation>
         updateCertificateAuthority(
             com.google.cloud.security.privateca.v1beta1.UpdateCertificateAuthorityRequest request) {
@@ -2550,13 +2013,7 @@ public final class CertificateAuthorityServiceGrpc {
           getChannel().newCall(getUpdateCertificateAuthorityMethod(), getCallOptions()), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Returns a [CertificateRevocationList][google.cloud.security.privateca.v1beta1.CertificateRevocationList].
-     * </pre>
-     */
+    /** */
     public com.google.common.util.concurrent.ListenableFuture<
             com.google.cloud.security.privateca.v1beta1.CertificateRevocationList>
         getCertificateRevocationList(
@@ -2566,13 +2023,7 @@ public final class CertificateAuthorityServiceGrpc {
           getChannel().newCall(getGetCertificateRevocationListMethod(), getCallOptions()), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Lists [CertificateRevocationLists][google.cloud.security.privateca.v1beta1.CertificateRevocationList].
-     * </pre>
-     */
+    /** */
     public com.google.common.util.concurrent.ListenableFuture<
             com.google.cloud.security.privateca.v1beta1.ListCertificateRevocationListsResponse>
         listCertificateRevocationLists(
@@ -2583,13 +2034,7 @@ public final class CertificateAuthorityServiceGrpc {
           request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Update a [CertificateRevocationList][google.cloud.security.privateca.v1beta1.CertificateRevocationList].
-     * </pre>
-     */
+    /** */
     public com.google.common.util.concurrent.ListenableFuture<com.google.longrunning.Operation>
         updateCertificateRevocationList(
             com.google.cloud.security.privateca.v1beta1.UpdateCertificateRevocationListRequest
@@ -2599,13 +2044,7 @@ public final class CertificateAuthorityServiceGrpc {
           request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Returns a [ReusableConfig][google.cloud.security.privateca.v1beta1.ReusableConfig].
-     * </pre>
-     */
+    /** */
     public com.google.common.util.concurrent.ListenableFuture<
             com.google.cloud.security.privateca.v1beta1.ReusableConfig>
         getReusableConfig(
@@ -2614,13 +2053,7 @@ public final class CertificateAuthorityServiceGrpc {
           getChannel().newCall(getGetReusableConfigMethod(), getCallOptions()), request);
     }
 
-    /**
-     *
-     *
-     * <pre>
-     * Lists [ReusableConfigs][google.cloud.security.privateca.v1beta1.ReusableConfig].
-     * </pre>
-     */
+    /** */
     public com.google.common.util.concurrent.ListenableFuture<
             com.google.cloud.security.privateca.v1beta1.ListReusableConfigsResponse>
         listReusableConfigs(
