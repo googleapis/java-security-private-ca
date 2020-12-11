@@ -178,7 +178,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * @param certificate Required. A
    *     [Certificate][google.cloud.security.privateca.v1beta1.Certificate] with initial field
    *     values.
-   * @param certificate_id Optional. It must be unique within a location and match the regular
+   * @param certificateId Optional. It must be unique within a location and match the regular
    *     expression `[a-zA-Z0-9_-]{1,63}`. This field is required when using a
    *     [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] in the
    *     Enterprise
@@ -210,7 +210,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * @param certificate Required. A
    *     [Certificate][google.cloud.security.privateca.v1beta1.Certificate] with initial field
    *     values.
-   * @param certificate_id Optional. It must be unique within a location and match the regular
+   * @param certificateId Optional. It must be unique within a location and match the regular
    *     expression `[a-zA-Z0-9_-]{1,63}`. This field is required when using a
    *     [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] in the
    *     Enterprise
@@ -427,7 +427,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    *
    * @param certificate Required. [Certificate][google.cloud.security.privateca.v1beta1.Certificate]
    *     with updated values.
-   * @param update_mask Required. A list of fields to be updated in this request.
+   * @param updateMask Required. A list of fields to be updated in this request.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Certificate updateCertificate(Certificate certificate, FieldMask updateMask) {
@@ -577,10 +577,10 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * @param parent Required. The resource name of the location associated with the
    *     [CertificateAuthorities][google.cloud.security.privateca.v1beta1.CertificateAuthority], in
    *     the format `projects/&#42;/locations/&#42;`.
-   * @param certificate_authority Required. A
+   * @param certificateAuthority Required. A
    *     [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] with
    *     initial field values.
-   * @param certificate_authority_id Required. It must be unique within a location and match the
+   * @param certificateAuthorityId Required. It must be unique within a location and match the
    *     regular expression `[a-zA-Z0-9_-]{1,63}`
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -607,10 +607,10 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * @param parent Required. The resource name of the location associated with the
    *     [CertificateAuthorities][google.cloud.security.privateca.v1beta1.CertificateAuthority], in
    *     the format `projects/&#42;/locations/&#42;`.
-   * @param certificate_authority Required. A
+   * @param certificateAuthority Required. A
    *     [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] with
    *     initial field values.
-   * @param certificate_authority_id Required. It must be unique within a location and match the
+   * @param certificateAuthorityId Required. It must be unique within a location and match the
    *     regular expression `[a-zA-Z0-9_-]{1,63}`
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -1175,10 +1175,10 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
   /**
    * Update a [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority].
    *
-   * @param certificate_authority Required.
+   * @param certificateAuthority Required.
    *     [CertificateAuthority][google.cloud.security.privateca.v1beta1.CertificateAuthority] with
    *     updated values.
-   * @param update_mask Required. A list of fields to be updated in this request.
+   * @param updateMask Required. A list of fields to be updated in this request.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final OperationFuture<CertificateAuthority, OperationMetadata>
@@ -1369,10 +1369,10 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * Update a
    * [CertificateRevocationList][google.cloud.security.privateca.v1beta1.CertificateRevocationList].
    *
-   * @param certificate_revocation_list Required.
+   * @param certificateRevocationList Required.
    *     [CertificateRevocationList][google.cloud.security.privateca.v1beta1.CertificateRevocationList]
    *     with updated values.
-   * @param update_mask Required. A list of fields to be updated in this request.
+   * @param updateMask Required. A list of fields to be updated in this request.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final OperationFuture<CertificateRevocationList, OperationMetadata>
