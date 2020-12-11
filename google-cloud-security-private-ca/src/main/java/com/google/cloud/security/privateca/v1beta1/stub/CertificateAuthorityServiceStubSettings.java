@@ -84,7 +84,6 @@ import com.google.common.collect.Lists;
 import com.google.longrunning.Operation;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 import javax.annotation.Generated;
 import org.threeten.bp.Duration;
 
@@ -233,7 +232,7 @@ public class CertificateAuthorityServiceStubSettings
 
             @Override
             public Iterable<Certificate> extractResources(ListCertificatesResponse payload) {
-              return Objects.isNull(payload.getCertificatesList())
+              return payload.getCertificatesList() == null
                   ? ImmutableList.<Certificate>of()
                   : payload.getCertificatesList();
             }
@@ -282,7 +281,7 @@ public class CertificateAuthorityServiceStubSettings
             @Override
             public Iterable<CertificateAuthority> extractResources(
                 ListCertificateAuthoritiesResponse payload) {
-              return Objects.isNull(payload.getCertificateAuthoritiesList())
+              return payload.getCertificateAuthoritiesList() == null
                   ? ImmutableList.<CertificateAuthority>of()
                   : payload.getCertificateAuthoritiesList();
             }
@@ -331,7 +330,7 @@ public class CertificateAuthorityServiceStubSettings
             @Override
             public Iterable<CertificateRevocationList> extractResources(
                 ListCertificateRevocationListsResponse payload) {
-              return Objects.isNull(payload.getCertificateRevocationListsList())
+              return payload.getCertificateRevocationListsList() == null
                   ? ImmutableList.<CertificateRevocationList>of()
                   : payload.getCertificateRevocationListsList();
             }
@@ -371,7 +370,7 @@ public class CertificateAuthorityServiceStubSettings
 
             @Override
             public Iterable<ReusableConfig> extractResources(ListReusableConfigsResponse payload) {
-              return Objects.isNull(payload.getReusableConfigsList())
+              return payload.getReusableConfigsList() == null
                   ? ImmutableList.<ReusableConfig>of()
                   : payload.getReusableConfigsList();
             }
