@@ -100,7 +100,7 @@ public class CertificateAuthorityServiceClientTest {
                         "[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]", "[CERTIFICATE]")
                     .toString())
             .setLifetime(Duration.newBuilder().build())
-            .setPemCertificate("pem_certificate1234463984")
+            .setPemCertificate("pemCertificate153491807")
             .setCertificateDescription(CertificateDescription.newBuilder().build())
             .addAllPemCertificateChain(new ArrayList<String>())
             .setCreateTime(Timestamp.newBuilder().build())
@@ -112,7 +112,7 @@ public class CertificateAuthorityServiceClientTest {
     CertificateAuthorityName parent =
         CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
     Certificate certificate = Certificate.newBuilder().build();
-    String certificateId = "certificate_id1494430915";
+    String certificateId = "certificateId-644529902";
 
     Certificate actualResponse = client.createCertificate(parent, certificate, certificateId);
     Assert.assertEquals(expectedResponse, actualResponse);
@@ -139,7 +139,7 @@ public class CertificateAuthorityServiceClientTest {
       CertificateAuthorityName parent =
           CertificateAuthorityName.of("[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]");
       Certificate certificate = Certificate.newBuilder().build();
-      String certificateId = "certificate_id1494430915";
+      String certificateId = "certificateId-644529902";
       client.createCertificate(parent, certificate, certificateId);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
@@ -156,7 +156,7 @@ public class CertificateAuthorityServiceClientTest {
                         "[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]", "[CERTIFICATE]")
                     .toString())
             .setLifetime(Duration.newBuilder().build())
-            .setPemCertificate("pem_certificate1234463984")
+            .setPemCertificate("pemCertificate153491807")
             .setCertificateDescription(CertificateDescription.newBuilder().build())
             .addAllPemCertificateChain(new ArrayList<String>())
             .setCreateTime(Timestamp.newBuilder().build())
@@ -167,7 +167,7 @@ public class CertificateAuthorityServiceClientTest {
 
     String parent = "parent-995424086";
     Certificate certificate = Certificate.newBuilder().build();
-    String certificateId = "certificate_id1494430915";
+    String certificateId = "certificateId-644529902";
 
     Certificate actualResponse = client.createCertificate(parent, certificate, certificateId);
     Assert.assertEquals(expectedResponse, actualResponse);
@@ -193,7 +193,7 @@ public class CertificateAuthorityServiceClientTest {
     try {
       String parent = "parent-995424086";
       Certificate certificate = Certificate.newBuilder().build();
-      String certificateId = "certificate_id1494430915";
+      String certificateId = "certificateId-644529902";
       client.createCertificate(parent, certificate, certificateId);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
@@ -210,7 +210,7 @@ public class CertificateAuthorityServiceClientTest {
                         "[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]", "[CERTIFICATE]")
                     .toString())
             .setLifetime(Duration.newBuilder().build())
-            .setPemCertificate("pem_certificate1234463984")
+            .setPemCertificate("pemCertificate153491807")
             .setCertificateDescription(CertificateDescription.newBuilder().build())
             .addAllPemCertificateChain(new ArrayList<String>())
             .setCreateTime(Timestamp.newBuilder().build())
@@ -260,7 +260,7 @@ public class CertificateAuthorityServiceClientTest {
                         "[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]", "[CERTIFICATE]")
                     .toString())
             .setLifetime(Duration.newBuilder().build())
-            .setPemCertificate("pem_certificate1234463984")
+            .setPemCertificate("pemCertificate153491807")
             .setCertificateDescription(CertificateDescription.newBuilder().build())
             .addAllPemCertificateChain(new ArrayList<String>())
             .setCreateTime(Timestamp.newBuilder().build())
@@ -398,7 +398,7 @@ public class CertificateAuthorityServiceClientTest {
                         "[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]", "[CERTIFICATE]")
                     .toString())
             .setLifetime(Duration.newBuilder().build())
-            .setPemCertificate("pem_certificate1234463984")
+            .setPemCertificate("pemCertificate153491807")
             .setCertificateDescription(CertificateDescription.newBuilder().build())
             .addAllPemCertificateChain(new ArrayList<String>())
             .setCreateTime(Timestamp.newBuilder().build())
@@ -448,7 +448,7 @@ public class CertificateAuthorityServiceClientTest {
                         "[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]", "[CERTIFICATE]")
                     .toString())
             .setLifetime(Duration.newBuilder().build())
-            .setPemCertificate("pem_certificate1234463984")
+            .setPemCertificate("pemCertificate153491807")
             .setCertificateDescription(CertificateDescription.newBuilder().build())
             .addAllPemCertificateChain(new ArrayList<String>())
             .setCreateTime(Timestamp.newBuilder().build())
@@ -496,7 +496,7 @@ public class CertificateAuthorityServiceClientTest {
                         "[PROJECT]", "[LOCATION]", "[CERTIFICATE_AUTHORITY]", "[CERTIFICATE]")
                     .toString())
             .setLifetime(Duration.newBuilder().build())
-            .setPemCertificate("pem_certificate1234463984")
+            .setPemCertificate("pemCertificate153491807")
             .setCertificateDescription(CertificateDescription.newBuilder().build())
             .addAllPemCertificateChain(new ArrayList<String>())
             .setCreateTime(Timestamp.newBuilder().build())
@@ -550,7 +550,7 @@ public class CertificateAuthorityServiceClientTest {
             .setSubordinateConfig(SubordinateConfig.newBuilder().build())
             .addAllPemCaCertificates(new ArrayList<String>())
             .addAllCaCertificateDescriptions(new ArrayList<CertificateDescription>())
-            .setGcsBucket("gcs_bucket-1720393710")
+            .setGcsBucket("gcsBucket239654881")
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
             .setDeleteTime(Timestamp.newBuilder().build())
@@ -611,7 +611,7 @@ public class CertificateAuthorityServiceClientTest {
             .setSubordinateConfig(SubordinateConfig.newBuilder().build())
             .addAllPemCaCertificates(new ArrayList<String>())
             .addAllCaCertificateDescriptions(new ArrayList<CertificateDescription>())
-            .setGcsBucket("gcs_bucket-1720393710")
+            .setGcsBucket("gcsBucket239654881")
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
             .setDeleteTime(Timestamp.newBuilder().build())
@@ -670,7 +670,7 @@ public class CertificateAuthorityServiceClientTest {
             .setSubordinateConfig(SubordinateConfig.newBuilder().build())
             .addAllPemCaCertificates(new ArrayList<String>())
             .addAllCaCertificateDescriptions(new ArrayList<CertificateDescription>())
-            .setGcsBucket("gcs_bucket-1720393710")
+            .setGcsBucket("gcsBucket239654881")
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
             .setDeleteTime(Timestamp.newBuilder().build())
@@ -686,7 +686,7 @@ public class CertificateAuthorityServiceClientTest {
 
     LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
     CertificateAuthority certificateAuthority = CertificateAuthority.newBuilder().build();
-    String certificateAuthorityId = "certificate_authority_id561919295";
+    String certificateAuthorityId = "certificateAuthorityId-1652580953";
 
     CertificateAuthority actualResponse =
         client
@@ -716,7 +716,7 @@ public class CertificateAuthorityServiceClientTest {
     try {
       LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
       CertificateAuthority certificateAuthority = CertificateAuthority.newBuilder().build();
-      String certificateAuthorityId = "certificate_authority_id561919295";
+      String certificateAuthorityId = "certificateAuthorityId-1652580953";
       client
           .createCertificateAuthorityAsync(parent, certificateAuthority, certificateAuthorityId)
           .get();
@@ -740,7 +740,7 @@ public class CertificateAuthorityServiceClientTest {
             .setSubordinateConfig(SubordinateConfig.newBuilder().build())
             .addAllPemCaCertificates(new ArrayList<String>())
             .addAllCaCertificateDescriptions(new ArrayList<CertificateDescription>())
-            .setGcsBucket("gcs_bucket-1720393710")
+            .setGcsBucket("gcsBucket239654881")
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
             .setDeleteTime(Timestamp.newBuilder().build())
@@ -756,7 +756,7 @@ public class CertificateAuthorityServiceClientTest {
 
     String parent = "parent-995424086";
     CertificateAuthority certificateAuthority = CertificateAuthority.newBuilder().build();
-    String certificateAuthorityId = "certificate_authority_id561919295";
+    String certificateAuthorityId = "certificateAuthorityId-1652580953";
 
     CertificateAuthority actualResponse =
         client
@@ -786,7 +786,7 @@ public class CertificateAuthorityServiceClientTest {
     try {
       String parent = "parent-995424086";
       CertificateAuthority certificateAuthority = CertificateAuthority.newBuilder().build();
-      String certificateAuthorityId = "certificate_authority_id561919295";
+      String certificateAuthorityId = "certificateAuthorityId-1652580953";
       client
           .createCertificateAuthorityAsync(parent, certificateAuthority, certificateAuthorityId)
           .get();
@@ -810,7 +810,7 @@ public class CertificateAuthorityServiceClientTest {
             .setSubordinateConfig(SubordinateConfig.newBuilder().build())
             .addAllPemCaCertificates(new ArrayList<String>())
             .addAllCaCertificateDescriptions(new ArrayList<CertificateDescription>())
-            .setGcsBucket("gcs_bucket-1720393710")
+            .setGcsBucket("gcsBucket239654881")
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
             .setDeleteTime(Timestamp.newBuilder().build())
@@ -871,7 +871,7 @@ public class CertificateAuthorityServiceClientTest {
             .setSubordinateConfig(SubordinateConfig.newBuilder().build())
             .addAllPemCaCertificates(new ArrayList<String>())
             .addAllCaCertificateDescriptions(new ArrayList<CertificateDescription>())
-            .setGcsBucket("gcs_bucket-1720393710")
+            .setGcsBucket("gcsBucket239654881")
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
             .setDeleteTime(Timestamp.newBuilder().build())
@@ -930,7 +930,7 @@ public class CertificateAuthorityServiceClientTest {
             .setSubordinateConfig(SubordinateConfig.newBuilder().build())
             .addAllPemCaCertificates(new ArrayList<String>())
             .addAllCaCertificateDescriptions(new ArrayList<CertificateDescription>())
-            .setGcsBucket("gcs_bucket-1720393710")
+            .setGcsBucket("gcsBucket239654881")
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
             .setDeleteTime(Timestamp.newBuilder().build())
@@ -991,7 +991,7 @@ public class CertificateAuthorityServiceClientTest {
             .setSubordinateConfig(SubordinateConfig.newBuilder().build())
             .addAllPemCaCertificates(new ArrayList<String>())
             .addAllCaCertificateDescriptions(new ArrayList<CertificateDescription>())
-            .setGcsBucket("gcs_bucket-1720393710")
+            .setGcsBucket("gcsBucket239654881")
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
             .setDeleteTime(Timestamp.newBuilder().build())
@@ -1041,7 +1041,7 @@ public class CertificateAuthorityServiceClientTest {
   @Test
   public void fetchCertificateAuthorityCsrTest() throws Exception {
     FetchCertificateAuthorityCsrResponse expectedResponse =
-        FetchCertificateAuthorityCsrResponse.newBuilder().setPemCsr("pem_csr-683665829").build();
+        FetchCertificateAuthorityCsrResponse.newBuilder().setPemCsr("pemCsr-991911478").build();
     mockCertificateAuthorityService.addResponse(expectedResponse);
 
     CertificateAuthorityName name =
@@ -1080,7 +1080,7 @@ public class CertificateAuthorityServiceClientTest {
   @Test
   public void fetchCertificateAuthorityCsrTest2() throws Exception {
     FetchCertificateAuthorityCsrResponse expectedResponse =
-        FetchCertificateAuthorityCsrResponse.newBuilder().setPemCsr("pem_csr-683665829").build();
+        FetchCertificateAuthorityCsrResponse.newBuilder().setPemCsr("pemCsr-991911478").build();
     mockCertificateAuthorityService.addResponse(expectedResponse);
 
     String name = "name3373707";
@@ -1126,7 +1126,7 @@ public class CertificateAuthorityServiceClientTest {
             .setSubordinateConfig(SubordinateConfig.newBuilder().build())
             .addAllPemCaCertificates(new ArrayList<String>())
             .addAllCaCertificateDescriptions(new ArrayList<CertificateDescription>())
-            .setGcsBucket("gcs_bucket-1720393710")
+            .setGcsBucket("gcsBucket239654881")
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
             .setDeleteTime(Timestamp.newBuilder().build())
@@ -1179,7 +1179,7 @@ public class CertificateAuthorityServiceClientTest {
             .setSubordinateConfig(SubordinateConfig.newBuilder().build())
             .addAllPemCaCertificates(new ArrayList<String>())
             .addAllCaCertificateDescriptions(new ArrayList<CertificateDescription>())
-            .setGcsBucket("gcs_bucket-1720393710")
+            .setGcsBucket("gcsBucket239654881")
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
             .setDeleteTime(Timestamp.newBuilder().build())
@@ -1322,7 +1322,7 @@ public class CertificateAuthorityServiceClientTest {
             .setSubordinateConfig(SubordinateConfig.newBuilder().build())
             .addAllPemCaCertificates(new ArrayList<String>())
             .addAllCaCertificateDescriptions(new ArrayList<CertificateDescription>())
-            .setGcsBucket("gcs_bucket-1720393710")
+            .setGcsBucket("gcsBucket239654881")
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
             .setDeleteTime(Timestamp.newBuilder().build())
@@ -1383,7 +1383,7 @@ public class CertificateAuthorityServiceClientTest {
             .setSubordinateConfig(SubordinateConfig.newBuilder().build())
             .addAllPemCaCertificates(new ArrayList<String>())
             .addAllCaCertificateDescriptions(new ArrayList<CertificateDescription>())
-            .setGcsBucket("gcs_bucket-1720393710")
+            .setGcsBucket("gcsBucket239654881")
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
             .setDeleteTime(Timestamp.newBuilder().build())
@@ -1442,7 +1442,7 @@ public class CertificateAuthorityServiceClientTest {
             .setSubordinateConfig(SubordinateConfig.newBuilder().build())
             .addAllPemCaCertificates(new ArrayList<String>())
             .addAllCaCertificateDescriptions(new ArrayList<CertificateDescription>())
-            .setGcsBucket("gcs_bucket-1720393710")
+            .setGcsBucket("gcsBucket239654881")
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
             .setDeleteTime(Timestamp.newBuilder().build())
@@ -1504,7 +1504,7 @@ public class CertificateAuthorityServiceClientTest {
             .setSubordinateConfig(SubordinateConfig.newBuilder().build())
             .addAllPemCaCertificates(new ArrayList<String>())
             .addAllCaCertificateDescriptions(new ArrayList<CertificateDescription>())
-            .setGcsBucket("gcs_bucket-1720393710")
+            .setGcsBucket("gcsBucket239654881")
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
             .setDeleteTime(Timestamp.newBuilder().build())
@@ -1564,7 +1564,7 @@ public class CertificateAuthorityServiceClientTest {
             .setSubordinateConfig(SubordinateConfig.newBuilder().build())
             .addAllPemCaCertificates(new ArrayList<String>())
             .addAllCaCertificateDescriptions(new ArrayList<CertificateDescription>())
-            .setGcsBucket("gcs_bucket-1720393710")
+            .setGcsBucket("gcsBucket239654881")
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
             .setDeleteTime(Timestamp.newBuilder().build())
@@ -1629,8 +1629,8 @@ public class CertificateAuthorityServiceClientTest {
             .setSequenceNumber(-1309190777)
             .addAllRevokedCertificates(
                 new ArrayList<CertificateRevocationList.RevokedCertificate>())
-            .setPemCrl("pem_crl-683665866")
-            .setAccessUrl("access_url-1141680108")
+            .setPemCrl("pemCrl-991911515")
+            .setAccessUrl("accessUrl-2115048085")
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
             .putAllLabels(new HashMap<String, String>())
@@ -1689,8 +1689,8 @@ public class CertificateAuthorityServiceClientTest {
             .setSequenceNumber(-1309190777)
             .addAllRevokedCertificates(
                 new ArrayList<CertificateRevocationList.RevokedCertificate>())
-            .setPemCrl("pem_crl-683665866")
-            .setAccessUrl("access_url-1141680108")
+            .setPemCrl("pemCrl-991911515")
+            .setAccessUrl("accessUrl-2115048085")
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
             .putAllLabels(new HashMap<String, String>())
@@ -1838,8 +1838,8 @@ public class CertificateAuthorityServiceClientTest {
             .setSequenceNumber(-1309190777)
             .addAllRevokedCertificates(
                 new ArrayList<CertificateRevocationList.RevokedCertificate>())
-            .setPemCrl("pem_crl-683665866")
-            .setAccessUrl("access_url-1141680108")
+            .setPemCrl("pemCrl-991911515")
+            .setAccessUrl("accessUrl-2115048085")
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
             .putAllLabels(new HashMap<String, String>())
