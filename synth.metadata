@@ -3,8 +3,8 @@
     {
       "git": {
         "name": ".",
-        "remote": "git@github.com:googleapis/java-security-private-ca.git",
-        "sha": "7ba4f75bab9b14437e967a89a3bf3d2a2842806e"
+        "remote": "https://github.com/googleapis/java-security-private-ca.git",
+        "sha": "41178de11babf0e76b1d1418373c9a84129a29bd"
       }
     }
   ]
