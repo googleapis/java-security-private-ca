@@ -4,7 +4,7 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/java-security-private-ca.git",
-        "sha": "c69a0a98d8e47a615adb0193584d98b7b3e29e07"
+        "sha": "0a5389ab73ca2e504fb2c12e61f5329815894e08"
       }
     }
   ]
