@@ -58,8 +58,8 @@ import org.junit.Test;
 public class CertificateAuthorityServiceClientTest {
   private static MockCertificateAuthorityService mockCertificateAuthorityService;
   private static MockServiceHelper mockServiceHelper;
-  private CertificateAuthorityServiceClient client;
   private LocalChannelProvider channelProvider;
+  private CertificateAuthorityServiceClient client;
 
   @BeforeClass
   public static void startStaticServer() {
