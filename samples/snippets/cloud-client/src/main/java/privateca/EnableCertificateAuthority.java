@@ -42,27 +42,31 @@ public class EnableCertificateAuthority {
 
   // Enable the Certificate Authority present in the given ca pool.
   // CA cannot be enabled if it has been already deleted.
-  public static void enableCertificateAuthority(String project, String location, String caPoolName,
-      String certificateAuthority)
+  public static void enableCertificateAuthority(
+      String project, String location, String caPoolName, String certificateAuthority)
       throws IOException, ExecutionException, InterruptedException {
-    try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient
-        .create()) {
+    try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
+        CertificateAuthorityServiceClient.create()) {
       // Create the Certificate Authority Name.
-      CertificateAuthorityName certificateAuthorityName = CertificateAuthorityName.newBuilder()
-          .setProject(project)
-          .setLocation(location)
-          .setCaPool(caPoolName)
-          .setCertificateAuthority(certificateAuthority)
-          .build();
+      CertificateAuthorityName certificateAuthorityName =
+          CertificateAuthorityName.newBuilder()
+              .setProject(project)
+              .setLocation(location)
+              .setCaPool(caPoolName)
+              .setCertificateAuthority(certificateAuthority)
+              .build();
 
       // Create the Enable Certificate Authority Request.
       EnableCertificateAuthorityRequest enableCertificateAuthorityRequest =
           EnableCertificateAuthorityRequest.newBuilder()
-              .setName(certificateAuthorityName.toString()).build();
+              .setName(certificateAuthorityName.toString())
+              .build();
 
       // Enable the Certificate Authority.
-      ApiFuture<Operation> futureCall = certificateAuthorityServiceClient
-          .enableCertificateAuthorityCallable().futureCall(enableCertificateAuthorityRequest);
+      ApiFuture<Operation> futureCall =
+          certificateAuthorityServiceClient
+              .enableCertificateAuthorityCallable()
+              .futureCall(enableCertificateAuthorityRequest);
       Operation response = futureCall.get();
 
       if (response.hasError()) {
@@ -71,16 +75,17 @@ public class EnableCertificateAuthority {
       }
 
       // Get the current CA state.
-      State caState = certificateAuthorityServiceClient
-          .getCertificateAuthority(certificateAuthorityName)
-          .getState();
+      State caState =
+          certificateAuthorityServiceClient
+              .getCertificateAuthority(certificateAuthorityName)
+              .getState();
 
       // Check if the CA is enabled.
       if (caState == State.ENABLED) {
         System.out.println("Enabled Certificate Authority : " + certificateAuthority);
       } else {
-        System.out
-            .println("Cannot enable the Certificate Authority ! Current CA State: " + caState);
+        System.out.println(
+            "Cannot enable the Certificate Authority ! Current CA State: " + caState);
       }
     }
   }

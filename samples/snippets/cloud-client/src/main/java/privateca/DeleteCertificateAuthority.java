@@ -42,25 +42,29 @@ public class DeleteCertificateAuthority {
 
   // Delete the Certificate Authority from the specified CA pool.
   // Before deletion, the CA must be disabled and must not contain any active certificates.
-  public static void deleteCertificateAuthority(String project, String location, String caPoolName,
-      String certificateAuthority) throws IOException, ExecutionException, InterruptedException {
+  public static void deleteCertificateAuthority(
+      String project, String location, String caPoolName, String certificateAuthority)
+      throws IOException, ExecutionException, InterruptedException {
     // Initialize client that will be used to send requests. This client only needs to be created
     // once, and can be reused for multiple requests. After completing all of your requests, call
     // the `certificateAuthorityServiceClient.close()` method on the client to safely
     // clean up any remaining background resources.
-    try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient
-        .create()) {
+    try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
+        CertificateAuthorityServiceClient.create()) {
       // Create the Certificate Authority Name.
-      CertificateAuthorityName certificateAuthorityName = CertificateAuthorityName.newBuilder()
-          .setProject(project)
-          .setLocation(location)
-          .setCaPool(caPoolName)
-          .setCertificateAuthority(certificateAuthority)
-          .build();
+      CertificateAuthorityName certificateAuthorityName =
+          CertificateAuthorityName.newBuilder()
+              .setProject(project)
+              .setLocation(location)
+              .setCaPool(caPoolName)
+              .setCertificateAuthority(certificateAuthority)
+              .build();
 
       // Check if the CA is enabled.
-      if (certificateAuthorityServiceClient.getCertificateAuthority(certificateAuthorityName)
-          .getState() == State.ENABLED) {
+      if (certificateAuthorityServiceClient
+              .getCertificateAuthority(certificateAuthorityName)
+              .getState()
+          == State.ENABLED) {
         System.out.println("Please disable the Certificate Authority before deletion !");
         return;
       }
@@ -72,11 +76,14 @@ public class DeleteCertificateAuthority {
       DeleteCertificateAuthorityRequest deleteCertificateAuthorityRequest =
           DeleteCertificateAuthorityRequest.newBuilder()
               .setName(certificateAuthorityName.toString())
-              .setIgnoreActiveCertificates(false).build();
+              .setIgnoreActiveCertificates(false)
+              .build();
 
       // Delete the Certificate Authority.
-      ApiFuture<Operation> futureCall = certificateAuthorityServiceClient
-          .deleteCertificateAuthorityCallable().futureCall(deleteCertificateAuthorityRequest);
+      ApiFuture<Operation> futureCall =
+          certificateAuthorityServiceClient
+              .deleteCertificateAuthorityCallable()
+              .futureCall(deleteCertificateAuthorityRequest);
       Operation response = futureCall.get();
 
       if (response.hasError()) {
@@ -85,8 +92,10 @@ public class DeleteCertificateAuthority {
       }
 
       // Check if the CA has been deleted.
-      if (certificateAuthorityServiceClient.getCertificateAuthority(certificateAuthorityName)
-          .getState() == State.DELETED) {
+      if (certificateAuthorityServiceClient
+              .getCertificateAuthority(certificateAuthorityName)
+              .getState()
+          == State.DELETED) {
         System.out.println("Successfully deleted Certificate Authority : " + certificateAuthority);
       } else {
         System.out.println("Unable to delete Certificate Authority ! Please try again !");

@@ -52,7 +52,8 @@ public class SnippetsIT {
   // Check if the required environment variables are set.
   public static void reqEnvVar(String envVarName) {
     assertWithMessage(String.format("Missing environment variable '%s' ", envVarName))
-        .that(System.getenv(envVarName)).isNotEmpty();
+        .that(System.getenv(envVarName))
+        .isNotEmpty();
   }
 
   @BeforeClass
@@ -71,24 +72,23 @@ public class SnippetsIT {
     privateca.CreateCAPool.createCAPool(PROJECT_ID, LOCATION, CA_POOL_NAME_DELETE);
 
     // Create Certificate Authorities
-    privateca.CreateCertificateAuthority
-        .createCertificateAuthority(PROJECT_ID, LOCATION, CA_POOL_NAME, CA_NAME);
-    privateca.CreateCertificateAuthority
-        .createCertificateAuthority(PROJECT_ID, LOCATION, CA_POOL_NAME, CA_NAME_DELETE);
+    privateca.CreateCertificateAuthority.createCertificateAuthority(
+        PROJECT_ID, LOCATION, CA_POOL_NAME, CA_NAME);
+    privateca.CreateCertificateAuthority.createCertificateAuthority(
+        PROJECT_ID, LOCATION, CA_POOL_NAME, CA_NAME_DELETE);
     // Wait for the setting to be effected.
     TimeUnit.SECONDS.sleep(10);
   }
 
   @AfterClass
-  public static void cleanUp()
-      throws InterruptedException, ExecutionException, IOException {
+  public static void cleanUp() throws InterruptedException, ExecutionException, IOException {
 
     ByteArrayOutputStream stdOut = new ByteArrayOutputStream();
     System.setOut(new PrintStream(stdOut));
 
     // Delete CA and CA pool
-    privateca.DeleteCertificateAuthority
-        .deleteCertificateAuthority(PROJECT_ID, LOCATION, CA_POOL_NAME, CA_NAME);
+    privateca.DeleteCertificateAuthority.deleteCertificateAuthority(
+        PROJECT_ID, LOCATION, CA_POOL_NAME, CA_NAME);
     // Wait for the setting to be effected.
     TimeUnit.SECONDS.sleep(5);
     privateca.DeleteCAPool.deleteCAPool(PROJECT_ID, LOCATION, CA_POOL_NAME);
@@ -112,12 +112,16 @@ public class SnippetsIT {
   @Test
   public void testCreateCAPool() throws IOException {
     // Check if the CA pool created during setup is successful.
-    try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient
-        .create()) {
-      String caPoolName = certificateAuthorityServiceClient
-          .getCaPool(CaPoolName.of(PROJECT_ID, LOCATION, CA_POOL_NAME).toString()).getName();
-      assertThat(caPoolName).contains(
-          String.format("projects/%s/locations/%s/caPools/%s", PROJECT_ID, LOCATION, CA_POOL_NAME));
+    try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
+        CertificateAuthorityServiceClient.create()) {
+      String caPoolName =
+          certificateAuthorityServiceClient
+              .getCaPool(CaPoolName.of(PROJECT_ID, LOCATION, CA_POOL_NAME).toString())
+              .getName();
+      assertThat(caPoolName)
+          .contains(
+              String.format(
+                  "projects/%s/locations/%s/caPools/%s", PROJECT_ID, LOCATION, CA_POOL_NAME));
     }
   }
 
@@ -135,42 +139,41 @@ public class SnippetsIT {
   }
 
   @Test
-  public void testCreateCertificateAuthority()
-      throws IOException {
+  public void testCreateCertificateAuthority() throws IOException {
     // Check if the CA created during setup is successful.
-    try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient
-        .create()) {
-      CertificateAuthority response = certificateAuthorityServiceClient.getCertificateAuthority(
-          CertificateAuthorityName.of(PROJECT_ID, LOCATION, CA_POOL_NAME, CA_NAME).toString());
+    try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
+        CertificateAuthorityServiceClient.create()) {
+      CertificateAuthority response =
+          certificateAuthorityServiceClient.getCertificateAuthority(
+              CertificateAuthorityName.of(PROJECT_ID, LOCATION, CA_POOL_NAME, CA_NAME).toString());
       assertThat(response.getName()).contains(CA_NAME);
     }
   }
 
   @Test
   public void testListCertificateAuthorities() throws IOException {
-    privateca.ListCertificateAuthorities
-        .listCertificateAuthority(PROJECT_ID, LOCATION, CA_POOL_NAME);
+    privateca.ListCertificateAuthorities.listCertificateAuthority(
+        PROJECT_ID, LOCATION, CA_POOL_NAME);
     assertThat(stdOut.toString()).contains(CA_NAME);
   }
 
   @Test
   public void testEnableDisableCertificateAuthority()
       throws InterruptedException, ExecutionException, IOException {
-    privateca.EnableCertificateAuthority
-        .enableCertificateAuthority(PROJECT_ID, LOCATION, CA_POOL_NAME, CA_NAME);
+    privateca.EnableCertificateAuthority.enableCertificateAuthority(
+        PROJECT_ID, LOCATION, CA_POOL_NAME, CA_NAME);
     assertThat(stdOut.toString()).contains("Enabled Certificate Authority : " + CA_NAME);
-    privateca.DisableCertificateAuthority
-        .disableCertificateAuthority(PROJECT_ID, LOCATION, CA_POOL_NAME, CA_NAME);
+    privateca.DisableCertificateAuthority.disableCertificateAuthority(
+        PROJECT_ID, LOCATION, CA_POOL_NAME, CA_NAME);
     assertThat(stdOut.toString()).contains("Disabled Certificate Authority : " + CA_NAME);
   }
 
   @Test
   public void testDeleteCertificateAuthority()
       throws InterruptedException, ExecutionException, IOException {
-    privateca.DeleteCertificateAuthority
-        .deleteCertificateAuthority(PROJECT_ID, LOCATION, CA_POOL_NAME, CA_NAME_DELETE);
+    privateca.DeleteCertificateAuthority.deleteCertificateAuthority(
+        PROJECT_ID, LOCATION, CA_POOL_NAME, CA_NAME_DELETE);
     assertThat(stdOut.toString())
         .contains("Successfully deleted Certificate Authority : " + CA_NAME_DELETE);
   }
-
 }
