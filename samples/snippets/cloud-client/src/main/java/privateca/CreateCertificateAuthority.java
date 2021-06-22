@@ -15,6 +15,9 @@
  */
 package privateca;
 
+// [START privateca_create_ca]
+
+import com.google.api.core.ApiFuture;
 import com.google.cloud.security.privateca.v1.CaPoolName;
 import com.google.cloud.security.privateca.v1.CertificateAuthority;
 import com.google.cloud.security.privateca.v1.CertificateAuthority.KeyVersionSpec;
@@ -28,6 +31,7 @@ import com.google.cloud.security.privateca.v1.KeyUsage.KeyUsageOptions;
 import com.google.cloud.security.privateca.v1.Subject;
 import com.google.cloud.security.privateca.v1.X509Parameters;
 import com.google.cloud.security.privateca.v1.X509Parameters.CaOptions;
+import com.google.longrunning.Operation;
 import com.google.protobuf.Duration;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
@@ -36,9 +40,12 @@ public class CreateCertificateAuthority {
 
   public static void main(String[] args)
       throws InterruptedException, ExecutionException, IOException {
+    // location: For a list of locations, see: certificate-authority-service/docs/locations
+    // caPoolName: Set it to the CA Pool under which the CA should be created.
+    // certificateAuthorityName: Unique name for the CA.
     String project = "your-project-id";
     String location = "ca-location";
-    String caPoolName = "your-ca-pool-name";
+    String caPoolName = "ca-pool-name";
     String certificateAuthorityName = "certificate-authority-name";
     createCertificateAuthority(project, location, caPoolName, certificateAuthorityName);
   }
@@ -52,20 +59,23 @@ public class CreateCertificateAuthority {
     // once, and can be reused for multiple requests. After completing all of your requests, call
     // the `certificateAuthorityServiceClient.close()` method on the client to safely
     // clean up any remaining background resources.
-    try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient
-        .create()) {
+    try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
+        CertificateAuthorityServiceClient.create()) {
 
       String commonName = "common-name";
       String orgName = "org-name";
-      int caDuration = 10000; // validity of this CA
+      int caDuration = 100000; // Validity of this CA in seconds.
 
-      // Create certificate authority.
+      // Set certificate authority settings.
       CertificateAuthority certificateAuthority = CertificateAuthority.newBuilder()
+          // CertificateAuthority.Type.SELF_SIGNED denotes that this CA is a root CA.
           .setType(CertificateAuthority.Type.SELF_SIGNED)
 
+          // Set the types of Algorithm used to create a cloud KMS key.
           .setKeySpec(KeyVersionSpec.newBuilder()
               .setAlgorithm(SignHashAlgorithm.RSA_PKCS1_4096_SHA256).build())
 
+          // Set CA subject config and X.509 fields.
           .setConfig(CertificateConfig.newBuilder()
               .setSubjectConfig(SubjectConfig.newBuilder()
                   .setSubject(Subject.newBuilder()
@@ -85,9 +95,11 @@ public class CreateCertificateAuthority {
                       .build())
               .build())
 
+          // Set the duration of validity of CA.
           .setLifetime(Duration.newBuilder().setSeconds(caDuration).build())
           .build();
 
+      // Create the CertificateAuthorityRequest.
       CreateCertificateAuthorityRequest certificateAuthorityRequest =
           CreateCertificateAuthorityRequest.newBuilder()
               .setParent(CaPoolName.of(project, location, caPoolName).toString())
@@ -95,13 +107,19 @@ public class CreateCertificateAuthority {
               .setCertificateAuthority(certificateAuthority)
               .build();
 
-      CertificateAuthority caResponse = certificateAuthorityServiceClient
-          .createCertificateAuthorityAsync(certificateAuthorityRequest).get();
+      // Create Certificate Authority.
+      ApiFuture<Operation> futureCall = certificateAuthorityServiceClient
+          .createCertificateAuthorityCallable().futureCall(certificateAuthorityRequest);
+      Operation response = futureCall.get();
 
-      String caResponseName = caResponse.getName();
-      System.out.println("Certificate Authority created successfully : " + caResponseName
-          .substring(caResponseName.lastIndexOf("/") + 1));
+      if (response.hasError()) {
+        System.out.println("Error while creating CA !");
+        return;
+      }
+
+      System.out
+          .println("Certificate Authority created successfully : " + certificateAuthorityName);
     }
   }
-
 }
+// [END privateca_create_ca]

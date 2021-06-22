@@ -15,10 +15,14 @@
  */
 package privateca;
 
-import com.google.cloud.security.privateca.v1.CertificateAuthority;
+// [START privateca_delete_ca]
+
+import com.google.api.core.ApiFuture;
 import com.google.cloud.security.privateca.v1.CertificateAuthority.State;
 import com.google.cloud.security.privateca.v1.CertificateAuthorityName;
 import com.google.cloud.security.privateca.v1.CertificateAuthorityServiceClient;
+import com.google.cloud.security.privateca.v1.DeleteCertificateAuthorityRequest;
+import com.google.longrunning.Operation;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
@@ -26,18 +30,27 @@ public class DeleteCertificateAuthority {
 
   public static void main(String[] args)
       throws InterruptedException, ExecutionException, IOException {
+    // location: For a list of locations, see: certificate-authority-service/docs/locations
+    // caPoolName: The name of the CA pool under which the CA is present.
+    // certificateAuthority: The name of the CA to be deleted.
     String project = "your-project-id";
     String location = "ca-location";
-    String caPoolName = "your-ca-pool-name";
-    String certificateAuthority = "certificate-authority";
+    String caPoolName = "ca-pool-name";
+    String certificateAuthority = "certificate-authority-name";
     deleteCertificateAuthority(project, location, caPoolName, certificateAuthority);
   }
 
+  // Delete the Certificate Authority from the specified CA pool.
+  // Before deletion, the CA must be disabled and must not contain any active certificates.
   public static void deleteCertificateAuthority(String project, String location, String caPoolName,
       String certificateAuthority) throws IOException, ExecutionException, InterruptedException {
+    // Initialize client that will be used to send requests. This client only needs to be created
+    // once, and can be reused for multiple requests. After completing all of your requests, call
+    // the `certificateAuthorityServiceClient.close()` method on the client to safely
+    // clean up any remaining background resources.
     try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient
         .create()) {
-
+      // Create the Certificate Authority Name.
       CertificateAuthorityName certificateAuthorityName = CertificateAuthorityName.newBuilder()
           .setProject(project)
           .setLocation(location)
@@ -45,19 +58,40 @@ public class DeleteCertificateAuthority {
           .setCertificateAuthority(certificateAuthority)
           .build();
 
+      // Check if the CA is enabled.
       if (certificateAuthorityServiceClient.getCertificateAuthority(certificateAuthorityName)
           .getState() == State.ENABLED) {
-        System.out.println("Please disable the Certificate Authority before deletion ! ! ");
+        System.out.println("Please disable the Certificate Authority before deletion !");
+        return;
       }
 
-      CertificateAuthority certificateAuthorityResponse = certificateAuthorityServiceClient
-          .deleteCertificateAuthorityAsync(certificateAuthorityName).get();
-      if (certificateAuthorityResponse.getState() == State.DELETED) {
+      // Create the DeleteCertificateAuthorityRequest.
+      // Setting the setIgnoreActiveCertificates() to true, will delete the CA
+      // even if it contains active certificates. Care should be taken to re-anchor
+      // the certificates to new CA before deleting.
+      DeleteCertificateAuthorityRequest deleteCertificateAuthorityRequest =
+          DeleteCertificateAuthorityRequest.newBuilder()
+              .setName(certificateAuthorityName.toString())
+              .setIgnoreActiveCertificates(false).build();
+
+      // Delete the Certificate Authority.
+      ApiFuture<Operation> futureCall = certificateAuthorityServiceClient
+          .deleteCertificateAuthorityCallable().futureCall(deleteCertificateAuthorityRequest);
+      Operation response = futureCall.get();
+
+      if (response.hasError()) {
+        System.out.println("Error while deleting Certificate Authority !");
+        return;
+      }
+
+      // Check if the CA has been deleted.
+      if (certificateAuthorityServiceClient.getCertificateAuthority(certificateAuthorityName)
+          .getState() == State.DELETED) {
         System.out.println("Successfully deleted Certificate Authority : " + certificateAuthority);
       } else {
-        System.out.println("Unable to delete Certificate Authority ! ! Please try again ! !");
+        System.out.println("Unable to delete Certificate Authority ! Please try again !");
       }
     }
   }
-
 }
+// [END privateca_delete_ca]

@@ -15,11 +15,15 @@
  */
 package privateca;
 
+// [START privateca_create_ca_pool]
+
+import com.google.api.core.ApiFuture;
 import com.google.cloud.security.privateca.v1.CaPool;
 import com.google.cloud.security.privateca.v1.CaPool.Tier;
 import com.google.cloud.security.privateca.v1.CertificateAuthorityServiceClient;
 import com.google.cloud.security.privateca.v1.CreateCaPoolRequest;
 import com.google.cloud.security.privateca.v1.LocationName;
+import com.google.longrunning.Operation;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
@@ -27,9 +31,11 @@ public class CreateCAPool {
 
   public static void main(String[] args)
       throws InterruptedException, ExecutionException, IOException {
+    // location: For a list of locations, see: certificate-authority-service/docs/locations
+    // caPoolName: Set a unique name for the ca pool.
     String project = "your-project-id";
     String location = "ca-location";
-    String caPoolName = "your-ca-pool-name";
+    String caPoolName = "ca-pool-name";
     createCAPool(project, location, caPoolName);
   }
 
@@ -44,26 +50,29 @@ public class CreateCAPool {
     try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
         CertificateAuthorityServiceClient.create()) {
 
-      /* Create a pool request as below:
-         Set Parent which denotes the project id and
-         location (see, certificate-authority-service/docs/locations) of the ca pool.
-         Set a unique name for the ca pool.
-         Set the Tier (see, certificate-authority-service/docs/tiers).
+      /* Create the pool request
+         Set Parent which denotes the project id and location.
+         Set the Tier (see: certificate-authority-service/docs/tiers).
        */
       CreateCaPoolRequest caPoolRequest = CreateCaPoolRequest.newBuilder()
           .setParent(LocationName.of(project, location).toString())
           .setCaPoolId(caPoolName)
           .setCaPool(CaPool.newBuilder()
-              .setTier(Tier.ENTERPRISE)
-              .build())
+              .setTier(Tier.ENTERPRISE).build())
           .build();
 
-      // Create the CA pool
-      CaPool caPoolResponse = certificateAuthorityServiceClient.createCaPoolAsync(caPoolRequest)
-          .get();
+      // Create the CA pool.
+      ApiFuture<Operation> futureCall = certificateAuthorityServiceClient.createCaPoolCallable()
+          .futureCall(caPoolRequest);
+      Operation response = futureCall.get();
 
-      // Check if the CA Pool is created.
-      System.out.println("CA pool created successfully: " + caPoolResponse.getName());
+      if (response.hasError()) {
+        System.out.println("Error while creating CA pool !");
+        return;
+      }
+
+      System.out.println("CA pool created successfully: " + caPoolName);
     }
   }
 }
+// [END privateca_create_ca_pool]

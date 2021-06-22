@@ -49,6 +49,7 @@ public class SnippetsIT {
 
   private ByteArrayOutputStream stdOut;
 
+  // Check if the required environment variables are set.
   public static void reqEnvVar(String envVarName) {
     assertWithMessage(String.format("Missing environment variable '%s' ", envVarName))
         .that(System.getenv(envVarName)).isNotEmpty();
@@ -65,23 +66,30 @@ public class SnippetsIT {
     CA_NAME = "ca-name-" + UUID.randomUUID().toString();
     CA_NAME_DELETE = "ca-name-" + UUID.randomUUID().toString();
 
+    // Create CA Pool
     privateca.CreateCAPool.createCAPool(PROJECT_ID, LOCATION, CA_POOL_NAME);
     privateca.CreateCAPool.createCAPool(PROJECT_ID, LOCATION, CA_POOL_NAME_DELETE);
 
+    // Create Certificate Authorities
     privateca.CreateCertificateAuthority
         .createCertificateAuthority(PROJECT_ID, LOCATION, CA_POOL_NAME, CA_NAME);
     privateca.CreateCertificateAuthority
         .createCertificateAuthority(PROJECT_ID, LOCATION, CA_POOL_NAME, CA_NAME_DELETE);
+    // Wait for the setting to be effected.
+    TimeUnit.SECONDS.sleep(10);
   }
 
   @AfterClass
   public static void cleanUp()
-      throws InterruptedException, ExecutionException, IOException, TimeoutException {
+      throws InterruptedException, ExecutionException, IOException {
+
     ByteArrayOutputStream stdOut = new ByteArrayOutputStream();
     System.setOut(new PrintStream(stdOut));
 
+    // Delete CA and CA pool
     privateca.DeleteCertificateAuthority
         .deleteCertificateAuthority(PROJECT_ID, LOCATION, CA_POOL_NAME, CA_NAME);
+    // Wait for the setting to be effected.
     TimeUnit.SECONDS.sleep(5);
     privateca.DeleteCAPool.deleteCAPool(PROJECT_ID, LOCATION, CA_POOL_NAME);
 
@@ -103,7 +111,7 @@ public class SnippetsIT {
 
   @Test
   public void testCreateCAPool() throws IOException {
-    // Check if the CA pool created during setup is successful
+    // Check if the CA pool created during setup is successful.
     try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient
         .create()) {
       String caPoolName = certificateAuthorityServiceClient
@@ -128,7 +136,8 @@ public class SnippetsIT {
 
   @Test
   public void testCreateCertificateAuthority()
-      throws InterruptedException, ExecutionException, IOException {
+      throws IOException {
+    // Check if the CA created during setup is successful.
     try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient
         .create()) {
       CertificateAuthority response = certificateAuthorityServiceClient.getCertificateAuthority(

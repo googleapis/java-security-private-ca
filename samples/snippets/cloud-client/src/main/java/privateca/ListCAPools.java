@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package privateca;
+// [START privateca_list_ca_pool]
 
 import com.google.cloud.security.privateca.v1.CaPool;
 import com.google.cloud.security.privateca.v1.CertificateAuthorityServiceClient;
@@ -22,13 +23,12 @@ import java.io.IOException;
 
 public class ListCAPools {
 
-
   public static void main(String[] args) throws IOException {
+    // location: For a list of locations, see: certificate-authority-service/docs/locations
     String project = "your-project-id";
     String location = "ca-location";
     listCAPools(project, location);
   }
-
 
   // List all CA pools present in the given project and location.
   public static void listCAPools(String project, String location) throws IOException {
@@ -39,19 +39,25 @@ public class ListCAPools {
     try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient
         .create()) {
 
+      // Set the Location Name which contains project and location of the pool.
       LocationName locationName = LocationName.newBuilder()
           .setProject(project)
           .setLocation(location).build();
 
       String caPoolName = "";
-      System.out.println("Available CA pools : ");
+      System.out.println("Available CA pools: ");
+
+      // List the CA pools.
       for (CaPool caPool : certificateAuthorityServiceClient.listCaPools(locationName)
           .iterateAll()) {
         caPoolName = caPool.getName();
+        // caPoolName represents the full resource name of the
+        // format 'projects/project-id/locations/location/ca-pools/ca-pool-name'.
+        // Hence stripping it down to just pool name.
         System.out.println(
             caPoolName.substring(caPoolName.lastIndexOf("/") + 1) + " " + caPool.isInitialized());
       }
     }
   }
-
 }
+// [END privateca_list_ca_pool]

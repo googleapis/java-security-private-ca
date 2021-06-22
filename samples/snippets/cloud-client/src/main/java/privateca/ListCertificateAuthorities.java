@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package privateca;
+// [START privateca_list_ca]
 
 import com.google.cloud.security.privateca.v1.CaPoolName;
 import com.google.cloud.security.privateca.v1.CertificateAuthority;
@@ -23,25 +24,32 @@ import java.io.IOException;
 public class ListCertificateAuthorities {
 
   public static void main(String[] args) throws IOException {
+    // location: For a list of locations, see: certificate-authority-service/docs/locations
+    // caPoolName: The name of the CA pool under which the CAs to be listed are present.
     String project = "your-project-id";
     String location = "ca-location";
-    String caPoolName = "your-ca-pool-name";
+    String caPoolName = "ca-pool-name";
     listCertificateAuthority(project, location, caPoolName);
   }
 
-  // List all Certificate authorities present in the given project and location.
+  // List all Certificate authorities present in the given CA Pool.
   public static void listCertificateAuthority(String project, String location, String caPoolName)
       throws IOException {
+    // Initialize client that will be used to send requests. This client only needs to be created
+    // once, and can be reused for multiple requests. After completing all of your requests, call
+    // the `certificateAuthorityServiceClient.close()` method on the client to safely
+    // clean up any remaining background resources.
     try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient
         .create()) {
 
+      // Create CA pool name comprising of project, location and the pool name.
       CaPoolName parent = CaPoolName.newBuilder()
           .setProject(project)
           .setLocation(location)
           .setCaPool(caPoolName)
           .build();
 
-      // List the CA name and its state.
+      // List the CA name and its corresponding state.
       for (CertificateAuthority certificateAuthority : certificateAuthorityServiceClient
           .listCertificateAuthorities(parent).iterateAll()) {
         System.out
@@ -49,5 +57,5 @@ public class ListCertificateAuthorities {
       }
     }
   }
-
 }
+// [END privateca_list_ca]

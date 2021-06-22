@@ -15,10 +15,14 @@
  */
 package privateca;
 
-import com.google.cloud.security.privateca.v1.CertificateAuthority;
+// [START privateca_enable_ca]
+
+import com.google.api.core.ApiFuture;
 import com.google.cloud.security.privateca.v1.CertificateAuthority.State;
 import com.google.cloud.security.privateca.v1.CertificateAuthorityName;
 import com.google.cloud.security.privateca.v1.CertificateAuthorityServiceClient;
+import com.google.cloud.security.privateca.v1.EnableCertificateAuthorityRequest;
+import com.google.longrunning.Operation;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
@@ -26,19 +30,24 @@ public class EnableCertificateAuthority {
 
   public static void main(String[] args)
       throws InterruptedException, ExecutionException, IOException {
+    // location: For a list of locations, see: certificate-authority-service/docs/locations
+    // caPoolName: The name of the CA pool under which the CA is present.
+    // certificateAuthority: The name of the CA to be enabled.
     String project = "your-project-id";
     String location = "ca-location";
-    String caPoolName = "your-ca-pool-name";
+    String caPoolName = "ca-pool-name";
     String certificateAuthority = "certificate-authority-name";
     enableCertificateAuthority(project, location, caPoolName, certificateAuthority);
   }
 
+  // Enable the Certificate Authority present in the given ca pool.
+  // CA cannot be enabled if it has been already deleted.
   public static void enableCertificateAuthority(String project, String location, String caPoolName,
       String certificateAuthority)
       throws IOException, ExecutionException, InterruptedException {
     try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient
         .create()) {
-
+      // Create the Certificate Authority Name.
       CertificateAuthorityName certificateAuthorityName = CertificateAuthorityName.newBuilder()
           .setProject(project)
           .setLocation(location)
@@ -46,15 +55,34 @@ public class EnableCertificateAuthority {
           .setCertificateAuthority(certificateAuthority)
           .build();
 
-      CertificateAuthority certificateAuthorityResponse = certificateAuthorityServiceClient
-          .enableCertificateAuthorityAsync(certificateAuthorityName).get();
+      // Create the Enable Certificate Authority Request.
+      EnableCertificateAuthorityRequest enableCertificateAuthorityRequest =
+          EnableCertificateAuthorityRequest.newBuilder()
+              .setName(certificateAuthorityName.toString()).build();
 
-      if (certificateAuthorityResponse.getState() == State.ENABLED) {
+      // Enable the Certificate Authority.
+      ApiFuture<Operation> futureCall = certificateAuthorityServiceClient
+          .enableCertificateAuthorityCallable().futureCall(enableCertificateAuthorityRequest);
+      Operation response = futureCall.get();
+
+      if (response.hasError()) {
+        System.out.println("Error while enabling Certificate Authority !");
+        return;
+      }
+
+      // Get the current CA state.
+      State caState = certificateAuthorityServiceClient
+          .getCertificateAuthority(certificateAuthorityName)
+          .getState();
+
+      // Check if the CA is enabled.
+      if (caState == State.ENABLED) {
         System.out.println("Enabled Certificate Authority : " + certificateAuthority);
       } else {
-        System.out.println("Cannot enable the Certificate Authority ! ! Please try again ! !");
+        System.out
+            .println("Cannot enable the Certificate Authority ! Current CA State: " + caState);
       }
     }
   }
-
 }
+// [END privateca_enable_ca]
