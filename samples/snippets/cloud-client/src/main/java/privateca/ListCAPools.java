@@ -39,20 +39,19 @@ public class ListCAPools {
     // once, and can be reused for multiple requests. After completing all of your requests, call
     // the `certificateAuthorityServiceClient.close()` method on the client to safely
     // clean up any remaining background resources.
-    try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient
-        .create()) {
+    try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
+        CertificateAuthorityServiceClient.create()) {
 
       // Set the Location Name which contains project and location of the pool.
-      LocationName locationName = LocationName.newBuilder()
-          .setProject(project)
-          .setLocation(location).build();
+      LocationName locationName =
+          LocationName.newBuilder().setProject(project).setLocation(location).build();
 
       String caPoolName = "";
       System.out.println("Available CA pools: ");
 
       // List the CA pools.
-      for (CaPool caPool : certificateAuthorityServiceClient.listCaPools(locationName)
-          .iterateAll()) {
+      for (CaPool caPool :
+          certificateAuthorityServiceClient.listCaPools(locationName).iterateAll()) {
         caPoolName = caPool.getName();
         // caPoolName represents the full resource name of the
         // format 'projects/{project-id}/locations/{location}/ca-pools/{ca-pool-name}'.

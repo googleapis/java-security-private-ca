@@ -54,8 +54,8 @@ public class CreateCertificateAuthority {
 
   // Create Certificate Authority which is the root CA in the given CA Pool. This CA will be
   // responsible for signing certificates within this pool.
-  public static void createCertificateAuthority(String project, String location,
-      String caPoolName, String certificateAuthorityName)
+  public static void createCertificateAuthority(
+      String project, String location, String caPoolName, String certificateAuthorityName)
       throws InterruptedException, ExecutionException, IOException {
     // Initialize client that will be used to send requests. This client only needs to be created
     // once, and can be reused for multiple requests. After completing all of your requests, call
@@ -69,37 +69,45 @@ public class CreateCertificateAuthority {
       int caDuration = 100000; // Validity of this CA in seconds.
 
       // Set certificate authority settings.
-      CertificateAuthority certificateAuthority = CertificateAuthority.newBuilder()
-          // CertificateAuthority.Type.SELF_SIGNED denotes that this CA is a root CA.
-          .setType(CertificateAuthority.Type.SELF_SIGNED)
+      CertificateAuthority certificateAuthority =
+          CertificateAuthority.newBuilder()
+              // CertificateAuthority.Type.SELF_SIGNED denotes that this CA is a root CA.
+              .setType(CertificateAuthority.Type.SELF_SIGNED)
 
-          // Set the types of Algorithm used to create a cloud KMS key.
-          .setKeySpec(KeyVersionSpec.newBuilder()
-              .setAlgorithm(SignHashAlgorithm.RSA_PKCS1_4096_SHA256).build())
-
-          // Set CA subject config and X.509 fields.
-          .setConfig(CertificateConfig.newBuilder()
-              .setSubjectConfig(SubjectConfig.newBuilder()
-                  .setSubject(Subject.newBuilder()
-                      .setCommonName(commonName)
-                      .setOrganization(orgName)
+              // Set the types of Algorithm used to create a cloud KMS key.
+              .setKeySpec(
+                  KeyVersionSpec.newBuilder()
+                      .setAlgorithm(SignHashAlgorithm.RSA_PKCS1_4096_SHA256)
                       .build())
-                  .build())
-              .setX509Config(
-                  X509Parameters.newBuilder()
-                      .setKeyUsage(KeyUsage.newBuilder()
-                          .setBaseKeyUsage(KeyUsageOptions.newBuilder()
-                              .setCrlSign(true)
-                              .setCertSign(true)
+
+              // Set CA subject config and X.509 fields.
+              .setConfig(
+                  CertificateConfig.newBuilder()
+                      .setSubjectConfig(
+                          SubjectConfig.newBuilder()
+                              .setSubject(
+                                  Subject.newBuilder()
+                                      .setCommonName(commonName)
+                                      .setOrganization(orgName)
+                                      .build())
                               .build())
-                          .build())
-                      .setCaOptions(CaOptions.newBuilder().setIsCa(true).build())
+                      .setX509Config(
+                          X509Parameters.newBuilder()
+                              .setKeyUsage(
+                                  KeyUsage.newBuilder()
+                                      .setBaseKeyUsage(
+                                          KeyUsageOptions.newBuilder()
+                                              .setCrlSign(true)
+                                              .setCertSign(true)
+                                              .build())
+                                      .build())
+                              .setCaOptions(CaOptions.newBuilder().setIsCa(true).build())
+                              .build())
                       .build())
-              .build())
 
-          // Set the duration of validity of CA.
-          .setLifetime(Duration.newBuilder().setSeconds(caDuration).build())
-          .build();
+              // Set the duration of validity of CA.
+              .setLifetime(Duration.newBuilder().setSeconds(caDuration).build())
+              .build();
 
       // Create the CertificateAuthorityRequest.
       CreateCertificateAuthorityRequest certificateAuthorityRequest =
@@ -110,8 +118,10 @@ public class CreateCertificateAuthority {
               .build();
 
       // Create Certificate Authority.
-      ApiFuture<Operation> futureCall = certificateAuthorityServiceClient
-          .createCertificateAuthorityCallable().futureCall(certificateAuthorityRequest);
+      ApiFuture<Operation> futureCall =
+          certificateAuthorityServiceClient
+              .createCertificateAuthorityCallable()
+              .futureCall(certificateAuthorityRequest);
       Operation response = futureCall.get();
 
       if (response.hasError()) {
@@ -119,8 +129,8 @@ public class CreateCertificateAuthority {
         return;
       }
 
-      System.out
-          .println("Certificate Authority created successfully : " + certificateAuthorityName);
+      System.out.println(
+          "Certificate Authority created successfully : " + certificateAuthorityName);
     }
   }
 }

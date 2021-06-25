@@ -42,21 +42,22 @@ public class ListCertificateAuthorities {
     // once, and can be reused for multiple requests. After completing all of your requests, call
     // the `certificateAuthorityServiceClient.close()` method on the client to safely
     // clean up any remaining background resources.
-    try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient
-        .create()) {
+    try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
+        CertificateAuthorityServiceClient.create()) {
 
       // Create CA pool name comprising of project, location and the pool name.
-      CaPoolName parent = CaPoolName.newBuilder()
-          .setProject(project)
-          .setLocation(location)
-          .setCaPool(caPoolName)
-          .build();
+      CaPoolName parent =
+          CaPoolName.newBuilder()
+              .setProject(project)
+              .setLocation(location)
+              .setCaPool(caPoolName)
+              .build();
 
       // List the CA name and its corresponding state.
-      for (CertificateAuthority certificateAuthority : certificateAuthorityServiceClient
-          .listCertificateAuthorities(parent).iterateAll()) {
-        System.out
-            .println(certificateAuthority.getName() + " is " + certificateAuthority.getState());
+      for (CertificateAuthority certificateAuthority :
+          certificateAuthorityServiceClient.listCertificateAuthorities(parent).iterateAll()) {
+        System.out.println(
+            certificateAuthority.getName() + " is " + certificateAuthority.getState());
       }
     }
   }

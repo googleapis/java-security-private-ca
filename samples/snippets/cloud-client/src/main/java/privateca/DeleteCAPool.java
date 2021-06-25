@@ -28,7 +28,6 @@ import java.util.concurrent.TimeoutException;
 
 public class DeleteCAPool {
 
-
   public static void main(String[] args)
       throws InterruptedException, ExecutionException, IOException, TimeoutException {
     // TODO(developer): Replace these variables before running the sample.
@@ -45,22 +44,24 @@ public class DeleteCAPool {
   // Before deleting the pool, all CAs in the pool MUST BE deleted.
   public static void deleteCAPool(String project, String location, String caPoolName)
       throws InterruptedException, ExecutionException, IOException {
-    try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient
-        .create()) {
+    try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
+        CertificateAuthorityServiceClient.create()) {
 
       // Set the project, location and caPoolName to delete.
-      CaPoolName caPool = CaPoolName.newBuilder()
-          .setProject(project)
-          .setLocation(location)
-          .setCaPool(caPoolName).build();
+      CaPoolName caPool =
+          CaPoolName.newBuilder()
+              .setProject(project)
+              .setLocation(location)
+              .setCaPool(caPoolName)
+              .build();
 
       // Create the Delete request.
-      DeleteCaPoolRequest deleteCaPoolRequest = DeleteCaPoolRequest.newBuilder()
-          .setName(caPool.toString()).build();
+      DeleteCaPoolRequest deleteCaPoolRequest =
+          DeleteCaPoolRequest.newBuilder().setName(caPool.toString()).build();
 
       // Delete the CA Pool.
-      ApiFuture<Operation> futureCall = certificateAuthorityServiceClient
-          .deleteCaPoolCallable().futureCall(deleteCaPoolRequest);
+      ApiFuture<Operation> futureCall =
+          certificateAuthorityServiceClient.deleteCaPoolCallable().futureCall(deleteCaPoolRequest);
       Operation response = futureCall.get();
 
       if (response.hasError()) {
