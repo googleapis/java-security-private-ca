@@ -56,8 +56,7 @@ public class CreateCertificate {
     String keyVersionId = "your-version-id";
 
     // Retrieve the public key from Cloud KMS.
-    ByteString publicKey = retrievePublicKey(project, kmsLocation, keyRingId, keyId,
-        keyVersionId);
+    ByteString publicKey = retrievePublicKey(project, kmsLocation, keyRingId, keyId, keyVersionId);
 
     // location: For a list of locations, see:
     // https://cloud.google.com/certificate-authority-service/docs/locations
@@ -69,21 +68,26 @@ public class CreateCertificate {
     String certificateAuthorityName = "certificate-authority-name";
     String certificateName = "certificate-name";
 
-    createCertificate(project, location, caPoolName, certificateAuthorityName, certificateName,
-        publicKey);
+    createCertificate(
+        project, location, caPoolName, certificateAuthorityName, certificateName, publicKey);
   }
 
   // Create a Certificate which is issued by the Certificate Authority present in the CA Pool.
   // The key used to sign the certificate is created by the Cloud KMS.
-  public static void createCertificate(String project, String location, String caPoolName,
-      String certificateAuthorityName, String certificateName, ByteString publicKey)
+  public static void createCertificate(
+      String project,
+      String location,
+      String caPoolName,
+      String certificateAuthorityName,
+      String certificateName,
+      ByteString publicKey)
       throws InterruptedException, ExecutionException, IOException {
     // Initialize client that will be used to send requests. This client only needs to be created
     // once, and can be reused for multiple requests. After completing all of your requests, call
     // the `certificateAuthorityServiceClient.close()` method on the client to safely
     // clean up any remaining background resources.
-    try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient
-        .create()) {
+    try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
+        CertificateAuthorityServiceClient.create()) {
 
       // commonName: Enter a title for your certificate.
       // orgName: Provide the name of your company.
@@ -95,56 +99,63 @@ public class CreateCertificate {
       long certificateLifetime = 1000L;
 
       // Create certificate.
-      Certificate certificate = Certificate.newBuilder()
-          .setConfig(
-              CertificateConfig.newBuilder()
+      Certificate certificate =
+          Certificate.newBuilder()
+              .setConfig(
+                  CertificateConfig.newBuilder()
 
-                  // Set the Public Key and its format as obtained from the Cloud KMS.
-                  .setPublicKey(
-                      PublicKey.newBuilder().setKey(publicKey).setFormat(KeyFormat.PEM)
-                          .build())
+                      // Set the Public Key and its format as obtained from the Cloud KMS.
+                      .setPublicKey(
+                          PublicKey.newBuilder().setKey(publicKey).setFormat(KeyFormat.PEM).build())
 
-                  // Set the common name and org name.
-                  .setSubjectConfig(SubjectConfig.newBuilder()
-                      .setSubject(Subject.newBuilder()
-                          .setCommonName(commonName)
-                          .setOrganization(orgName)
-                          .build())
-                      // Set the fully qualified domain name.
-                      .setSubjectAltName(
-                          SubjectAltNames.newBuilder().addDnsNames(domainName).build())
-                      .build())
-
-                  // Set the X.509 fields required for the certificate.
-                  .setX509Config(X509Parameters.newBuilder()
-                      .setKeyUsage(KeyUsage.newBuilder()
-                          .setBaseKeyUsage(KeyUsageOptions.newBuilder()
-                              .setDigitalSignature(true)
-                              .setKeyEncipherment(true)
-                              .setCertSign(true)
+                      // Set the common name and org name.
+                      .setSubjectConfig(
+                          SubjectConfig.newBuilder()
+                              .setSubject(
+                                  Subject.newBuilder()
+                                      .setCommonName(commonName)
+                                      .setOrganization(orgName)
+                                      .build())
+                              // Set the fully qualified domain name.
+                              .setSubjectAltName(
+                                  SubjectAltNames.newBuilder().addDnsNames(domainName).build())
                               .build())
-                          .setExtendedKeyUsage(
-                              ExtendedKeyUsageOptions.newBuilder().setServerAuth(true).build())
-                          .build())
-                      .setCaOptions(CaOptions.newBuilder().setIsCa(true).buildPartial())
+
+                      // Set the X.509 fields required for the certificate.
+                      .setX509Config(
+                          X509Parameters.newBuilder()
+                              .setKeyUsage(
+                                  KeyUsage.newBuilder()
+                                      .setBaseKeyUsage(
+                                          KeyUsageOptions.newBuilder()
+                                              .setDigitalSignature(true)
+                                              .setKeyEncipherment(true)
+                                              .setCertSign(true)
+                                              .build())
+                                      .setExtendedKeyUsage(
+                                          ExtendedKeyUsageOptions.newBuilder()
+                                              .setServerAuth(true)
+                                              .build())
+                                      .build())
+                              .setCaOptions(CaOptions.newBuilder().setIsCa(true).buildPartial())
+                              .build())
                       .build())
-                  .build())
-
-          .setLifetime(Duration.newBuilder().setSeconds(certificateLifetime).build())
-
-          .build();
+              .setLifetime(Duration.newBuilder().setSeconds(certificateLifetime).build())
+              .build();
 
       // Create the Certificate Request.
-      CreateCertificateRequest certificateRequest = CreateCertificateRequest.newBuilder()
-          .setParent(CaPoolName.of(project, location, caPoolName).toString())
-          .setCertificateId(certificateName)
-          .setCertificate(certificate)
-          .setIssuingCertificateAuthorityId(certificateAuthorityName)
-          .build();
+      CreateCertificateRequest certificateRequest =
+          CreateCertificateRequest.newBuilder()
+              .setParent(CaPoolName.of(project, location, caPoolName).toString())
+              .setCertificateId(certificateName)
+              .setCertificate(certificate)
+              .setIssuingCertificateAuthorityId(certificateAuthorityName)
+              .build();
 
       // Get the Certificate response.
       ApiFuture<Certificate> future =
-          certificateAuthorityServiceClient.createCertificateCallable()
+          certificateAuthorityServiceClient
+              .createCertificateCallable()
               .futureCall(certificateRequest);
 
       // Get the PEM encoded, signed X.509 certificate.
@@ -156,9 +167,9 @@ public class CreateCertificate {
   }
 
   // Get the public Key used for signing the certificate from Cloud KMS.
-  public static ByteString retrievePublicKey(String project, String kmsLocation,
-      String keyRingId, String keyId,
-      String keyVersionId) throws IOException {
+  public static ByteString retrievePublicKey(
+      String project, String kmsLocation, String keyRingId, String keyId, String keyVersionId)
+      throws IOException {
     // Initialize client that will be used to send requests. This client only needs to be created
     // once, and can be reused for multiple requests. After completing all of your requests, call
     // the `certificateAuthorityServiceClient.close()` method on the client to safely

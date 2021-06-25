@@ -42,19 +42,20 @@ public class ListCertificates {
     // once, and can be reused for multiple requests. After completing all of your requests, call
     // the `certificateAuthorityServiceClient.close()` method on the client to safely
     // clean up any remaining background resources.
-    try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient
-        .create()) {
+    try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
+        CertificateAuthorityServiceClient.create()) {
 
-      CaPoolName caPool = CaPoolName.newBuilder()
-          .setProject(project)
-          .setLocation(location)
-          .setCaPool(caPoolName)
-          .build();
+      CaPoolName caPool =
+          CaPoolName.newBuilder()
+              .setProject(project)
+              .setLocation(location)
+              .setCaPool(caPoolName)
+              .build();
 
       // Retrieve and print the certificate names.
       System.out.println("Available certificates: ");
-      for (Certificate certificate : certificateAuthorityServiceClient.listCertificates(caPool)
-          .iterateAll()) {
+      for (Certificate certificate :
+          certificateAuthorityServiceClient.listCertificates(caPool).iterateAll()) {
         System.out.println(certificate.getName());
       }
     }
