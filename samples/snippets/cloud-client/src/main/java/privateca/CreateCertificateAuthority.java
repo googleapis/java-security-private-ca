@@ -68,32 +68,27 @@ public class CreateCertificateAuthority {
       String orgName = "org-name";
       int caDuration = 100000; // Validity of this CA in seconds.
 
-
       // Set the types of Algorithm used to create a cloud KMS key.
-      KeyVersionSpec keyVersionSpec = KeyVersionSpec.newBuilder()
-          .setAlgorithm(SignHashAlgorithm.RSA_PKCS1_4096_SHA256)
-          .build();
+      KeyVersionSpec keyVersionSpec =
+          KeyVersionSpec.newBuilder().setAlgorithm(SignHashAlgorithm.RSA_PKCS1_4096_SHA256).build();
 
       // Set CA subject config.
-      SubjectConfig subjectConfig = SubjectConfig.newBuilder()
-          .setSubject(Subject.newBuilder()
-            .setCommonName(commonName)
-            .setOrganization(orgName)
-            .build())
-          .build();
+      SubjectConfig subjectConfig =
+          SubjectConfig.newBuilder()
+              .setSubject(
+                  Subject.newBuilder().setCommonName(commonName).setOrganization(orgName).build())
+              .build();
 
       //  Set the key usage options for X.509 fields.
-      X509Parameters x509Parameters = X509Parameters.newBuilder()
-          .setKeyUsage(KeyUsage.newBuilder()
-              .setBaseKeyUsage(
-                  KeyUsageOptions.newBuilder()
-                    .setCrlSign(true)
-                    .setCertSign(true)
-                    .build())
-              .build())
-          .setCaOptions(CaOptions.newBuilder().setIsCa(true).build())
-          .build();
-
+      X509Parameters x509Parameters =
+          X509Parameters.newBuilder()
+              .setKeyUsage(
+                  KeyUsage.newBuilder()
+                      .setBaseKeyUsage(
+                          KeyUsageOptions.newBuilder().setCrlSign(true).setCertSign(true).build())
+                      .build())
+              .setCaOptions(CaOptions.newBuilder().setIsCa(true).build())
+              .build();
 
       // Set certificate authority settings.
       CertificateAuthority certificateAuthority =
