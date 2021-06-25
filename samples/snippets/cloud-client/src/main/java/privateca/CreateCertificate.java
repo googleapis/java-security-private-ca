@@ -56,7 +56,7 @@ public class CreateCertificate {
     String keyVersionId = "your-version-id";
 
     // Retrieve the public key from Cloud KMS.
-    ByteString publicKey = retrievePublicKey(project, kmsLocation, keyRingId, keyId,
+    ByteString publicKeyBytes = retrievePublicKey(project, kmsLocation, keyRingId, keyId,
         keyVersionId);
 
     // location: For a list of locations, see:
@@ -70,13 +70,13 @@ public class CreateCertificate {
     String certificateName = "certificate-name";
 
     createCertificate(project, location, caPoolName, certificateAuthorityName, certificateName,
-        publicKey);
+        publicKeyBytes);
   }
 
   // Create a Certificate which is issued by the Certificate Authority present in the CA Pool.
   // The key used to sign the certificate is created by the Cloud KMS.
   public static void createCertificate(String project, String location, String caPoolName,
-      String certificateAuthorityName, String certificateName, ByteString publicKey)
+      String certificateAuthorityName, String certificateName, ByteString publicKeyBytes)
       throws InterruptedException, ExecutionException, IOException {
     // Initialize client that will be used to send requests. This client only needs to be created
     // once, and can be reused for multiple requests. After completing all of your requests, call
@@ -94,44 +94,39 @@ public class CreateCertificate {
       String domainName = "dnsname.com";
       long certificateLifetime = 1000L;
 
+      // Set the Public Key and its format as obtained from the Cloud KMS.
+      PublicKey publicKey = PublicKey.newBuilder().setKey(publicKeyBytes).setFormat(KeyFormat.PEM).build();
+
+      SubjectConfig subjectConfig = SubjectConfig.newBuilder()
+          // Set the common name and org name.
+          .setSubject(Subject.newBuilder().setCommonName(commonName).setOrganization(orgName).build())
+          // Set the fully qualified domain name.
+          .setSubjectAltName(SubjectAltNames.newBuilder().addDnsNames(domainName).build())
+          .build();
+
+      // Set the X.509 fields required for the certificate.
+      X509Parameters x509Parameters = X509Parameters.newBuilder()
+          .setKeyUsage(KeyUsage.newBuilder()
+              .setBaseKeyUsage(KeyUsageOptions.newBuilder()
+                  .setDigitalSignature(true)
+                  .setKeyEncipherment(true)
+                  .setCertSign(true)
+                  .build())
+              .setExtendedKeyUsage(
+                  ExtendedKeyUsageOptions.newBuilder().setServerAuth(true).build())
+              .build())
+          .setCaOptions(CaOptions.newBuilder().setIsCa(true).buildPartial())
+          .build();
+
       // Create certificate.
       Certificate certificate = Certificate.newBuilder()
           .setConfig(
               CertificateConfig.newBuilder()
-
-                  // Set the Public Key and its format as obtained from the Cloud KMS.
-                  .setPublicKey(
-                      PublicKey.newBuilder().setKey(publicKey).setFormat(KeyFormat.PEM)
-                          .build())
-
-                  // Set the common name and org name.
-                  .setSubjectConfig(SubjectConfig.newBuilder()
-                      .setSubject(Subject.newBuilder()
-                          .setCommonName(commonName)
-                          .setOrganization(orgName)
-                          .build())
-                      // Set the fully qualified domain name.
-                      .setSubjectAltName(
-                          SubjectAltNames.newBuilder().addDnsNames(domainName).build())
-                      .build())
-
-                  // Set the X.509 fields required for the certificate.
-                  .setX509Config(X509Parameters.newBuilder()
-                      .setKeyUsage(KeyUsage.newBuilder()
-                          .setBaseKeyUsage(KeyUsageOptions.newBuilder()
-                              .setDigitalSignature(true)
-                              .setKeyEncipherment(true)
-                              .setCertSign(true)
-                              .build())
-                          .setExtendedKeyUsage(
-                              ExtendedKeyUsageOptions.newBuilder().setServerAuth(true).build())
-                          .build())
-                      .setCaOptions(CaOptions.newBuilder().setIsCa(true).buildPartial())
-                      .build())
+                  .setPublicKey(publicKey)
+                  .setSubjectConfig(subjectConfig)
+                  .setX509Config(x509Parameters)
                   .build())
-
           .setLifetime(Duration.newBuilder().setSeconds(certificateLifetime).build())
-
           .build();
 
       // Create the Certificate Request.
