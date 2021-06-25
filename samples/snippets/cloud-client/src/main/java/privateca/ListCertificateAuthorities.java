@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package privateca;
+
 // [START privateca_list_ca]
 
 import com.google.cloud.security.privateca.v1.CaPoolName;
@@ -24,7 +25,9 @@ import java.io.IOException;
 public class ListCertificateAuthorities {
 
   public static void main(String[] args) throws IOException {
-    // location: For a list of locations, see: certificate-authority-service/docs/locations
+    // TODO(developer): Replace these variables before running the sample.
+    // location: For a list of locations, see:
+    // https://cloud.google.com/certificate-authority-service/docs/locations
     // caPoolName: The name of the CA pool under which the CAs to be listed are present.
     String project = "your-project-id";
     String location = "ca-location";

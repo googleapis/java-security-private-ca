@@ -40,7 +40,9 @@ public class CreateCertificateAuthority {
 
   public static void main(String[] args)
       throws InterruptedException, ExecutionException, IOException {
-    // location: For a list of locations, see: certificate-authority-service/docs/locations
+    // TODO(developer): Replace these variables before running the sample.
+    // location: For a list of locations, see:
+    // https://cloud.google.com/certificate-authority-service/docs/locations
     // caPoolName: Set it to the CA Pool under which the CA should be created.
     // certificateAuthorityName: Unique name for the CA.
     String project = "your-project-id";

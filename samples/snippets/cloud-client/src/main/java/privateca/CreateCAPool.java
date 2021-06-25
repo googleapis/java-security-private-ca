@@ -31,7 +31,9 @@ public class CreateCAPool {
 
   public static void main(String[] args)
       throws InterruptedException, ExecutionException, IOException {
-    // location: For a list of locations, see: certificate-authority-service/docs/locations
+    // TODO(developer): Replace these variables before running the sample.
+    // location: For a list of locations, see:
+    // https://cloud.google.com/certificate-authority-service/docs/locations
     // caPoolName: Set a unique name for the ca pool.
     String project = "your-project-id";
     String location = "ca-location";
@@ -52,7 +54,7 @@ public class CreateCAPool {
 
       /* Create the pool request
          Set Parent which denotes the project id and location.
-         Set the Tier (see: certificate-authority-service/docs/tiers).
+         Set the Tier (see: https://cloud.google.com/certificate-authority-service/docs/tiers).
        */
       CreateCaPoolRequest caPoolRequest = CreateCaPoolRequest.newBuilder()
           .setParent(LocationName.of(project, location).toString())

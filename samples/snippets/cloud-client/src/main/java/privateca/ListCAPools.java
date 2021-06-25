@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package privateca;
+
 // [START privateca_list_ca_pool]
 
 import com.google.cloud.security.privateca.v1.CaPool;
@@ -24,7 +25,9 @@ import java.io.IOException;
 public class ListCAPools {
 
   public static void main(String[] args) throws IOException {
-    // location: For a list of locations, see: certificate-authority-service/docs/locations
+    // TODO(developer): Replace these variables before running the sample.
+    // location: For a list of locations, see:
+    // https://cloud.google.com/certificate-authority-service/docs/locations
     String project = "your-project-id";
     String location = "ca-location";
     listCAPools(project, location);
@@ -52,7 +55,7 @@ public class ListCAPools {
           .iterateAll()) {
         caPoolName = caPool.getName();
         // caPoolName represents the full resource name of the
-        // format 'projects/project-id/locations/location/ca-pools/ca-pool-name'.
+        // format 'projects/{project-id}/locations/{location}/ca-pools/{ca-pool-name}'.
         // Hence stripping it down to just pool name.
         System.out.println(
             caPoolName.substring(caPoolName.lastIndexOf("/") + 1) + " " + caPool.isInitialized());

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package privateca;
+
 // [START privateca_delete_ca_pool]
 
 import com.google.api.core.ApiFuture;
@@ -30,7 +31,9 @@ public class DeleteCAPool {
 
   public static void main(String[] args)
       throws InterruptedException, ExecutionException, IOException, TimeoutException {
-    // location: For a list of locations, see: certificate-authority-service/docs/locations
+    // TODO(developer): Replace these variables before running the sample.
+    // location: For a list of locations, see:
+    // https://cloud.google.com/certificate-authority-service/docs/locations
     // caPoolName: The name of the CA pool to be deleted.
     String project = "your-project-id";
     String location = "ca-location";
