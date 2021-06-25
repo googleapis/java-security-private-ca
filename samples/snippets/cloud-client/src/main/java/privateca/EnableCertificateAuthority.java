@@ -30,35 +30,37 @@ public class EnableCertificateAuthority {
 
   public static void main(String[] args)
       throws InterruptedException, ExecutionException, IOException {
-    // location: For a list of locations, see: certificate-authority-service/docs/locations
+    // TODO(developer): Replace these variables before running the sample.
+    // location: For a list of locations, see:
+    // https://cloud.google.com/certificate-authority-service/docs/locations
     // caPoolName: The name of the CA pool under which the CA is present.
-    // certificateAuthority: The name of the CA to be enabled.
+    // certificateAuthorityName: The name of the CA to be enabled.
     String project = "your-project-id";
     String location = "ca-location";
     String caPoolName = "ca-pool-name";
-    String certificateAuthority = "certificate-authority-name";
-    enableCertificateAuthority(project, location, caPoolName, certificateAuthority);
+    String certificateAuthorityName = "certificate-authority-name";
+    enableCertificateAuthority(project, location, caPoolName, certificateAuthorityName);
   }
 
   // Enable the Certificate Authority present in the given ca pool.
   // CA cannot be enabled if it has been already deleted.
   public static void enableCertificateAuthority(String project, String location, String caPoolName,
-      String certificateAuthority)
+      String certificateAuthorityName)
       throws IOException, ExecutionException, InterruptedException {
     try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient
         .create()) {
       // Create the Certificate Authority Name.
-      CertificateAuthorityName certificateAuthorityName = CertificateAuthorityName.newBuilder()
+      CertificateAuthorityName certificateAuthorityParent = CertificateAuthorityName.newBuilder()
           .setProject(project)
           .setLocation(location)
           .setCaPool(caPoolName)
-          .setCertificateAuthority(certificateAuthority)
+          .setCertificateAuthority(certificateAuthorityName)
           .build();
 
       // Create the Enable Certificate Authority Request.
       EnableCertificateAuthorityRequest enableCertificateAuthorityRequest =
           EnableCertificateAuthorityRequest.newBuilder()
-              .setName(certificateAuthorityName.toString()).build();
+              .setName(certificateAuthorityParent.toString()).build();
 
       // Enable the Certificate Authority.
       ApiFuture<Operation> futureCall = certificateAuthorityServiceClient
@@ -72,12 +74,12 @@ public class EnableCertificateAuthority {
 
       // Get the current CA state.
       State caState = certificateAuthorityServiceClient
-          .getCertificateAuthority(certificateAuthorityName)
+          .getCertificateAuthority(certificateAuthorityParent)
           .getState();
 
       // Check if the CA is enabled.
       if (caState == State.ENABLED) {
-        System.out.println("Enabled Certificate Authority : " + certificateAuthority);
+        System.out.println("Enabled Certificate Authority : " + certificateAuthorityName);
       } else {
         System.out
             .println("Cannot enable the Certificate Authority ! Current CA State: " + caState);

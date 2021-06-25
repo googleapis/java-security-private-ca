@@ -30,19 +30,22 @@ public class DisableCertificateAuthority {
 
   public static void main(String[] args)
       throws InterruptedException, ExecutionException, IOException {
-    // location: For a list of locations, see: certificate-authority-service/docs/locations
+    // TODO(developer): Replace these variables before running the sample.
+    // location: For a list of locations, see:
+    // https://cloud.google.com/certificate-authority-service/docs/locations
     // caPoolName: The name of the CA pool under which the CA is present.
-    // certificateAuthority: The name of the CA to be disabled.
+    // certificateAuthorityName: The name of the CA to be disabled.
     String project = "your-project-id";
     String location = "ca-location";
     String caPoolName = "ca-pool-name";
-    String certificateAuthority = "certificate-authority-name";
-    disableCertificateAuthority(project, location, caPoolName, certificateAuthority);
+    String certificateAuthorityName = "certificate-authority-name";
+    disableCertificateAuthority(project, location, caPoolName, certificateAuthorityName);
   }
 
   // Disable a Certificate Authority which is present in the given CA pool.
   public static void disableCertificateAuthority(String project, String location, String caPoolName,
-      String certificateAuthority) throws IOException, ExecutionException, InterruptedException {
+      String certificateAuthorityName)
+      throws IOException, ExecutionException, InterruptedException {
     // Initialize client that will be used to send requests. This client only needs to be created
     // once, and can be reused for multiple requests. After completing all of your requests, call
     // the `certificateAuthorityServiceClient.close()` method on the client to safely
@@ -51,17 +54,18 @@ public class DisableCertificateAuthority {
         .create()) {
 
       // Create the Certificate Authority Name.
-      CertificateAuthorityName certificateAuthorityName = CertificateAuthorityName.newBuilder()
+      CertificateAuthorityName certificateAuthorityNameParent = CertificateAuthorityName
+          .newBuilder()
           .setProject(project)
           .setLocation(location)
           .setCaPool(caPoolName)
-          .setCertificateAuthority(certificateAuthority)
+          .setCertificateAuthority(certificateAuthorityName)
           .build();
 
       // Create the Disable Certificate Authority Request.
       DisableCertificateAuthorityRequest disableCertificateAuthorityRequest =
           DisableCertificateAuthorityRequest.newBuilder()
-              .setName(certificateAuthorityName.toString()).build();
+              .setName(certificateAuthorityNameParent.toString()).build();
 
       // Disable the Certificate Authority.
       ApiFuture<Operation> futureCall = certificateAuthorityServiceClient
@@ -75,12 +79,12 @@ public class DisableCertificateAuthority {
 
       // Get the current CA state.
       State caState = certificateAuthorityServiceClient
-          .getCertificateAuthority(certificateAuthorityName)
+          .getCertificateAuthority(certificateAuthorityNameParent)
           .getState();
 
       // Check if the Certificate Authority is disabled.
       if (caState == State.DISABLED) {
-        System.out.println("Disabled Certificate Authority : " + certificateAuthority);
+        System.out.println("Disabled Certificate Authority : " + certificateAuthorityName);
       } else {
         System.out
             .println("Cannot disable the Certificate Authority ! Current CA State: " + caState);
