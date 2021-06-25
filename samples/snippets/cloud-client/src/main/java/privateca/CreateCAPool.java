@@ -53,19 +53,19 @@ public class CreateCAPool {
         CertificateAuthorityServiceClient.create()) {
 
       /* Create the pool request
-         Set Parent which denotes the project id and location.
-         Set the Tier (see: https://cloud.google.com/certificate-authority-service/docs/tiers).
-       */
-      CreateCaPoolRequest caPoolRequest = CreateCaPoolRequest.newBuilder()
-          .setParent(LocationName.of(project, location).toString())
-          .setCaPoolId(caPoolName)
-          .setCaPool(CaPool.newBuilder()
-              .setTier(Tier.ENTERPRISE).build())
-          .build();
+        Set Parent which denotes the project id and location.
+        Set the Tier (see: https://cloud.google.com/certificate-authority-service/docs/tiers).
+      */
+      CreateCaPoolRequest caPoolRequest =
+          CreateCaPoolRequest.newBuilder()
+              .setParent(LocationName.of(project, location).toString())
+              .setCaPoolId(caPoolName)
+              .setCaPool(CaPool.newBuilder().setTier(Tier.ENTERPRISE).build())
+              .build();
 
       // Create the CA pool.
-      ApiFuture<Operation> futureCall = certificateAuthorityServiceClient.createCaPoolCallable()
-          .futureCall(caPoolRequest);
+      ApiFuture<Operation> futureCall =
+          certificateAuthorityServiceClient.createCaPoolCallable().futureCall(caPoolRequest);
       Operation response = futureCall.get();
 
       if (response.hasError()) {
