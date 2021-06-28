@@ -63,13 +63,13 @@ public class DeleteCertificateAuthority {
               .build();
 
       // Check if the CA is enabled.
-      State caState = certificateAuthorityServiceClient
-          .getCertificateAuthority(certificateAuthorityNameParent)
-          .getState();
+      State caState =
+          certificateAuthorityServiceClient
+              .getCertificateAuthority(certificateAuthorityNameParent)
+              .getState();
       if (caState == State.ENABLED) {
         System.out.println(
-            "Please disable the Certificate Authority before deletion ! Current state: "
-                + caState);
+            "Please disable the Certificate Authority before deletion ! Current state: " + caState);
         return;
       }
 
@@ -96,16 +96,16 @@ public class DeleteCertificateAuthority {
       }
 
       // Check if the CA has been deleted.
-      caState = certificateAuthorityServiceClient
-          .getCertificateAuthority(certificateAuthorityNameParent)
-          .getState();
+      caState =
+          certificateAuthorityServiceClient
+              .getCertificateAuthority(certificateAuthorityNameParent)
+              .getState();
       if (caState == State.DELETED) {
         System.out.println(
             "Successfully deleted Certificate Authority : " + certificateAuthorityName);
       } else {
         System.out.println(
-            "Unable to delete Certificate Authority. Please try again ! Current state: "
-                + caState);
+            "Unable to delete Certificate Authority. Please try again ! Current state: " + caState);
       }
     }
   }
