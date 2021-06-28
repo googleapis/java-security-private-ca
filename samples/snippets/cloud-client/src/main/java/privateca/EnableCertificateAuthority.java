@@ -72,7 +72,7 @@ public class EnableCertificateAuthority {
       Operation response = futureCall.get();
 
       if (response.hasError()) {
-        System.out.println("Error while enabling Certificate Authority !");
+        System.out.println("Error while enabling Certificate Authority !" + response.getError());
         return;
       }
 

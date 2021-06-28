@@ -27,23 +27,23 @@ import com.google.longrunning.Operation;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-public class CreateCAPool {
+public class CreateCaPool {
 
   public static void main(String[] args)
       throws InterruptedException, ExecutionException, IOException {
     // TODO(developer): Replace these variables before running the sample.
     // location: For a list of locations, see:
     // https://cloud.google.com/certificate-authority-service/docs/locations
-    // caPoolName: Set a unique name for the ca pool.
+    // caPoolName: Set a unique name for the CA pool.
     String project = "your-project-id";
     String location = "ca-location";
     String caPoolName = "ca-pool-name";
-    createCAPool(project, location, caPoolName);
+    createCaPool(project, location, caPoolName);
   }
 
-  // Create a Certificate Authority Pool. All certificates created under this ca pool will
+  // Create a Certificate Authority Pool. All certificates created under this CA pool will
   // follow the same issuance policy, IAM policies,etc.,
-  public static void createCAPool(String project, String location, String caPoolName)
+  public static void createCaPool(String project, String location, String caPoolName)
       throws InterruptedException, ExecutionException, IOException {
     // Initialize client that will be used to send requests. This client only needs to be created
     // once, and can be reused for multiple requests. After completing all of your requests, call
@@ -69,7 +69,7 @@ public class CreateCAPool {
       Operation response = futureCall.get();
 
       if (response.hasError()) {
-        System.out.println("Error while creating CA pool !");
+        System.out.println("Error while creating CA pool !" + response.getError());
         return;
       }
 

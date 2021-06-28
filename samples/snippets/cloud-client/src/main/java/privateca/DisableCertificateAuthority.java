@@ -76,7 +76,7 @@ public class DisableCertificateAuthority {
       Operation response = futureCall.get();
 
       if (response.hasError()) {
-        System.out.println("Error while disabling Certificate Authority !");
+        System.out.println("Error while disabling Certificate Authority !" + response.getError());
         return;
       }
 

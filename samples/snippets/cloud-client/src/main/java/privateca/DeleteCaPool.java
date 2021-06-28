@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
-public class DeleteCAPool {
+public class DeleteCaPool {
 
   public static void main(String[] args)
       throws InterruptedException, ExecutionException, IOException, TimeoutException {
@@ -37,13 +37,17 @@ public class DeleteCAPool {
     String project = "your-project-id";
     String location = "ca-location";
     String caPoolName = "ca-pool-name";
-    deleteCAPool(project, location, caPoolName);
+    deleteCaPool(project, location, caPoolName);
   }
 
   // Delete the CA pool as mentioned by the caPoolName.
   // Before deleting the pool, all CAs in the pool MUST BE deleted.
-  public static void deleteCAPool(String project, String location, String caPoolName)
+  public static void deleteCaPool(String project, String location, String caPoolName)
       throws InterruptedException, ExecutionException, IOException {
+    // Initialize client that will be used to send requests. This client only needs to be created
+    // once, and can be reused for multiple requests. After completing all of your requests, call
+    // the `certificateAuthorityServiceClient.close()` method on the client to safely
+    // clean up any remaining background resources.
     try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
         CertificateAuthorityServiceClient.create()) {
 
@@ -65,7 +69,7 @@ public class DeleteCAPool {
       Operation response = futureCall.get();
 
       if (response.hasError()) {
-        System.out.println("Error while deleting CA pool !");
+        System.out.println("Error while deleting CA pool !" + response.getError());
         return;
       }
 

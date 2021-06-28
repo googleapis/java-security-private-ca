@@ -61,7 +61,7 @@ public class CreateCertificate {
 
     // location: For a list of locations, see:
     // https://cloud.google.com/certificate-authority-service/docs/locations
-    // caPoolName: Set a unique name for the ca pool.
+    // caPoolName: Set a unique name for the CA pool.
     // certificateAuthorityName: The name of the certificate authority which issues the certificate.
     // certificateName: Set a unique name for the certificate.
     String location = "ca-location";
@@ -95,11 +95,13 @@ public class CreateCertificate {
       long certificateLifetime = 1000L;
 
       // Set the Public Key and its format as obtained from the Cloud KMS.
-      PublicKey publicKey = PublicKey.newBuilder().setKey(publicKeyBytes).setFormat(KeyFormat.PEM).build();
+      PublicKey publicKey = PublicKey.newBuilder().setKey(publicKeyBytes).setFormat(KeyFormat.PEM)
+          .build();
 
       SubjectConfig subjectConfig = SubjectConfig.newBuilder()
           // Set the common name and org name.
-          .setSubject(Subject.newBuilder().setCommonName(commonName).setOrganization(orgName).build())
+          .setSubject(
+              Subject.newBuilder().setCommonName(commonName).setOrganization(orgName).build())
           // Set the fully qualified domain name.
           .setSubjectAltName(SubjectAltNames.newBuilder().addDnsNames(domainName).build())
           .build();
@@ -142,11 +144,11 @@ public class CreateCertificate {
           certificateAuthorityServiceClient.createCertificateCallable()
               .futureCall(certificateRequest);
 
-      // Get the PEM encoded, signed X.509 certificate.
-      // response.getPemCertificate()
-      // To verify the obtained certificate, use this intermediate chain list.
-      // response.getPemCertificateChainList()
       Certificate response = future.get();
+      // Get the PEM encoded, signed X.509 certificate.
+      System.out.println(response.getPemCertificate());
+      // To verify the obtained certificate, use this intermediate chain list.
+      System.out.println(response.getPemCertificateChainList());
     }
   }
 

@@ -93,8 +93,8 @@ public class SnippetsIT {
     VERSION_ID = "1";
 
     // Create CA Pool.
-    privateca.CreateCAPool.createCAPool(PROJECT_ID, LOCATION, CA_POOL_NAME);
-    privateca.CreateCAPool.createCAPool(PROJECT_ID, LOCATION, CA_POOL_NAME_DELETE);
+    privateca.CreateCaPool.createCaPool(PROJECT_ID, LOCATION, CA_POOL_NAME);
+    privateca.CreateCaPool.createCaPool(PROJECT_ID, LOCATION, CA_POOL_NAME_DELETE);
 
     // Create and Enable Certificate Authorities.
     privateca.CreateCertificateAuthority.createCertificateAuthority(
@@ -132,7 +132,7 @@ public class SnippetsIT {
     privateca.DeleteCertificateAuthority.deleteCertificateAuthority(
         PROJECT_ID, LOCATION, CA_POOL_NAME, CA_NAME);
     sleep(5);
-    privateca.DeleteCAPool.deleteCAPool(PROJECT_ID, LOCATION, CA_POOL_NAME);
+    privateca.DeleteCaPool.deleteCaPool(PROJECT_ID, LOCATION, CA_POOL_NAME);
 
     stdOut = null;
     System.setOut(null);
@@ -235,14 +235,14 @@ public class SnippetsIT {
 
   @Test
   public void testListCAPools() throws IOException {
-    privateca.ListCAPools.listCAPools(PROJECT_ID, LOCATION);
+    privateca.ListCaPools.listCaPools(PROJECT_ID, LOCATION);
     assertThat(stdOut.toString()).contains(CA_POOL_NAME);
   }
 
   @Test
   public void testDeleteCAPool()
       throws InterruptedException, ExecutionException, IOException, TimeoutException {
-    privateca.DeleteCAPool.deleteCAPool(PROJECT_ID, LOCATION, CA_POOL_NAME_DELETE);
+    privateca.DeleteCaPool.deleteCaPool(PROJECT_ID, LOCATION, CA_POOL_NAME_DELETE);
     assertThat(stdOut.toString()).contains("Deleted CA Pool: " + CA_POOL_NAME_DELETE);
   }
 

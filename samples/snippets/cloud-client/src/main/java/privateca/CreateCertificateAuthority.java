@@ -68,7 +68,6 @@ public class CreateCertificateAuthority {
       String orgName = "org-name";
       int caDuration = 100000; // Validity of this CA in seconds.
 
-
       // Set the types of Algorithm used to create a cloud KMS key.
       KeyVersionSpec keyVersionSpec = KeyVersionSpec.newBuilder()
           .setAlgorithm(SignHashAlgorithm.RSA_PKCS1_4096_SHA256)
@@ -77,9 +76,9 @@ public class CreateCertificateAuthority {
       // Set CA subject config.
       SubjectConfig subjectConfig = SubjectConfig.newBuilder()
           .setSubject(Subject.newBuilder()
-            .setCommonName(commonName)
-            .setOrganization(orgName)
-            .build())
+              .setCommonName(commonName)
+              .setOrganization(orgName)
+              .build())
           .build();
 
       //  Set the key usage options for X.509 fields.
@@ -87,13 +86,12 @@ public class CreateCertificateAuthority {
           .setKeyUsage(KeyUsage.newBuilder()
               .setBaseKeyUsage(
                   KeyUsageOptions.newBuilder()
-                    .setCrlSign(true)
-                    .setCertSign(true)
-                    .build())
+                      .setCrlSign(true)
+                      .setCertSign(true)
+                      .build())
               .build())
           .setCaOptions(CaOptions.newBuilder().setIsCa(true).build())
           .build();
-
 
       // Set certificate authority settings.
       CertificateAuthority certificateAuthority =
@@ -126,7 +124,7 @@ public class CreateCertificateAuthority {
       Operation response = futureCall.get();
 
       if (response.hasError()) {
-        System.out.println("Error while creating CA !");
+        System.out.println("Error while creating CA !" + response.getError());
         return;
       }
 

@@ -22,7 +22,7 @@ import com.google.cloud.security.privateca.v1.CertificateAuthorityServiceClient;
 import com.google.cloud.security.privateca.v1.LocationName;
 import java.io.IOException;
 
-public class ListCAPools {
+public class ListCaPools {
 
   public static void main(String[] args) throws IOException {
     // TODO(developer): Replace these variables before running the sample.
@@ -30,11 +30,11 @@ public class ListCAPools {
     // https://cloud.google.com/certificate-authority-service/docs/locations
     String project = "your-project-id";
     String location = "ca-location";
-    listCAPools(project, location);
+    listCaPools(project, location);
   }
 
   // List all CA pools present in the given project and location.
-  public static void listCAPools(String project, String location) throws IOException {
+  public static void listCaPools(String project, String location) throws IOException {
     // Initialize client that will be used to send requests. This client only needs to be created
     // once, and can be reused for multiple requests. After completing all of your requests, call
     // the `certificateAuthorityServiceClient.close()` method on the client to safely
