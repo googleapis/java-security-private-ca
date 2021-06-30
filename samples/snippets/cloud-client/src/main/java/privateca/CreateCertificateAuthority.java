@@ -52,8 +52,7 @@ public class CreateCertificateAuthority {
     createCertificateAuthority(project, location, caPoolName, certificateAuthorityName);
   }
 
-  // Create Certificate Authority which is the root CA in the given CA Pool. This CA will be
-  // responsible for signing certificates within this pool.
+  // Create Certificate Authority which is the root CA in the given CA Pool.
   public static void createCertificateAuthority(
       String project, String location, String caPoolName, String certificateAuthorityName)
       throws InterruptedException, ExecutionException, IOException {
@@ -68,7 +67,7 @@ public class CreateCertificateAuthority {
       String orgName = "org-name";
       int caDuration = 100000; // Validity of this CA in seconds.
 
-      // Set the types of Algorithm used to create a cloud KMS key.
+      // Set the type of Algorithm.
       KeyVersionSpec keyVersionSpec =
           KeyVersionSpec.newBuilder().setAlgorithm(SignHashAlgorithm.RSA_PKCS1_4096_SHA256).build();
 
