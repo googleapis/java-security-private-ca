@@ -170,7 +170,7 @@ public class CreateCertificate {
       throws IOException {
     // Initialize client that will be used to send requests. This client only needs to be created
     // once, and can be reused for multiple requests. After completing all of your requests, call
-    // the `certificateAuthorityServiceClient.close()` method on the client to safely
+    // the `client.close()` method on the client to safely
     // clean up any remaining background resources.
     try (KeyManagementServiceClient client = KeyManagementServiceClient.create()) {
 
