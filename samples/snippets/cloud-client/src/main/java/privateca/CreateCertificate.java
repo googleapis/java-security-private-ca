@@ -47,7 +47,7 @@ public class CreateCertificate {
     // TODO(developer): Replace these variables before running the sample.
 
     // To sign and issue a certificate, a public key is essential. Make use
-    // of Google Cloud KMS to retrieve an already created public key. Specify the following details 
+    // of Google Cloud KMS to retrieve an already created public key. Specify the following details
     // to retrieve the key. See: https://cloud.google.com/kms/docs/retrieve-public-key
     String project = "your-project-id";
     String kmsLocation = "kms-location";
