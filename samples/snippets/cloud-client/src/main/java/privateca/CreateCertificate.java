@@ -51,7 +51,7 @@ public class CreateCertificate {
     // certificateAuthorityName: The name of the certificate authority which issues the certificate.
     // certificateName: Set a unique name for the certificate.
     String project = "your-project-id";
-    ByteString publicKeyBytes = ByteString.copyFrom(new byte[]{});
+    ByteString publicKeyBytes = ByteString.copyFrom(new byte[] {});
     String location = "ca-location";
     String caPoolName = "ca-pool-name";
     String certificateAuthorityName = "certificate-authority-name";
