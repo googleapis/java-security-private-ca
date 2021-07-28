@@ -36,8 +36,6 @@ import java.security.NoSuchProviderException;
 import java.security.Security;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-import java.util.AbstractMap;
-import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -78,7 +76,7 @@ public class SnippetsIT {
   @BeforeClass
   public static void setUp()
       throws IOException, ExecutionException, NoSuchProviderException, NoSuchAlgorithmException,
-          InterruptedException {
+      InterruptedException {
     reqEnvVar("GOOGLE_APPLICATION_CREDENTIALS");
     reqEnvVar("GOOGLE_CLOUD_PROJECT");
 
@@ -104,16 +102,27 @@ public class SnippetsIT {
     privateca.EnableCertificateAuthority.enableCertificateAuthority(
         PROJECT_ID, LOCATION, CA_POOL_NAME, CA_NAME);
 
-    // Create an asymmetric pem encoded key pair using Bouncy Castle crypto framework.
-    Map.Entry pemEncodedKeyPair = createPemEncodedKeyPair();
+    System.out.println("Starting key creation with Bouncy Castle...");
+
+    // Create an asymmetric key pair using Bouncy Castle crypto framework.
+    KeyPair asymmetricKeyPair = createAsymmetricKeyPair();
+
+    // Cast the keys to their respective components.
+    RSAPublicKey publicKey = (RSAPublicKey) asymmetricKeyPair.getPublic();
+    RSAPrivateKey privateKey = (RSAPrivateKey) asymmetricKeyPair.getPrivate();
+
+    // Construct the PemObject for public and private keys.
+    PemObject publicKeyPemObject = new PemObject("PUBLIC KEY", publicKey.getEncoded());
+    PemObject privateKeyPemObject = new PemObject("PRIVATE KEY", privateKey.getEncoded());
+
     // Only the public key will be used to create the certificate.
-    ByteString publicKeyByteString =
-        convertToPemEncodedByteString((PemObject) pemEncodedKeyPair.getKey()); // publicKey
+    ByteString publicKeyByteString = convertToPemEncodedByteString(publicKeyPemObject);
 
     // TODO (Developers): Save the private key by writing it to a file and
     // TODO (cont): use it to verify the issued certificate.
-    ByteString privateKey =
-        convertToPemEncodedByteString((PemObject) pemEncodedKeyPair.getValue()); // privateKey
+    ByteString privateKeyByteString = convertToPemEncodedByteString(privateKeyPemObject);
+
+    System.out.println("Key creation successful!");
 
     // Create certificate with the above generated public key.
     privateca.CreateCertificate.createCertificate(
@@ -143,8 +152,8 @@ public class SnippetsIT {
   }
 
   // Create an asymmetric key pair to be used in certificate signing.
-  public static Map.Entry createPemEncodedKeyPair()
-      throws NoSuchAlgorithmException, NoSuchProviderException, IOException {
+  public static KeyPair createAsymmetricKeyPair()
+      throws NoSuchAlgorithmException, NoSuchProviderException {
     Security.addProvider(new BouncyCastleProvider());
     System.out.println("BouncyCastle provider added.");
 
@@ -154,19 +163,7 @@ public class SnippetsIT {
     KeyPair keyPair = generator.generateKeyPair();
     System.out.println("RSA key pair generated.");
 
-    // Cast the keys to their respective components.
-    RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
-    RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
-
-    // Construct the PemObject for public and private keys.
-    PemObject publicKeyPemObject = new PemObject("PUBLIC KEY", publicKey.getEncoded());
-    PemObject privateKeyPemObject = new PemObject("PRIVATE KEY", privateKey.getEncoded());
-
-    // Return the Pem encoded tuple (public key, private key).
-    Map.Entry pemEncodedKeyPair =
-        new AbstractMap.SimpleEntry<PemObject, PemObject>(publicKeyPemObject, privateKeyPemObject);
-
-    return pemEncodedKeyPair;
+    return keyPair;
   }
 
   // Convert the encoded PemObject to ByteString.
