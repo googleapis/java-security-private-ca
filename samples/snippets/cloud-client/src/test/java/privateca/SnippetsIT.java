@@ -36,6 +36,8 @@ import java.security.NoSuchProviderException;
 import java.security.Security;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.AbstractMap;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -86,7 +88,7 @@ public class SnippetsIT {
     CA_NAME = "ca-name-" + UUID.randomUUID().toString();
     CA_NAME_DELETE = "ca-name-" + UUID.randomUUID().toString();
     CERTIFICATE_NAME = "certificate-name-" + UUID.randomUUID().toString();
-    KEY_SIZE = 2048;
+    KEY_SIZE = 2048; // Default key size
 
     // Create CA Pool.
     privateca.CreateCaPool.createCaPool(PROJECT_ID, LOCATION, CA_POOL_NAME);
@@ -102,12 +104,20 @@ public class SnippetsIT {
     privateca.EnableCertificateAuthority.enableCertificateAuthority(
         PROJECT_ID, LOCATION, CA_POOL_NAME, CA_NAME);
 
-    // Create an asymmetric key pair using Bouncy Castle crypto framework.
-    ByteString publicKey = createPublicKey();
+    // Create an asymmetric pem encoded key pair using Bouncy Castle crypto framework.
+    Map.Entry pemEncodedKeyPair = createPemEncodedKeyPair();
+    // Only the public key will be used to create the certificate.
+    ByteString publicKeyByteString = convertToPemEncodedByteString(
+        (PemObject) pemEncodedKeyPair.getKey()); // publicKey
+
+    // TODO (Developers): Save the private key by writing it to a file and
+    // TODO (cont): use it to verify the issued certificate.
+    ByteString privateKey = convertToPemEncodedByteString(
+        (PemObject) pemEncodedKeyPair.getValue()); // privateKey
 
     // Create certificate with the above generated public key.
     privateca.CreateCertificate.createCertificate(
-        PROJECT_ID, LOCATION, CA_POOL_NAME, CA_NAME, CERTIFICATE_NAME, publicKey);
+        PROJECT_ID, LOCATION, CA_POOL_NAME, CA_NAME, CERTIFICATE_NAME, publicKeyByteString);
     sleep(5);
   }
 
@@ -133,32 +143,43 @@ public class SnippetsIT {
   }
 
   // Create an asymmetric key pair to be used in certificate signing.
-  public static ByteString createPublicKey()
+  public static Map.Entry createPemEncodedKeyPair()
       throws NoSuchAlgorithmException, NoSuchProviderException, IOException {
     Security.addProvider(new BouncyCastleProvider());
     System.out.println("BouncyCastle provider added.");
 
+    // Generate the key pair with RSA algorithm using Bouncy Castle (BC).
     KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA", "BC");
     generator.initialize(KEY_SIZE);
     KeyPair keyPair = generator.generateKeyPair();
     System.out.println("RSA key pair generated.");
 
-    // Only the public key will be used to create the certificate.
-    // Save the private key in your machine to verify the certificate.
+    // Cast the keys to their respective components.
     RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
     RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
 
-    // Construct the PemObject for public key.
-    PemObject pemObject = new PemObject("RSA PUBLIC KEY", publicKey.getEncoded());
+    // Construct the PemObject for public and private keys.
+    PemObject publicKeyPemObject = new PemObject("PUBLIC KEY", publicKey.getEncoded());
+    PemObject privateKeyPemObject = new PemObject("PRIVATE KEY", privateKey.getEncoded());
 
-    // Convert the encoded PemObject to ByteString.
+    // Return the Pem encoded tuple (public key, private key).
+    Map.Entry pemEncodedKeyPair = new AbstractMap.SimpleEntry<PemObject, PemObject>(
+        publicKeyPemObject,
+        privateKeyPemObject);
+
+    return pemEncodedKeyPair;
+  }
+
+  // Convert the encoded PemObject to ByteString.
+  public static ByteString convertToPemEncodedByteString(PemObject pemEncodedKey)
+      throws IOException {
     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
     PemWriter pemWriter = new PemWriter(new OutputStreamWriter(byteArrayOutputStream));
-    pemWriter.writeObject(pemObject);
+    pemWriter.writeObject(pemEncodedKey);
     pemWriter.close();
-    ByteString publicKeyByteString = ByteString.copyFrom(byteArrayOutputStream.toByteArray());
+    ByteString keyByteString = ByteString.copyFrom(byteArrayOutputStream.toByteArray());
 
-    return publicKeyByteString;
+    return keyByteString;
   }
 
   @Before
