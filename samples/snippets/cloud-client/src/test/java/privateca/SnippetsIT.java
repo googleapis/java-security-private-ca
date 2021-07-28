@@ -107,13 +107,13 @@ public class SnippetsIT {
     // Create an asymmetric pem encoded key pair using Bouncy Castle crypto framework.
     Map.Entry pemEncodedKeyPair = createPemEncodedKeyPair();
     // Only the public key will be used to create the certificate.
-    ByteString publicKeyByteString = convertToPemEncodedByteString(
-        (PemObject) pemEncodedKeyPair.getKey()); // publicKey
+    ByteString publicKeyByteString =
+        convertToPemEncodedByteString((PemObject) pemEncodedKeyPair.getKey()); // publicKey
 
     // TODO (Developers): Save the private key by writing it to a file and
     // TODO (cont): use it to verify the issued certificate.
-    ByteString privateKey = convertToPemEncodedByteString(
-        (PemObject) pemEncodedKeyPair.getValue()); // privateKey
+    ByteString privateKey =
+        convertToPemEncodedByteString((PemObject) pemEncodedKeyPair.getValue()); // privateKey
 
     // Create certificate with the above generated public key.
     privateca.CreateCertificate.createCertificate(
@@ -163,9 +163,8 @@ public class SnippetsIT {
     PemObject privateKeyPemObject = new PemObject("PRIVATE KEY", privateKey.getEncoded());
 
     // Return the Pem encoded tuple (public key, private key).
-    Map.Entry pemEncodedKeyPair = new AbstractMap.SimpleEntry<PemObject, PemObject>(
-        publicKeyPemObject,
-        privateKeyPemObject);
+    Map.Entry pemEncodedKeyPair =
+        new AbstractMap.SimpleEntry<PemObject, PemObject>(publicKeyPemObject, privateKeyPemObject);
 
     return pemEncodedKeyPair;
   }
