@@ -76,7 +76,7 @@ public class SnippetsIT {
   @BeforeClass
   public static void setUp()
       throws IOException, ExecutionException, NoSuchProviderException, NoSuchAlgorithmException,
-      InterruptedException {
+          InterruptedException {
     reqEnvVar("GOOGLE_APPLICATION_CREDENTIALS");
     reqEnvVar("GOOGLE_CLOUD_PROJECT");
 
