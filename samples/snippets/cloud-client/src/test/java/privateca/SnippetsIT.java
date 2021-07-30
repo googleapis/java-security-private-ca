@@ -102,8 +102,6 @@ public class SnippetsIT {
     privateca.EnableCertificateAuthority.enableCertificateAuthority(
         PROJECT_ID, LOCATION, CA_POOL_NAME, CA_NAME);
 
-    System.out.println("Starting key creation with Bouncy Castle...");
-
     // Create an asymmetric key pair using Bouncy Castle crypto framework.
     KeyPair asymmetricKeyPair = createAsymmetricKeyPair();
 
@@ -121,8 +119,6 @@ public class SnippetsIT {
     // TODO (Developers): Save the private key by writing it to a file and
     // TODO (cont): use it to verify the issued certificate.
     ByteString privateKeyByteString = convertToPemEncodedByteString(privateKeyPemObject);
-
-    System.out.println("Key creation successful!");
 
     // Create certificate with the above generated public key.
     privateca.CreateCertificate.createCertificate(
@@ -155,13 +151,11 @@ public class SnippetsIT {
   public static KeyPair createAsymmetricKeyPair()
       throws NoSuchAlgorithmException, NoSuchProviderException {
     Security.addProvider(new BouncyCastleProvider());
-    System.out.println("BouncyCastle provider added.");
 
     // Generate the key pair with RSA algorithm using Bouncy Castle (BC).
     KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA", "BC");
     generator.initialize(KEY_SIZE);
     KeyPair keyPair = generator.generateKeyPair();
-    System.out.println("RSA key pair generated.");
 
     return keyPair;
   }
