@@ -16,7 +16,7 @@ Set up a Google Cloud project with billing enabled.
 
 ### Enable the API
 
-You must [enable the Google Private Certificate Authority Service API](https://console.cloud.google.com/flows/enableapi?apiid=privateca.googleapis.com) for your project in order to use these samples
+You must [enable the Google Private Certificate Authority Service API](https://console.cloud.google.com/flows/enableapi?apiid=privateca.googleapis.com) for your project in order to use these samples.
 
 ### Service account
 
@@ -25,7 +25,7 @@ Create a [service account](https://console.cloud.google.com/iam-admin/serviceacc
 
 ### Set Environment Variables
 
-You must set your project ID and service account credentials in order to run the tests
+You must set your project ID and service account credentials in order to run the tests.
 
 ```
 $ export GOOGLE_CLOUD_PROJECT="<google-project-id-here>"
