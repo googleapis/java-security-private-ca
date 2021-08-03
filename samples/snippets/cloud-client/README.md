@@ -44,4 +44,32 @@ You must ensure that the [user account or service account](https://cloud.google.
 * Cloud CA Service Operation Manager  
 * Cloud CA Service Auditor
 
-More information can be found in the [Google Private Certificate Authority Service Docs](https://cloud.google.com/certificate-authority-service/docs/reference/permissions-and-roles)
+More information can be found in the [Google Private Certificate Authority Service Docs](https://cloud.google.com/certificate-authority-service/docs/reference/permissions-and-roles).
+
+
+## Build and Run
+
+The following instructions will help you prepare your development environment.
+
+1. Download and install the [Java Development Kit (JDK)](https://www.oracle.com/java/technologies/javase-downloads.html). 
+   Verify that the [JAVA_HOME](https://docs.oracle.com/javase/8/docs/technotes/guides/troubleshoot/envvars001.html) environment variable is set and points to your JDK installation.
+
+
+2. Download and install [Apache Maven](http://maven.apache.org/download.cgi) by following the [Maven installation guide](http://maven.apache.org/install.html) for your specific operating system.
+
+
+3. Clone the java-security-private-ca repository.
+```
+git clone https://github.com/googleapis/java-security-private-ca.git
+```
+
+4. Navigate to the sample code directory.
+
+```
+cd java-security-private-ca/samples/snippets/cloud-client
+```
+
+5. Run the **SnippetsIT** test file present under the test folder.
+
+### Crypto frameworks 
+[Bouncy Castle](https://www.bouncycastle.org/documentation.html) cryptographic framework is used as a part of testing.
