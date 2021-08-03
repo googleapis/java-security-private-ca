@@ -227,8 +227,7 @@ public class SnippetsIT {
 
   @Test
   public void testListCertificateAuthorities() throws IOException {
-    privateca.ListCertificateAuthorities.listCertificateAuthority(
-        PROJECT_ID, LOCATION, CA_POOL_ID);
+    privateca.ListCertificateAuthorities.listCertificateAuthority(PROJECT_ID, LOCATION, CA_POOL_ID);
     assertThat(stdOut.toString()).contains(CA_NAME);
   }
 
