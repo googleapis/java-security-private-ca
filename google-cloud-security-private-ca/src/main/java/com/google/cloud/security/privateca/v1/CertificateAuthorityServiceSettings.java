@@ -279,7 +279,7 @@ public class CertificateAuthorityServiceSettings
   }
 
   /** Returns the object with the settings used for calls to deleteCaPool. */
-  public OperationCallSettings<DeleteCaPoolRequest, CaPool, OperationMetadata>
+  public OperationCallSettings<DeleteCaPoolRequest, Empty, OperationMetadata>
       deleteCaPoolOperationSettings() {
     return ((CertificateAuthorityServiceStubSettings) getStubSettings())
         .deleteCaPoolOperationSettings();
@@ -469,14 +469,13 @@ public class CertificateAuthorityServiceSettings
       return ((CertificateAuthorityServiceStubSettings.Builder) getStubSettings());
     }
 
-    // NEXT_MAJOR_VER: remove 'throws Exception'.
     /**
      * Applies the given settings updater function to all of the unary API methods in this service.
      *
      * <p>Note: This method does not support applying settings to streaming methods.
      */
     public Builder applyToAllUnaryMethods(
-        ApiFunction<UnaryCallSettings.Builder<?, ?>, Void> settingsUpdater) throws Exception {
+        ApiFunction<UnaryCallSettings.Builder<?, ?>, Void> settingsUpdater) {
       super.applyToAllUnaryMethods(
           getStubSettingsBuilder().unaryMethodSettingsBuilders(), settingsUpdater);
       return this;
@@ -665,7 +664,7 @@ public class CertificateAuthorityServiceSettings
     }
 
     /** Returns the builder for the settings used for calls to deleteCaPool. */
-    public OperationCallSettings.Builder<DeleteCaPoolRequest, CaPool, OperationMetadata>
+    public OperationCallSettings.Builder<DeleteCaPoolRequest, Empty, OperationMetadata>
         deleteCaPoolOperationSettings() {
       return getStubSettingsBuilder().deleteCaPoolOperationSettings();
     }
