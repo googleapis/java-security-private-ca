@@ -43,26 +43,31 @@ public class CreateCertificate_CSR {
     String pool_Id = "ca-pool-id";
     String certificateAuthorityName = "certificate-authority-name";
     String certificateName = "certificate-name";
-    String pemCSR = "-----BEGIN CERTIFICATE REQUEST-----\n"
-        + "sample-pem-csr-format\n"
-        + "-----END CERTIFICATE REQUEST-----";
+    String pemCSR =
+        "-----BEGIN CERTIFICATE REQUEST-----\n"
+            + "sample-pem-csr-format\n"
+            + "-----END CERTIFICATE REQUEST-----";
 
-    createCertificateWithCSR(project, location, pool_Id, certificateAuthorityName,
-        certificateName, pemCSR);
+    createCertificateWithCSR(
+        project, location, pool_Id, certificateAuthorityName, certificateName, pemCSR);
   }
 
   // Create a Certificate which is issued by the specified Certificate Authority.
   // The certificate details and the public key is provided as a CSR (Certificate Signing Request).
-  public static void createCertificateWithCSR(String project, String location, String pool_Id,
+  public static void createCertificateWithCSR(
+      String project,
+      String location,
+      String pool_Id,
       String certificateAuthorityName,
-      String certificateName, String pemCSR)
+      String certificateName,
+      String pemCSR)
       throws IOException, ExecutionException, InterruptedException {
     // Initialize client that will be used to send requests. This client only needs to be created
     // once, and can be reused for multiple requests. After completing all of your requests, call
     // the `certificateAuthorityServiceClient.close()` method on the client to safely
     // clean up any remaining background resources.
-    try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient
-        .create()) {
+    try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
+        CertificateAuthorityServiceClient.create()) {
       // certificateLifetime: The validity of the certificate in seconds.
       long certificateLifetime = 1000L;
 

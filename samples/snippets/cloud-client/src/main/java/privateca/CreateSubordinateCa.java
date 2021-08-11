@@ -53,16 +53,15 @@ public class CreateSubordinateCa {
     createSubordinateCertificateAuthority(project, location, pool_Id, subordinateCaName);
   }
 
-  public static void createSubordinateCertificateAuthority(String project, String location,
-      String pool_Id,
-      String subordinateCaName)
+  public static void createSubordinateCertificateAuthority(
+      String project, String location, String pool_Id, String subordinateCaName)
       throws IOException, ExecutionException, InterruptedException {
     // Initialize client that will be used to send requests. This client only needs to be created
     // once, and can be reused for multiple requests. After completing all of your requests, call
     // the `certificateAuthorityServiceClient.close()` method on the client to safely
     // clean up any remaining background resources.
-    try (CertificateAuthorityServiceClient certificateAuthorityServiceClient = CertificateAuthorityServiceClient
-        .create()) {
+    try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
+        CertificateAuthorityServiceClient.create()) {
 
       String commonName = "common-name";
       String orgName = "csr-org-name";
@@ -113,8 +112,10 @@ public class CreateSubordinateCa {
               .build();
 
       // Create Subordinate CA.
-      ApiFuture<Operation> futureCall = certificateAuthorityServiceClient
-          .createCertificateAuthorityCallable().futureCall(subCertificateAuthorityRequest);
+      ApiFuture<Operation> futureCall =
+          certificateAuthorityServiceClient
+              .createCertificateAuthorityCallable()
+              .futureCall(subCertificateAuthorityRequest);
 
       Operation response = futureCall.get();
 
@@ -123,8 +124,8 @@ public class CreateSubordinateCa {
         return;
       }
 
-      System.out.println("Subordinate Certificate Authority created successfully : "
-          + subordinateCaName);
+      System.out.println(
+          "Subordinate Certificate Authority created successfully : " + subordinateCaName);
     }
   }
 }

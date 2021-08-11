@@ -32,7 +32,8 @@ public class FilterCertificates {
     // pool_Id: Id of the CA pool which contains the certificates to be listed.
     // filterCondition: Filter certificates based on the given condition.
     // For more info on conditions supported,
-    // see: https://cloud.google.com/certificate-authority-service/docs/sorting-filtering-certificates#filtering_support
+    // see:
+    // https://cloud.google.com/certificate-authority-service/docs/sorting-filtering-certificates#filtering_support
     String project = "your-project-id";
     String location = "ca-location";
     String pool_Id = "ca-pool-id";
@@ -42,9 +43,8 @@ public class FilterCertificates {
   }
 
   // Filter certificates based on a condition and list them.
-  public static void filterCertificates(String project, String location, String pool_Id,
-      String filterCondition)
-      throws IOException {
+  public static void filterCertificates(
+      String project, String location, String pool_Id, String filterCondition) throws IOException {
     // Initialize client that will be used to send requests. This client only needs to be created
     // once, and can be reused for multiple requests. After completing all of your requests, call
     // the `certificateAuthorityServiceClient.close()` method on the client to safely
@@ -60,16 +60,18 @@ public class FilterCertificates {
               .build();
 
       // Create the certificate request and set the filter condition.
-      ListCertificatesRequest listCertificatesRequest = ListCertificatesRequest.newBuilder()
-          .setParent(caPool.toString())
-          // Filter certificates according to the given condition.
-          .setFilter(filterCondition)
-          .build();
+      ListCertificatesRequest listCertificatesRequest =
+          ListCertificatesRequest.newBuilder()
+              .setParent(caPool.toString())
+              // Filter certificates according to the given condition.
+              .setFilter(filterCondition)
+              .build();
 
       // Retrieve and print the certificate names.
       System.out.println("Available certificates: ");
       for (Certificate certificate :
-          certificateAuthorityServiceClient.listCertificates(listCertificatesRequest)
+          certificateAuthorityServiceClient
+              .listCertificates(listCertificatesRequest)
               .iterateAll()) {
         System.out.println(certificate.getName());
       }
