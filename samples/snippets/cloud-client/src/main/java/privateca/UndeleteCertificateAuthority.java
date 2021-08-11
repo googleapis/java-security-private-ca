@@ -42,11 +42,11 @@ public class UndeleteCertificateAuthority {
     String pool_Id = "ca-pool-id";
     String certificateAuthorityName = "certificate-authority-name";
 
-    undeleteCaPool(project, location, pool_Id, certificateAuthorityName);
+    undeleteCertificateAuthority(project, location, pool_Id, certificateAuthorityName);
   }
 
   // Restore a deleted CA, if still within the grace period of 30 days.
-  public static void undeleteCaPool(String project, String location, String pool_Id,
+  public static void undeleteCertificateAuthority(String project, String location, String pool_Id,
       String certificateAuthorityName)
       throws IOException, ExecutionException, InterruptedException, TimeoutException {
     // Initialize client that will be used to send requests. This client only needs to be created
@@ -90,7 +90,8 @@ public class UndeleteCertificateAuthority {
       }
 
       // The CA will be in the DISABLED state. Enable before use.
-      System.out.println("Successfully restored the Certificate Authority ! " + certificateAuthorityName);
+      System.out
+          .println("Successfully restored the Certificate Authority ! " + certificateAuthorityName);
     }
   }
 

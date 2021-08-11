@@ -22,7 +22,6 @@ import com.google.cloud.security.privateca.v1.CaPoolName;
 import com.google.cloud.security.privateca.v1.CertificateAuthority;
 import com.google.cloud.security.privateca.v1.CertificateAuthority.KeyVersionSpec;
 import com.google.cloud.security.privateca.v1.CertificateAuthority.SignHashAlgorithm;
-import com.google.cloud.security.privateca.v1.CertificateAuthorityName;
 import com.google.cloud.security.privateca.v1.CertificateAuthorityServiceClient;
 import com.google.cloud.security.privateca.v1.CertificateConfig;
 import com.google.cloud.security.privateca.v1.CertificateConfig.SubjectConfig;
@@ -36,7 +35,6 @@ import com.google.longrunning.Operation;
 import com.google.protobuf.Duration;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 
 public class CreateSubordinateCa {
 
@@ -46,18 +44,18 @@ public class CreateSubordinateCa {
     // location: For a list of locations, see:
     // https://cloud.google.com/certificate-authority-service/docs/locations
     // pool_Id: Set it to the CA Pool under which the CA should be created.
-    // subCertificateAuthorityName: Unique name for the Subordinate CA.
+    // subordinateCaName: Unique name for the Subordinate CA.
     String project = "your-project-id";
     String location = "ca-location";
     String pool_Id = "ca-pool-id";
-    String subCertificateAuthorityName = "subordinate-certificate-authority-name";
+    String subordinateCaName = "subordinate-certificate-authority-name";
 
-    createSubordinateCertificateAuthority(project, location, pool_Id, subCertificateAuthorityName);
+    createSubordinateCertificateAuthority(project, location, pool_Id, subordinateCaName);
   }
 
   public static void createSubordinateCertificateAuthority(String project, String location,
       String pool_Id,
-      String subCertificateAuthorityName)
+      String subordinateCaName)
       throws IOException, ExecutionException, InterruptedException {
     // Initialize client that will be used to send requests. This client only needs to be created
     // once, and can be reused for multiple requests. After completing all of your requests, call
@@ -67,7 +65,7 @@ public class CreateSubordinateCa {
         .create()) {
 
       String commonName = "common-name";
-      String orgName = "org-name";
+      String orgName = "csr-org-name";
       int caDuration = 100000; // Validity of this CA in seconds.
 
       // Set the type of Algorithm.
@@ -110,7 +108,7 @@ public class CreateSubordinateCa {
       CreateCertificateAuthorityRequest subCertificateAuthorityRequest =
           CreateCertificateAuthorityRequest.newBuilder()
               .setParent(CaPoolName.of(project, location, pool_Id).toString())
-              .setCertificateAuthorityId(subCertificateAuthorityName)
+              .setCertificateAuthorityId(subordinateCaName)
               .setCertificateAuthority(subCertificateAuthority)
               .build();
 
@@ -126,20 +124,7 @@ public class CreateSubordinateCa {
       }
 
       System.out.println("Subordinate Certificate Authority created successfully : "
-          + subCertificateAuthorityName);
-
-      TimeUnit.SECONDS.sleep(5);
-      // To view details and fetch CSR information about the created Subordinate CA,
-      // use the below APIs.
-      String caParent = CertificateAuthorityName
-          .of(project, location, pool_Id, subCertificateAuthorityName).toString();
-
-      // Get current state.
-      System.out.println(
-          certificateAuthorityServiceClient.getCertificateAuthority(caParent).getStateValue());
-      // Fetch CSR.
-      System.out.println(certificateAuthorityServiceClient
-          .fetchCertificateAuthorityCsr(caParent));
+          + subordinateCaName);
     }
   }
 }
