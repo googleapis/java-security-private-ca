@@ -390,7 +390,6 @@ public class SnippetsIT {
                   .toString());
 
       String pemCertificate = response.getPemCertificate();
-      List<String> chainList = response.getPemCertificateChainList();
 
       privateca.ActivateSubordinateCa.activateSubordinateCA(
           PROJECT_ID,
@@ -398,8 +397,7 @@ public class SnippetsIT {
           CA_POOL_ID,
           CA_NAME,
           SUBORDINATE_CA_NAME,
-          pemCertificate,
-          chainList);
+          pemCertificate);
       assertThat(stdOut.toString()).contains("Current State: STAGED");
     }
   }
