@@ -22,7 +22,6 @@ import com.google.cloud.security.privateca.v1.ActivateCertificateAuthorityReques
 import com.google.cloud.security.privateca.v1.CertificateAuthorityName;
 import com.google.cloud.security.privateca.v1.CertificateAuthorityServiceClient;
 import com.google.cloud.security.privateca.v1.SubordinateConfig;
-import com.google.cloud.security.privateca.v1.SubordinateConfig.SubordinateConfigChain;
 import com.google.longrunning.Operation;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
@@ -47,16 +46,12 @@ public class ActivateSubordinateCa {
         "-----BEGIN CERTIFICATE-----\n" + "sample-pem-certificate\n" + "-----END CERTIFICATE-----";
 
     // certificateAuthorityName: The name of the certificate authority which signed the CSR.
-    // If an external CA (CA not present in GCloud) was used for signing, then use the CA's issuerCertificateChain.
+    // If an external CA (CA not present in GCloud) was used for signing, then use the CA's
+    // issuerCertificateChain.
     String certificateAuthorityName = "certificate-authority-name";
 
     activateSubordinateCA(
-        project,
-        location,
-        pool_Id,
-        certificateAuthorityName,
-        subordinateCaName,
-        pemCACertificate);
+        project, location, pool_Id, certificateAuthorityName, subordinateCaName, pemCACertificate);
   }
 
   // Activate a subordinate CA.
@@ -92,10 +87,13 @@ public class ActivateSubordinateCa {
                       // Follow one of the below methods:
 
                       // Method 1: If issuer CA is in GCloud, set the Certificate Authority Name.
-                      .setCertificateAuthority(CertificateAuthorityName
-                          .of(project, location, pool_Id, certificateAuthorityName).toString())
+                      .setCertificateAuthority(
+                          CertificateAuthorityName.of(
+                                  project, location, pool_Id, certificateAuthorityName)
+                              .toString())
 
-                      // Method 2: If issuer CA is external to GCloud,set the issuer's certificate chain.
+                      // Method 2: If issuer CA is external to GCloud,set the issuer's certificate
+                      // chain.
                       // The certificate chain of the CA (which signed the CSR) from leaf to root.
                       // .setPemIssuerChain(
                       //     SubordinateConfigChain.newBuilder()
@@ -126,8 +124,8 @@ public class ActivateSubordinateCa {
       System.out.println(
           "Current State: "
               + certificateAuthorityServiceClient
-              .getCertificateAuthority(subordinateCaParent)
-              .getState());
+                  .getCertificateAuthority(subordinateCaParent)
+                  .getState());
     }
   }
 }
