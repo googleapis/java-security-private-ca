@@ -46,8 +46,8 @@ public class UndeleteCertificateAuthority {
   }
 
   // Restore a deleted CA, if still within the grace period of 30 days.
-  public static void undeleteCertificateAuthority(String project, String location, String pool_Id,
-      String certificateAuthorityName)
+  public static void undeleteCertificateAuthority(
+      String project, String location, String pool_Id, String certificateAuthorityName)
       throws IOException, ExecutionException, InterruptedException, TimeoutException {
     // Initialize client that will be used to send requests. This client only needs to be created
     // once, and can be reused for multiple requests. After completing all of your requests, call
@@ -56,8 +56,9 @@ public class UndeleteCertificateAuthority {
     try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
         CertificateAuthorityServiceClient.create()) {
 
-      String certificateAuthorityParent = CertificateAuthorityName
-          .of(project, location, pool_Id, certificateAuthorityName).toString();
+      String certificateAuthorityParent =
+          CertificateAuthorityName.of(project, location, pool_Id, certificateAuthorityName)
+              .toString();
 
       // Confirm if the CA is in DELETED stage.
       if (getCurrentState(certificateAuthorityServiceClient, certificateAuthorityParent)
@@ -67,14 +68,16 @@ public class UndeleteCertificateAuthority {
       }
 
       // Create the Request.
-      UndeleteCertificateAuthorityRequest undeleteCertificateAuthorityRequest = UndeleteCertificateAuthorityRequest
-          .newBuilder()
-          .setName(certificateAuthorityParent)
-          .build();
+      UndeleteCertificateAuthorityRequest undeleteCertificateAuthorityRequest =
+          UndeleteCertificateAuthorityRequest.newBuilder()
+              .setName(certificateAuthorityParent)
+              .build();
 
       // Undelete the CA.
-      ApiFuture<Operation> futureCall = certificateAuthorityServiceClient
-          .undeleteCertificateAuthorityCallable().futureCall(undeleteCertificateAuthorityRequest);
+      ApiFuture<Operation> futureCall =
+          certificateAuthorityServiceClient
+              .undeleteCertificateAuthorityCallable()
+              .futureCall(undeleteCertificateAuthorityRequest);
 
       Operation response = futureCall.get(5, TimeUnit.SECONDS);
 
@@ -82,24 +85,23 @@ public class UndeleteCertificateAuthority {
       // Confirm if the CA is DISABLED.
       if (response.hasError()
           || getCurrentState(certificateAuthorityServiceClient, certificateAuthorityParent)
-          != State.DISABLED) {
+              != State.DISABLED) {
         System.out.println(
-            "Unable to restore the Certificate Authority! Please try again !" + response
-                .getError());
+            "Unable to restore the Certificate Authority! Please try again !"
+                + response.getError());
         return;
       }
 
       // The CA will be in the DISABLED state. Enable before use.
-      System.out
-          .println("Successfully restored the Certificate Authority ! " + certificateAuthorityName);
+      System.out.println(
+          "Successfully restored the Certificate Authority ! " + certificateAuthorityName);
     }
   }
 
   // Get the current state of CA.
-  private static State getCurrentState(CertificateAuthorityServiceClient client,
-      String certificateAuthorityParent) {
-    return client.getCertificateAuthority(certificateAuthorityParent)
-        .getState();
+  private static State getCurrentState(
+      CertificateAuthorityServiceClient client, String certificateAuthorityParent) {
+    return client.getCertificateAuthority(certificateAuthorityParent).getState();
   }
 }
 // [END privateca_undelete_ca]
