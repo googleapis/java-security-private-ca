@@ -89,7 +89,7 @@ public class CreateCertificate_CSR {
               .setCertificate(certificate)
               .build();
 
-      // Get the Certificate response.
+      // Get the certificate response.
       ApiFuture<Certificate> future =
           certificateAuthorityServiceClient
               .createCertificateCallable()

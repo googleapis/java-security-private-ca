@@ -47,7 +47,8 @@ public class ActivateSubordinateCa {
         "-----BEGIN CERTIFICATE-----\n" + "sample-pem-certificate\n" + "-----END CERTIFICATE-----";
 
     // certificateAuthorityName: The name of the certificate authority which signed the CSR.
-    // If an external CA (CA not present in GCloud) was used for signing, then use the CA's issuerCertificateChain.
+    // If an external CA (CA not present in Google Cloud) was used for signing,
+    // then use the CA's issuerCertificateChain.
     String certificateAuthorityName = "certificate-authority-name";
 
     activateSubordinateCA(
@@ -81,7 +82,7 @@ public class ActivateSubordinateCa {
       String subordinateCaParent =
           CertificateAuthorityName.of(project, location, pool_Id, subordinateCaName).toString();
 
-      // Create the Activate CA Request.
+      // Construct the "Activate CA Request".
       ActivateCertificateAuthorityRequest activateCertificateAuthorityRequest =
           ActivateCertificateAuthorityRequest.newBuilder()
               .setName(subordinateCaParent)
@@ -91,11 +92,12 @@ public class ActivateSubordinateCa {
                   SubordinateConfig.newBuilder()
                       // Follow one of the below methods:
 
-                      // Method 1: If issuer CA is in GCloud, set the Certificate Authority Name.
+                      // Method 1: If issuer CA is in Google Cloud, set the Certificate Authority Name.
                       .setCertificateAuthority(CertificateAuthorityName
                           .of(project, location, pool_Id, certificateAuthorityName).toString())
 
-                      // Method 2: If issuer CA is external to GCloud,set the issuer's certificate chain.
+                      // Method 2: If issuer CA is external to Google Cloud, set the issuer's
+                      // certificate chain.
                       // The certificate chain of the CA (which signed the CSR) from leaf to root.
                       // .setPemIssuerChain(
                       //     SubordinateConfigChain.newBuilder()
