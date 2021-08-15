@@ -37,7 +37,6 @@ import java.security.NoSuchProviderException;
 import java.security.Security;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -392,12 +391,7 @@ public class SnippetsIT {
       String pemCertificate = response.getPemCertificate();
 
       privateca.ActivateSubordinateCa.activateSubordinateCA(
-          PROJECT_ID,
-          LOCATION,
-          CA_POOL_ID,
-          CA_NAME,
-          SUBORDINATE_CA_NAME,
-          pemCertificate);
+          PROJECT_ID, LOCATION, CA_POOL_ID, CA_NAME, SUBORDINATE_CA_NAME, pemCertificate);
       assertThat(stdOut.toString()).contains("Current State: STAGED");
     }
   }
