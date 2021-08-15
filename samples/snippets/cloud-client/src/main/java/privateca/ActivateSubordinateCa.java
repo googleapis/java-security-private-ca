@@ -22,7 +22,6 @@ import com.google.cloud.security.privateca.v1.ActivateCertificateAuthorityReques
 import com.google.cloud.security.privateca.v1.CertificateAuthorityName;
 import com.google.cloud.security.privateca.v1.CertificateAuthorityServiceClient;
 import com.google.cloud.security.privateca.v1.SubordinateConfig;
-import com.google.cloud.security.privateca.v1.SubordinateConfig.SubordinateConfigChain;
 import com.google.longrunning.Operation;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
@@ -52,12 +51,7 @@ public class ActivateSubordinateCa {
     String certificateAuthorityName = "certificate-authority-name";
 
     activateSubordinateCA(
-        project,
-        location,
-        pool_Id,
-        certificateAuthorityName,
-        subordinateCaName,
-        pemCACertificate);
+        project, location, pool_Id, certificateAuthorityName, subordinateCaName, pemCACertificate);
   }
 
   // Activate a subordinate CA.
@@ -92,9 +86,12 @@ public class ActivateSubordinateCa {
                   SubordinateConfig.newBuilder()
                       // Follow one of the below methods:
 
-                      // Method 1: If issuer CA is in Google Cloud, set the Certificate Authority Name.
-                      .setCertificateAuthority(CertificateAuthorityName
-                          .of(project, location, pool_Id, certificateAuthorityName).toString())
+                      // Method 1: If issuer CA is in Google Cloud, set the Certificate Authority
+                      // Name.
+                      .setCertificateAuthority(
+                          CertificateAuthorityName.of(
+                                  project, location, pool_Id, certificateAuthorityName)
+                              .toString())
 
                       // Method 2: If issuer CA is external to Google Cloud, set the issuer's
                       // certificate chain.
@@ -128,8 +125,8 @@ public class ActivateSubordinateCa {
       System.out.println(
           "Current State: "
               + certificateAuthorityServiceClient
-              .getCertificateAuthority(subordinateCaParent)
-              .getState());
+                  .getCertificateAuthority(subordinateCaParent)
+                  .getState());
     }
   }
 }
