@@ -40,8 +40,8 @@ public class CreateCertificateTemplate {
   public static void main(String[] args)
       throws IOException, ExecutionException, InterruptedException, TimeoutException {
     /* TODO(developer): Replace these variables before running the sample.
-       location: For a list of locations, see:
-       https://cloud.google.com/certificate-authority-service/docs/locations */
+    location: For a list of locations, see:
+    https://cloud.google.com/certificate-authority-service/docs/locations */
     String project = "your-project-id";
     String location = "ca-location";
     String certificateTemplateId = "certificate-template-id";
@@ -50,56 +50,62 @@ public class CreateCertificateTemplate {
   }
 
   /* Creates a Certificate template. These templates can be reused for common
-     certificate issuance scenarios. */
-  public static void createCertificateTemplate(String project, String location,
-      String certificateTemplateId)
+  certificate issuance scenarios. */
+  public static void createCertificateTemplate(
+      String project, String location, String certificateTemplateId)
       throws IOException, ExecutionException, InterruptedException, TimeoutException {
     /* Initialize client that will be used to send requests. This client only needs to be created
-       once, and can be reused for multiple requests. After completing all of your requests, call
-       the `certificateAuthorityServiceClient.close()` method on the client to safely
-       clean up any remaining background resources. */
+    once, and can be reused for multiple requests. After completing all of your requests, call
+    the `certificateAuthorityServiceClient.close()` method on the client to safely
+    clean up any remaining background resources. */
     try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
         CertificateAuthorityServiceClient.create()) {
 
       /* Describes any predefined X.509 values set by this template.
-         The provided extensions are copied over to certificate requests that use this template.*/
-      KeyUsage keyUsage = KeyUsage.newBuilder()
-          .setBaseKeyUsage(KeyUsageOptions.newBuilder()
-              .setDigitalSignature(true)
-              .setKeyEncipherment(true).build())
-          .setExtendedKeyUsage(ExtendedKeyUsageOptions.newBuilder()
-              .setServerAuth(true).build())
-          .build();
+      The provided extensions are copied over to certificate requests that use this template.*/
+      KeyUsage keyUsage =
+          KeyUsage.newBuilder()
+              .setBaseKeyUsage(
+                  KeyUsageOptions.newBuilder()
+                      .setDigitalSignature(true)
+                      .setKeyEncipherment(true)
+                      .build())
+              .setExtendedKeyUsage(ExtendedKeyUsageOptions.newBuilder().setServerAuth(true).build())
+              .build();
 
       CaOptions caOptions = CaOptions.newBuilder().setIsCa(false).build();
 
       /* CEL expression that is evaluated against the Subject and
-         Subject Alternative Name of the certificate before it is issued. */
-      Expr expr = Expr.newBuilder()
-          .setExpression("subject_alt_names.all(san, san.type == DNS)")
-          .build();
+      Subject Alternative Name of the certificate before it is issued. */
+      Expr expr =
+          Expr.newBuilder().setExpression("subject_alt_names.all(san, san.type == DNS)").build();
 
       // Set the certificate issuance schema.
-      CertificateTemplate certificateTemplate = CertificateTemplate.newBuilder()
-          .setPredefinedValues(X509Parameters.newBuilder()
-              .setKeyUsage(keyUsage)
-              .setCaOptions(caOptions).build())
-          .setIdentityConstraints(CertificateIdentityConstraints.newBuilder()
-              .setCelExpression(expr)
-              .setAllowSubjectPassthrough(false)
-              .setAllowSubjectAltNamesPassthrough(false).build())
-          .build();
+      CertificateTemplate certificateTemplate =
+          CertificateTemplate.newBuilder()
+              .setPredefinedValues(
+                  X509Parameters.newBuilder().setKeyUsage(keyUsage).setCaOptions(caOptions).build())
+              .setIdentityConstraints(
+                  CertificateIdentityConstraints.newBuilder()
+                      .setCelExpression(expr)
+                      .setAllowSubjectPassthrough(false)
+                      .setAllowSubjectAltNamesPassthrough(false)
+                      .build())
+              .build();
 
       // Set the parent and certificate template properties.
-      CreateCertificateTemplateRequest certificateTemplateRequest = CreateCertificateTemplateRequest
-          .newBuilder()
-          .setParent(LocationName.of(project, location).toString())
-          .setCertificateTemplate(certificateTemplate)
-          .setCertificateTemplateId(certificateTemplateId).build();
+      CreateCertificateTemplateRequest certificateTemplateRequest =
+          CreateCertificateTemplateRequest.newBuilder()
+              .setParent(LocationName.of(project, location).toString())
+              .setCertificateTemplate(certificateTemplate)
+              .setCertificateTemplateId(certificateTemplateId)
+              .build();
 
       // Create Template request.
-      ApiFuture<Operation> futureCall = certificateAuthorityServiceClient
-          .createCertificateTemplateCallable().futureCall(certificateTemplateRequest);
+      ApiFuture<Operation> futureCall =
+          certificateAuthorityServiceClient
+              .createCertificateTemplateCallable()
+              .futureCall(certificateTemplateRequest);
 
       Operation response = futureCall.get(60, TimeUnit.SECONDS);
 

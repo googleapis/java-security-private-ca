@@ -32,7 +32,6 @@ import java.util.concurrent.TimeoutException;
 
 public class UpdateCertificateTemplate {
 
-
   public static void main(String[] args)
       throws IOException, ExecutionException, InterruptedException, TimeoutException {
     // TODO(developer): Replace these variables before running the sample.
@@ -47,41 +46,48 @@ public class UpdateCertificateTemplate {
   }
 
   // Updates an existing certificate template.
-  public static void updateCertificateTemplate(String project, String location,
-      String certificateTemplateId)
+  public static void updateCertificateTemplate(
+      String project, String location, String certificateTemplateId)
       throws IOException, ExecutionException, InterruptedException, TimeoutException {
     /* Initialize client that will be used to send requests. This client only needs to be created
-       once, and can be reused for multiple requests. After completing all of your requests, call
-       the `certificateAuthorityServiceClient.close()` method on the client to safely
-       clean up any remaining background resources. */
+    once, and can be reused for multiple requests. After completing all of your requests, call
+    the `certificateAuthorityServiceClient.close()` method on the client to safely
+    clean up any remaining background resources. */
     try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
         CertificateAuthorityServiceClient.create()) {
 
-      String certificateTemplateName = CertificateTemplateName
-          .of(project, location, certificateTemplateId).toString();
+      String certificateTemplateName =
+          CertificateTemplateName.of(project, location, certificateTemplateId).toString();
 
       // Set the parent name and the properties to be updated.
-      CertificateTemplate certificateTemplate = CertificateTemplate.newBuilder()
-          .setName(certificateTemplateName)
-          .setIdentityConstraints(CertificateIdentityConstraints.newBuilder()
-              .setAllowSubjectPassthrough(false)
-              .setAllowSubjectAltNamesPassthrough(true).build())
-          .build();
+      CertificateTemplate certificateTemplate =
+          CertificateTemplate.newBuilder()
+              .setName(certificateTemplateName)
+              .setIdentityConstraints(
+                  CertificateIdentityConstraints.newBuilder()
+                      .setAllowSubjectPassthrough(false)
+                      .setAllowSubjectAltNamesPassthrough(true)
+                      .build())
+              .build();
 
       // Set the mask corresponding to the properties updated above.
-      FieldMask fieldMask = FieldMask.newBuilder()
-          .addPaths("identity_constraints.allow_subject_alt_names_passthrough")
-          .addPaths("identity_constraints.allow_subject_passthrough").build();
+      FieldMask fieldMask =
+          FieldMask.newBuilder()
+              .addPaths("identity_constraints.allow_subject_alt_names_passthrough")
+              .addPaths("identity_constraints.allow_subject_passthrough")
+              .build();
 
       /* Set the new template.
-         Set the mask to specify which properties of the template should be updated. */
-      UpdateCertificateTemplateRequest request = UpdateCertificateTemplateRequest.newBuilder()
-          .setCertificateTemplate(certificateTemplate)
-          .setUpdateMask(fieldMask).build();
+      Set the mask to specify which properties of the template should be updated. */
+      UpdateCertificateTemplateRequest request =
+          UpdateCertificateTemplateRequest.newBuilder()
+              .setCertificateTemplate(certificateTemplate)
+              .setUpdateMask(fieldMask)
+              .build();
 
       // Create the update certificate template request.
-      ApiFuture<Operation> futureCall = certificateAuthorityServiceClient
-          .updateCertificateTemplateCallable().futureCall(request);
+      ApiFuture<Operation> futureCall =
+          certificateAuthorityServiceClient.updateCertificateTemplateCallable().futureCall(request);
 
       Operation response = futureCall.get(60, TimeUnit.SECONDS);
 
@@ -92,11 +98,13 @@ public class UpdateCertificateTemplate {
       }
 
       // Get the updated certificate template and check if the properties have been updated.
-      CertificateIdentityConstraints updatedCertificateIdentityConstraints = certificateAuthorityServiceClient
-          .getCertificateTemplate(certificateTemplateName).getIdentityConstraints();
+      CertificateIdentityConstraints updatedCertificateIdentityConstraints =
+          certificateAuthorityServiceClient
+              .getCertificateTemplate(certificateTemplateName)
+              .getIdentityConstraints();
 
-      if (!updatedCertificateIdentityConstraints.getAllowSubjectPassthrough() &&
-          updatedCertificateIdentityConstraints.getAllowSubjectAltNamesPassthrough()) {
+      if (!updatedCertificateIdentityConstraints.getAllowSubjectPassthrough()
+          && updatedCertificateIdentityConstraints.getAllowSubjectAltNamesPassthrough()) {
         System.out.println("Successfully updated the certificate template ! " + response.getName());
         return;
       }

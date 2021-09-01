@@ -82,7 +82,7 @@ public class SnippetsIT {
   @BeforeClass
   public static void setUp()
       throws IOException, ExecutionException, NoSuchProviderException, NoSuchAlgorithmException,
-      InterruptedException, TimeoutException {
+          InterruptedException, TimeoutException {
     reqEnvVar("GOOGLE_APPLICATION_CREDENTIALS");
     reqEnvVar("GOOGLE_CLOUD_PROJECT");
 
@@ -103,8 +103,8 @@ public class SnippetsIT {
     privateca.CreateCaPool.createCaPool(PROJECT_ID, LOCATION, CA_POOL_ID_DELETE);
     sleep(5);
     // Set the issuance policy for the created CA Pool.
-    privateca.UpdateCaPool_IssuancePolicy
-        .updateCaPoolIssuancePolicy(PROJECT_ID, LOCATION, CA_POOL_ID);
+    privateca.UpdateCaPool_IssuancePolicy.updateCaPoolIssuancePolicy(
+        PROJECT_ID, LOCATION, CA_POOL_ID);
     // <--- END CA POOL --->
 
     // <--- START ROOT CA --->
@@ -138,8 +138,8 @@ public class SnippetsIT {
 
     // <--- START CERTIFICATE --->
     // Create Certificate Template.
-    privateca.CreateCertificateTemplate
-        .createCertificateTemplate(PROJECT_ID, LOCATION, CERTIFICATE_TEMPLATE_NAME);
+    privateca.CreateCertificateTemplate.createCertificateTemplate(
+        PROJECT_ID, LOCATION, CERTIFICATE_TEMPLATE_NAME);
 
     // Create an asymmetric key pair using Bouncy Castle crypto framework.
     KeyPair asymmetricKeyPair = createAsymmetricKeyPair();
@@ -178,8 +178,8 @@ public class SnippetsIT {
         PROJECT_ID, LOCATION, CA_POOL_ID, CSR_CERTIFICATE_NAME);
 
     // Delete Certificate Template.
-    privateca.DeleteCertificateTemplate
-        .deleteCertificateTemplate(PROJECT_ID, LOCATION, CERTIFICATE_TEMPLATE_NAME);
+    privateca.DeleteCertificateTemplate.deleteCertificateTemplate(
+        PROJECT_ID, LOCATION, CERTIFICATE_TEMPLATE_NAME);
 
     // Delete root CA.
     privateca.DeleteCertificateAuthority.deleteCertificateAuthority(
@@ -281,9 +281,10 @@ public class SnippetsIT {
               .getCaPool(CaPoolName.of(PROJECT_ID, LOCATION, CA_POOL_ID).toString())
               .getIssuancePolicy();
 
-      String actualExpression = issuancePolicy.getIdentityConstraints().getCelExpression()
-          .getExpression();
-      String expectedExpression = "subject_alt_names.all(san, san.type == DNS && (san.value == \"us.google.org\" || san.value.endsWith(\".google.com\")) )";
+      String actualExpression =
+          issuancePolicy.getIdentityConstraints().getCelExpression().getExpression();
+      String expectedExpression =
+          "subject_alt_names.all(san, san.type == DNS && (san.value == \"us.google.org\" || san.value.endsWith(\".google.com\")) )";
       assertThat(actualExpression).contains(expectedExpression);
     }
   }
@@ -346,9 +347,12 @@ public class SnippetsIT {
     // Check that the Certificate template has been created as part of the setup.
     try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
         CertificateAuthorityServiceClient.create()) {
-      String certificateTemplate = certificateAuthorityServiceClient.getCertificateTemplate(
-          CertificateTemplateName.of(PROJECT_ID, LOCATION, CERTIFICATE_TEMPLATE_NAME).toString())
-          .getName();
+      String certificateTemplate =
+          certificateAuthorityServiceClient
+              .getCertificateTemplate(
+                  CertificateTemplateName.of(PROJECT_ID, LOCATION, CERTIFICATE_TEMPLATE_NAME)
+                      .toString())
+              .getName();
 
       assertThat(certificateTemplate)
           .contains(String.format("projects/%s/locations/%s/", PROJECT_ID, LOCATION));
@@ -365,8 +369,8 @@ public class SnippetsIT {
   @Test
   public void updateCertificateTemplate()
       throws IOException, ExecutionException, InterruptedException, TimeoutException {
-    privateca.UpdateCertificateTemplate
-        .updateCertificateTemplate(PROJECT_ID, LOCATION, CERTIFICATE_TEMPLATE_NAME);
+    privateca.UpdateCertificateTemplate.updateCertificateTemplate(
+        PROJECT_ID, LOCATION, CERTIFICATE_TEMPLATE_NAME);
     assertThat(stdOut.toString()).contains("Successfully updated the certificate template ! ");
   }
 

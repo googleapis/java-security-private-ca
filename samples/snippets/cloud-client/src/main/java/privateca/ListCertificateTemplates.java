@@ -33,8 +33,8 @@ public class ListCertificateTemplates {
   public static void main(String[] args)
       throws IOException, ExecutionException, InterruptedException, TimeoutException {
     /* TODO(developer): Replace these variables before running the sample.
-       location: For a list of locations, see:
-       https://cloud.google.com/certificate-authority-service/docs/locations */
+    location: For a list of locations, see:
+    https://cloud.google.com/certificate-authority-service/docs/locations */
     String project = "your-project-id";
     String location = "ca-location";
 
@@ -45,19 +45,20 @@ public class ListCertificateTemplates {
   public static void listCertificateTemplates(String project, String location)
       throws IOException, ExecutionException, InterruptedException, TimeoutException {
     /* Initialize client that will be used to send requests. This client only needs to be created
-       once, and can be reused for multiple requests. After completing all of your requests, call
-       the `certificateAuthorityServiceClient.close()` method on the client to safely
-       clean up any remaining background resources. */
+    once, and can be reused for multiple requests. After completing all of your requests, call
+    the `certificateAuthorityServiceClient.close()` method on the client to safely
+    clean up any remaining background resources. */
     try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
         CertificateAuthorityServiceClient.create()) {
 
       // Set the parent name to list the certificate templates.
-      ListCertificateTemplatesRequest request = ListCertificateTemplatesRequest.newBuilder()
-          .setParent(LocationName.of(project, location).toString())
-          .build();
+      ListCertificateTemplatesRequest request =
+          ListCertificateTemplatesRequest.newBuilder()
+              .setParent(LocationName.of(project, location).toString())
+              .build();
 
-      ApiFuture<ListCertificateTemplatesResponse> futureCall = certificateAuthorityServiceClient
-          .listCertificateTemplatesCallable().futureCall(request);
+      ApiFuture<ListCertificateTemplatesResponse> futureCall =
+          certificateAuthorityServiceClient.listCertificateTemplatesCallable().futureCall(request);
 
       // Get the response.
       ListCertificateTemplatesResponse response = futureCall.get(60, TimeUnit.SECONDS);
