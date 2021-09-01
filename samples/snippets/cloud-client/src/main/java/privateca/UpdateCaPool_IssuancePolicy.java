@@ -22,12 +22,11 @@ import com.google.cloud.security.privateca.v1.CaPool;
 import com.google.cloud.security.privateca.v1.CaPool.IssuancePolicy;
 import com.google.cloud.security.privateca.v1.CaPoolName;
 import com.google.cloud.security.privateca.v1.CertificateAuthorityServiceClient;
-import com.google.cloud.security.privateca.v1.CertificateExtensionConstraints;
-import com.google.cloud.security.privateca.v1.CertificateExtensionConstraints.KnownCertificateExtension;
 import com.google.cloud.security.privateca.v1.CertificateIdentityConstraints;
 import com.google.cloud.security.privateca.v1.UpdateCaPoolRequest;
 import com.google.longrunning.Operation;
 import com.google.protobuf.FieldMask;
+import com.google.type.Expr;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -59,14 +58,18 @@ public class UpdateCaPool_IssuancePolicy {
     try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
         CertificateAuthorityServiceClient.create()) {
 
-      // Set the updated issuance policy for the CA Pool.
-      CaPool.IssuancePolicy issuancePolicy = CaPool.IssuancePolicy.newBuilder()
-          .setPassthroughExtensions(CertificateExtensionConstraints.newBuilder()
-              .addKnownExtensions(KnownCertificateExtension.BASE_KEY_USAGE)
-              .addKnownExtensions(KnownCertificateExtension.EXTENDED_KEY_USAGE).build())
+      /* Set the updated issuance policy for the CA Pool.
+         This particular issuance policy allows only SANs that
+         have DNS Names as "us.google.org" or ending in ".google.com". */
+      String expr = "subject_alt_names.all(san, san.type == DNS && (san.value == \"us.google.org\""
+          + " || san.value.endsWith(\".google.com\")) )";
+
+      CaPool.IssuancePolicy issuancePolicy = IssuancePolicy.newBuilder()
           .setIdentityConstraints(CertificateIdentityConstraints.newBuilder()
               .setAllowSubjectPassthrough(true)
-              .setAllowSubjectAltNamesPassthrough(true).build()).build();
+              .setAllowSubjectAltNamesPassthrough(true)
+              .setCelExpression(Expr.newBuilder().setExpression(expr).build()).build())
+          .build();
 
       CaPool caPool = CaPool.newBuilder()
           .setName(CaPoolName.of(project, location, pool_Id).toString())
@@ -83,7 +86,7 @@ public class UpdateCaPool_IssuancePolicy {
           .setUpdateMask(FieldMask.newBuilder(FieldMask.newBuilder()
               .addPaths("issuance_policy.identity_constraints.allow_subject_passthrough")
               .addPaths("issuance_policy.identity_constraints.allow_subject_alt_names_passthrough")
-              .addPaths("issuance_policy.passthrough_extensions.known_extensions").build()))
+              .addPaths("issuance_policy.identity_constraints.cel_expression").build()))
           .build();
 
       // Update CA Pool request.
@@ -94,7 +97,7 @@ public class UpdateCaPool_IssuancePolicy {
 
       // Check for errors.
       if (operation.hasError()) {
-        System.out.println("Error in updating CA Pool ! " + operation.getError());
+        System.out.println("Error in updating CA Pool Issuance policy ! " + operation.getError());
         return;
       }
 
@@ -105,11 +108,12 @@ public class UpdateCaPool_IssuancePolicy {
       // Similarly, you can check for other modified fields as well.
       if (response.getIdentityConstraints().getAllowSubjectPassthrough() && response
           .getIdentityConstraints().getAllowSubjectAltNamesPassthrough()) {
-        System.out.println("CA Pool has been updated successfully ! ");
+        System.out.println("CA Pool Issuance policy has been updated successfully ! ");
         return;
       }
 
-      System.out.println("Error in updating CA Pool ! Please try again ! " + response);
+      System.out
+          .println("Error in updating CA Pool Issuance policy ! Please try again ! " + response);
     }
   }
 }

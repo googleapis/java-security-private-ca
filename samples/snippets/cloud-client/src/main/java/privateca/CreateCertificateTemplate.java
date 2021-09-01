@@ -44,13 +44,15 @@ public class CreateCertificateTemplate {
        https://cloud.google.com/certificate-authority-service/docs/locations */
     String project = "your-project-id";
     String location = "ca-location";
+    String certificateTemplateId = "certificate-template-id";
 
-    createCertificateTemplate(project, location);
+    createCertificateTemplate(project, location, certificateTemplateId);
   }
 
   /* Creates a Certificate template. These templates can be reused for common
      certificate issuance scenarios. */
-  public static void createCertificateTemplate(String project, String location)
+  public static void createCertificateTemplate(String project, String location,
+      String certificateTemplateId)
       throws IOException, ExecutionException, InterruptedException, TimeoutException {
     /* Initialize client that will be used to send requests. This client only needs to be created
        once, and can be reused for multiple requests. After completing all of your requests, call
@@ -58,9 +60,6 @@ public class CreateCertificateTemplate {
        clean up any remaining background resources. */
     try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
         CertificateAuthorityServiceClient.create()) {
-
-      // A unique identifier of the certificate template.
-      String certificateTemplateId = "server-tls";
 
       /* Describes any predefined X.509 values set by this template.
          The provided extensions are copied over to certificate requests that use this template.*/
