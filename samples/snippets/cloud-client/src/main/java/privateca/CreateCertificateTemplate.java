@@ -70,10 +70,16 @@ public class CreateCertificateTemplate {
                       .setDigitalSignature(true)
                       .setKeyEncipherment(true)
                       .build())
-              .setExtendedKeyUsage(ExtendedKeyUsageOptions.newBuilder().setServerAuth(true).build())
+              .setExtendedKeyUsage(
+                  ExtendedKeyUsageOptions.newBuilder()
+                      .setServerAuth(true)
+                      .build())
               .build();
 
-      CaOptions caOptions = CaOptions.newBuilder().setIsCa(false).build();
+      CaOptions caOptions =
+          CaOptions.newBuilder()
+              .setIsCa(false)
+              .build();
 
       /* CEL expression that is evaluated against the Subject and
       Subject Alternative Name of the certificate before it is issued. */
@@ -84,7 +90,10 @@ public class CreateCertificateTemplate {
       CertificateTemplate certificateTemplate =
           CertificateTemplate.newBuilder()
               .setPredefinedValues(
-                  X509Parameters.newBuilder().setKeyUsage(keyUsage).setCaOptions(caOptions).build())
+                  X509Parameters.newBuilder()
+                      .setKeyUsage(keyUsage)
+                      .setCaOptions(caOptions)
+                      .build())
               .setIdentityConstraints(
                   CertificateIdentityConstraints.newBuilder()
                       .setCelExpression(expr)

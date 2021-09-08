@@ -58,7 +58,9 @@ public class ListCertificateTemplates {
               .build();
 
       ApiFuture<ListCertificateTemplatesResponse> futureCall =
-          certificateAuthorityServiceClient.listCertificateTemplatesCallable().futureCall(request);
+          certificateAuthorityServiceClient
+              .listCertificateTemplatesCallable()
+              .futureCall(request);
 
       // Get the response.
       ListCertificateTemplatesResponse response = futureCall.get(60, TimeUnit.SECONDS);

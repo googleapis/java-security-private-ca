@@ -66,7 +66,7 @@ public class CreateSubordinateCa {
 
       String commonName = "common-name";
       String orgName = "csr-org-name";
-      String domainName = "test.google.com";
+      String domainName = "dns.your-domain.com";
       int caDuration = 100000; // Validity of this CA in seconds.
 
       // Set the type of Algorithm.
@@ -79,7 +79,10 @@ public class CreateSubordinateCa {
               .setSubject(
                   Subject.newBuilder().setCommonName(commonName).setOrganization(orgName).build())
               // Set the fully qualified domain name.
-              .setSubjectAltName(SubjectAltNames.newBuilder().addDnsNames(domainName).build())
+              .setSubjectAltName(
+                  SubjectAltNames.newBuilder()
+                      .addDnsNames(domainName)
+                      .build())
               .build();
 
       //  Set the key usage options for X.509 fields.

@@ -61,7 +61,9 @@ public class DeleteCertificateTemplate {
               .build();
 
       ApiFuture<Operation> futureCall =
-          certificateAuthorityServiceClient.deleteCertificateTemplateCallable().futureCall(request);
+          certificateAuthorityServiceClient
+              .deleteCertificateTemplateCallable()
+              .futureCall(request);
 
       Operation response = futureCall.get(60, TimeUnit.SECONDS);
 
