@@ -82,7 +82,7 @@ public class SnippetsIT {
   @BeforeClass
   public static void setUp()
       throws IOException, ExecutionException, NoSuchProviderException, NoSuchAlgorithmException,
-      InterruptedException, TimeoutException {
+          InterruptedException, TimeoutException {
     reqEnvVar("GOOGLE_APPLICATION_CREDENTIALS");
     reqEnvVar("GOOGLE_CLOUD_PROJECT");
 
@@ -395,8 +395,7 @@ public class SnippetsIT {
   @Test
   public void testFilterCertificates() throws IOException {
     // Filter only certificates created using CSR.
-    privateca.FilterCertificates.filterCertificates(
-        PROJECT_ID, LOCATION, CA_POOL_ID);
+    privateca.FilterCertificates.filterCertificates(PROJECT_ID, LOCATION, CA_POOL_ID);
     assertThat(stdOut.toString()).contains(CSR_CERTIFICATE_NAME);
     assertThat(stdOut.toString()).doesNotContain(CERTIFICATE_NAME);
   }
