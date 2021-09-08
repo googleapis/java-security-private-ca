@@ -79,10 +79,7 @@ public class CreateSubordinateCa {
               .setSubject(
                   Subject.newBuilder().setCommonName(commonName).setOrganization(orgName).build())
               // Set the fully qualified domain name.
-              .setSubjectAltName(
-                  SubjectAltNames.newBuilder()
-                      .addDnsNames(domainName)
-                      .build())
+              .setSubjectAltName(SubjectAltNames.newBuilder().addDnsNames(domainName).build())
               .build();
 
       //  Set the key usage options for X.509 fields.
