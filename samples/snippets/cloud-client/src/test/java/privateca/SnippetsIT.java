@@ -84,13 +84,13 @@ public class SnippetsIT {
     reqEnvVar("GOOGLE_CLOUD_PROJECT");
 
     LOCATION = "asia-south1";
-    CA_POOL_ID = "ca-pool-" + UUID.randomUUID().toString();
-    CA_POOL_ID_DELETE = "ca-pool-" + UUID.randomUUID().toString();
-    CA_NAME = "ca-name-" + UUID.randomUUID().toString();
-    CA_NAME_DELETE = "ca-name-" + UUID.randomUUID().toString();
-    SUBORDINATE_CA_NAME = "sub-ca-name-" + UUID.randomUUID().toString();
-    CERTIFICATE_NAME = "certificate-name-" + UUID.randomUUID().toString();
-    CSR_CERTIFICATE_NAME = "csr-certificate-name-" + UUID.randomUUID().toString();
+    CA_POOL_ID = "ca-pool-" + UUID.randomUUID();
+    CA_POOL_ID_DELETE = "ca-pool-" + UUID.randomUUID();
+    CA_NAME = "ca-name-" + UUID.randomUUID();
+    CA_NAME_DELETE = "ca-name-" + UUID.randomUUID();
+    SUBORDINATE_CA_NAME = "sub-ca-name-" + UUID.randomUUID();
+    CERTIFICATE_NAME = "certificate-name-" + UUID.randomUUID();
+    CSR_CERTIFICATE_NAME = "csr-certificate-name-" + UUID.randomUUID();
     KEY_SIZE = 2048; // Default key size
 
     // <--- START CA POOL --->
@@ -284,6 +284,19 @@ public class SnippetsIT {
   public void testListCertificateAuthorities() throws IOException {
     privateca.ListCertificateAuthorities.listCertificateAuthority(PROJECT_ID, LOCATION, CA_POOL_ID);
     assertThat(stdOut.toString()).contains(CA_NAME);
+  }
+
+  @Test
+  public void testUpdateCertificateAuthority()
+      throws IOException, ExecutionException, InterruptedException, TimeoutException {
+    privateca.UpdateCertificateAuthority.updateCaLabel(PROJECT_ID, LOCATION, CA_POOL_ID, CA_NAME);
+    assertThat(stdOut.toString()).contains("Successfully updated the labels ! ");
+  }
+
+  @Test
+  public void testMonitorCertificateAuthority() throws IOException, InterruptedException {
+    privateca.MonitorCertificateAuthority.createCaMonitoringPolicy(PROJECT_ID);
+    assertThat(stdOut.toString()).contains("Monitoring policy successfully created !");
   }
 
   @Test
