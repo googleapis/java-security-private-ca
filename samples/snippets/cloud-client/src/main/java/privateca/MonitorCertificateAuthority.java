@@ -36,46 +36,51 @@ public class MonitorCertificateAuthority {
   }
 
   // Creates a monitoring policy to notify 30 days before a managed CA expires.
-  public static void createCaMonitoringPolicy(String project)
-      throws IOException {
+  public static void createCaMonitoringPolicy(String project) throws IOException {
     /* Initialize client that will be used to send requests. This client only needs to be created
-       once, and can be reused for multiple requests. After completing all of your requests, call
-       the `client.close()` method on the client to safely
-       clean up any remaining background resources. */
+    once, and can be reused for multiple requests. After completing all of your requests, call
+    the `client.close()` method on the client to safely
+    clean up any remaining background resources. */
     try (AlertPolicyServiceClient client = AlertPolicyServiceClient.create();
-        NotificationChannelServiceClient notificationClient = NotificationChannelServiceClient
-            .create()) {
+        NotificationChannelServiceClient notificationClient =
+            NotificationChannelServiceClient.create()) {
 
       String policyName = "policy-name";
 
       /* Query which indicates the resource to monitor and the constraints.
-         Here, the alert policy notifies you 30 days before a managed CA expires.
-         For more info on creating queries, see: https://cloud.google.com/monitoring/mql/alerts */
-      String query = "fetch privateca.googleapis.com/CertificateAuthority" +
-          "| metric 'privateca.googleapis.com/ca/cert_chain_expiration'" +
-          "| group_by 5m," +
-          "[value_cert_chain_expiration_mean: mean(value.cert_chain_expiration)]" +
-          "| every 5m" +
-          "| condition val() < 2.592e+06 's'";
+      Here, the alert policy notifies you 30 days before a managed CA expires.
+      For more info on creating queries, see: https://cloud.google.com/monitoring/mql/alerts */
+      String query =
+          "fetch privateca.googleapis.com/CertificateAuthority"
+              + "| metric 'privateca.googleapis.com/ca/cert_chain_expiration'"
+              + "| group_by 5m,"
+              + "[value_cert_chain_expiration_mean: mean(value.cert_chain_expiration)]"
+              + "| every 5m"
+              + "| condition val() < 2.592e+06 's'";
 
       // Create a notification channel.
-      NotificationChannel notificationChannel = NotificationChannel.newBuilder()
-          .setType("email")
-          .putLabels("email_address", "java-docs-samples-testing@google.com")
-          .build();
+      NotificationChannel notificationChannel =
+          NotificationChannel.newBuilder()
+              .setType("email")
+              .putLabels("email_address", "java-docs-samples-testing@google.com")
+              .build();
       NotificationChannel channel =
-          notificationClient
-              .createNotificationChannel(ProjectName.of(project), notificationChannel);
+          notificationClient.createNotificationChannel(
+              ProjectName.of(project), notificationChannel);
 
       // Set the query and notification channel.
-      AlertPolicy alertPolicy = AlertPolicy.newBuilder()
-          .setDisplayName(policyName)
-          .addConditions(Condition.newBuilder()
-              .setDisplayName("ca-cert-chain-expiration")
-              .setConditionMonitoringQueryLanguage(MonitoringQueryLanguageCondition.newBuilder()
-                  .setQuery(query).build()).build())
-          .setCombiner(ConditionCombinerType.AND)
-          .addNotificationChannels(channel.getName()).build();
+      AlertPolicy alertPolicy =
+          AlertPolicy.newBuilder()
+              .setDisplayName(policyName)
+              .addConditions(
+                  Condition.newBuilder()
+                      .setDisplayName("ca-cert-chain-expiration")
+                      .setConditionMonitoringQueryLanguage(
+                          MonitoringQueryLanguageCondition.newBuilder().setQuery(query).build())
+                      .build())
+              .setCombiner(ConditionCombinerType.AND)
+              .addNotificationChannels(channel.getName())
+              .build();
 
       AlertPolicy policy = client.createAlertPolicy(ProjectName.of(project), alertPolicy);
 
