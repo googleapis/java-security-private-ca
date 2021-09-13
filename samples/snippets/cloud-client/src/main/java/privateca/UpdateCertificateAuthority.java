@@ -46,35 +46,33 @@ public class UpdateCertificateAuthority {
     updateCaLabel(project, location, pool_Id, certificateAuthorityName);
   }
 
-  // Updates the labels in a Certificate Authority.
-  public static void updateCaLabel(
-      String project, String location, String pool_Id, String certificateAuthorityName)
+  // Updates the labels in a certificate authority.
+  public static void updateCaLabel(String project, String location, String pool_Id,
+      String certificateAuthorityName)
       throws IOException, ExecutionException, InterruptedException, TimeoutException {
+    /* Initialize client that will be used to send requests. This client only needs to be created
+       once, and can be reused for multiple requests. After completing all of your requests, call
+       the `certificateAuthorityServiceClient.close()` method on the client to safely
+       clean up any remaining background resources. */
     try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
         CertificateAuthorityServiceClient.create()) {
 
       // Set the parent path and the new labels.
-      String certificateAuthorityParent =
-          CertificateAuthorityName.of(project, location, pool_Id, certificateAuthorityName)
-              .toString();
-      CertificateAuthority certificateAuthority =
-          CertificateAuthority.newBuilder()
-              .setName(certificateAuthorityParent)
-              .putLabels("env", "test")
-              .build();
+      String certificateAuthorityParent = CertificateAuthorityName
+          .of(project, location, pool_Id, certificateAuthorityName).toString();
+      CertificateAuthority certificateAuthority = CertificateAuthority.newBuilder()
+          .setName(certificateAuthorityParent)
+          .putLabels("env", "test").build();
 
-      // Create the update CA request.
-      UpdateCertificateAuthorityRequest request =
-          UpdateCertificateAuthorityRequest.newBuilder()
-              .setCertificateAuthority(certificateAuthority)
-              .setUpdateMask(FieldMask.newBuilder().addPaths("labels").build())
-              .build();
+      // Create a request to update the CA.
+      UpdateCertificateAuthorityRequest request = UpdateCertificateAuthorityRequest.newBuilder()
+          .setCertificateAuthority(certificateAuthority)
+          .setUpdateMask(FieldMask.newBuilder()
+              .addPaths("labels").build()).build();
 
       // Update the CA and wait for the operation to complete.
-      ApiFuture<Operation> futureCall =
-          certificateAuthorityServiceClient
-              .updateCertificateAuthorityCallable()
-              .futureCall(request);
+      ApiFuture<Operation> futureCall = certificateAuthorityServiceClient
+          .updateCertificateAuthorityCallable().futureCall(request);
       Operation operation = futureCall.get(60, TimeUnit.SECONDS);
 
       // Check for errors.
@@ -83,10 +81,10 @@ public class UpdateCertificateAuthority {
       }
 
       // Get the updated CA and check if it contains the new label.
-      CertificateAuthority response =
-          certificateAuthorityServiceClient.getCertificateAuthority(certificateAuthorityParent);
-      if (response.getLabelsMap().containsKey("env")
-          && response.getLabelsMap().get("env").equalsIgnoreCase("test")) {
+      CertificateAuthority response = certificateAuthorityServiceClient
+          .getCertificateAuthority(certificateAuthorityParent);
+      if (response.getLabelsMap().containsKey("env") && response.getLabelsMap().get("env")
+          .equalsIgnoreCase("test")) {
         System.out.println("Successfully updated the labels ! ");
       }
     }
