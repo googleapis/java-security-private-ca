@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://www.github.com/googleapis/java-security-private-ca/compare/v1.1.0...v1.2.0) (2021-10-01)
+
+
+### Features
+
+* configure initial sp version ([#230](https://www.github.com/googleapis/java-security-private-ca/issues/230)) ([878fbea](https://www.github.com/googleapis/java-security-private-ca/commit/878fbea78f8f1e50555d996cfb33a0a50052165c))
+
 ## [1.1.0](https://www.github.com/googleapis/java-security-private-ca/compare/v1.0.0...v1.1.0) (2021-07-01)
 
 
