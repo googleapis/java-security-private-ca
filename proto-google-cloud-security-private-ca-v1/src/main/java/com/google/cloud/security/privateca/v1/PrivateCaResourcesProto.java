@@ -198,8 +198,7 @@ public final class PrivateCaResourcesProto {
     java.lang.String[] descriptorData = {
       "\n"
           + "2google/cloud/security/privateca/v1/resources.proto\022\"google.cloud.security.priv"
-          + "ateca.v1\032\037google/api/field_behavior.prot"
-          + "o\032\031google/api/resource.proto\032\036google/protobuf/duration.proto\032\037google/protobuf/timestamp.proto\032\026google/type/expr.proto\032\034google/api/annotations.proto\"\362\017\n"
+          + "ateca.v1\032\037google/api/field_behavior.proto\032\031google/api/resource.proto\032\036google/protobuf/duration.proto\032\037google/protobuf/timestamp.proto\032\026google/type/expr.proto\032\034google/api/annotations.proto\"\362\017\n"
           + "\024CertificateAuthority\022\021\n"
           + "\004name\030\001 \001(\tB\003\340A\003\022S\n"
           + "\004type\030\002"
