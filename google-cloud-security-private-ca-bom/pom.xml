@@ -62,7 +62,7 @@
       <dependency>
         <groupId>com.google.api.grpc</groupId>
         <artifactId>grpc-google-cloud-security-private-ca-v1beta1</artifactId>
-        <version>0.13.0</version><!-- {x-version-update:grpc-google-cloud-security-private-ca-v1beta1:current} -->
+        <version>0.12.5-SNAPSHOT</version><!-- {x-version-update:grpc-google-cloud-security-private-ca-v1beta1:current} -->
       </dependency>
       <dependency>
         <groupId>com.google.api.grpc</groupId>
