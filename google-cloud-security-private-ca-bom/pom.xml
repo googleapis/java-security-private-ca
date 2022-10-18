@@ -77,7 +77,7 @@
       <dependency>
         <groupId>com.google.api.grpc</groupId>
         <artifactId>proto-google-cloud-security-private-ca-v1</artifactId>
-        <version>2.5.5-SNAPSHOT</version><!-- {x-version-update:proto-google-cloud-security-private-ca-v1:current} -->
+        <version>2.6.0</version><!-- {x-version-update:proto-google-cloud-security-private-ca-v1:current} -->
       </dependency>
     </dependencies>
   </dependencyManagement>
