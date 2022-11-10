@@ -9,6 +9,13 @@ Java idiomatic client for [Certificate Authority Service][product-docs].
 - [Client Library Documentation][javadocs]
 
 
+:bus: In October 2022, this library has moved to
+[google-cloud-java/java-security-private-ca](
+https://github.com/googleapis/google-cloud-java/tree/main/java-security-private-ca).
+This repository will be archived in the future.
+Future releases will appear in the new repository (https://github.com/googleapis/google-cloud-java/releases).
+The Maven artifact coordinates (`com.google.cloud:google-cloud-security-private-ca`) remain the same.
+
 ## Quickstart
 
 
@@ -19,20 +26,20 @@ If you are using Maven, add this to your pom.xml file:
 <dependency>
   <groupId>com.google.cloud</groupId>
   <artifactId>google-cloud-security-private-ca</artifactId>
-  <version>2.5.4</version>
+  <version>2.7.0</version>
 </dependency>
 ```
 
 If you are using Gradle without BOM, add this to your dependencies:
 
 ```Groovy
-implementation 'com.google.cloud:google-cloud-security-private-ca:2.5.4'
+implementation 'com.google.cloud:google-cloud-security-private-ca:2.7.0'
 ```
 
 If you are using SBT, add this to your dependencies:
 
 ```Scala
-libraryDependencies += "com.google.cloud" % "google-cloud-security-private-ca" % "2.5.4"
+libraryDependencies += "com.google.cloud" % "google-cloud-security-private-ca" % "2.7.0"
 ```
 
 ## Authentication
