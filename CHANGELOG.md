@@ -1,5 +1,158 @@
 # Changelog
 
+## [2.5.4](https://github.com/googleapis/java-security-private-ca/compare/v2.5.3...v2.5.4) (2022-10-03)
+
+
+### Dependencies
+
+* Update dependency certifi to v2022.9.24 ([#472](https://github.com/googleapis/java-security-private-ca/issues/472)) ([41f2dc2](https://github.com/googleapis/java-security-private-ca/commit/41f2dc2939878632459cce2bc17cb3a3ba55df04))
+* Update dependency com.google.cloud:google-cloud-shared-dependencies to v3.0.4 ([#481](https://github.com/googleapis/java-security-private-ca/issues/481)) ([744e0c6](https://github.com/googleapis/java-security-private-ca/commit/744e0c6f1187846d45d033a5c8b65d2bc7af4708))
+* Update dependency google-api-core to v2.10.1 ([#469](https://github.com/googleapis/java-security-private-ca/issues/469)) ([9aeda2c](https://github.com/googleapis/java-security-private-ca/commit/9aeda2ce3471a56c6df101929cc87798e577a380))
+* Update dependency google-crc32c to v1.5.0 ([#470](https://github.com/googleapis/java-security-private-ca/issues/470)) ([37650e7](https://github.com/googleapis/java-security-private-ca/commit/37650e7499592d3bdee1316ee2629b5f1027a337))
+* Update dependency googleapis-common-protos to v1.56.4 ([#468](https://github.com/googleapis/java-security-private-ca/issues/468)) ([5eedec1](https://github.com/googleapis/java-security-private-ca/commit/5eedec187b7f7cb16c6bc001bfbc2d9bafdc42e5))
+* Update dependency importlib-metadata to v4.12.0 ([#474](https://github.com/googleapis/java-security-private-ca/issues/474)) ([3f78d76](https://github.com/googleapis/java-security-private-ca/commit/3f78d76ef8cf12d0e984411a63f8e7ba125b263e))
+* Update dependency jeepney to v0.8.0 ([#471](https://github.com/googleapis/java-security-private-ca/issues/471)) ([fae78b7](https://github.com/googleapis/java-security-private-ca/commit/fae78b73b4421c438d41a775808e93bf486517bc))
+* Update dependency jinja2 to v3.1.2 ([#475](https://github.com/googleapis/java-security-private-ca/issues/475)) ([6ed4755](https://github.com/googleapis/java-security-private-ca/commit/6ed4755a5745e693ab3a6f178224ae03816d75a1))
+* Update dependency keyring to v23.9.3 ([#476](https://github.com/googleapis/java-security-private-ca/issues/476)) ([b770954](https://github.com/googleapis/java-security-private-ca/commit/b77095498465397ee810b0a39b1b4a14d760eab7))
+* Update dependency markupsafe to v2.1.1 ([#477](https://github.com/googleapis/java-security-private-ca/issues/477)) ([b004522](https://github.com/googleapis/java-security-private-ca/commit/b0045222f2cefb49ea695fd0cbcf1c872da48fdd))
+* Update dependency protobuf to v3.20.2 ([#478](https://github.com/googleapis/java-security-private-ca/issues/478)) ([1c1f819](https://github.com/googleapis/java-security-private-ca/commit/1c1f8191f06a8e94ce666bae14742da3a3849dd3))
+
+## [2.5.3](https://github.com/googleapis/java-security-private-ca/compare/v2.5.2...v2.5.3) (2022-09-15)
+
+
+### Dependencies
+
+* Update dependency com.google.cloud:google-cloud-shared-dependencies to v3.0.3 ([#461](https://github.com/googleapis/java-security-private-ca/issues/461)) ([e2e8f29](https://github.com/googleapis/java-security-private-ca/commit/e2e8f292047d23f2720d0b287c4dc7ebcee35489))
+
+## [2.5.2](https://github.com/googleapis/java-security-private-ca/compare/v2.5.1...v2.5.2) (2022-09-09)
+
+
+### Dependencies
+
+* Update dependency com.google.cloud:google-cloud-shared-dependencies to v3.0.2 ([#455](https://github.com/googleapis/java-security-private-ca/issues/455)) ([a90d743](https://github.com/googleapis/java-security-private-ca/commit/a90d7439ecbc6b8a04a023384039d1928ed8a5c4))
+
+## [2.5.1](https://github.com/googleapis/java-security-private-ca/compare/v2.5.0...v2.5.1) (2022-08-02)
+
+
+### Bug Fixes
+
+* enable longpaths support for windows test ([#1485](https://github.com/googleapis/java-security-private-ca/issues/1485)) ([#438](https://github.com/googleapis/java-security-private-ca/issues/438)) ([48a1195](https://github.com/googleapis/java-security-private-ca/commit/48a1195c5c0858f5df4675baba3fbd5944c21b95))
+
+
+### Dependencies
+
+* update dependency com.google.cloud:google-cloud-shared-dependencies to v3 ([#445](https://github.com/googleapis/java-security-private-ca/issues/445)) ([1fa6efc](https://github.com/googleapis/java-security-private-ca/commit/1fa6efce6a6a66ec7dd17a5fb2b15e329b79b716))
+
+## [2.5.0](https://github.com/googleapis/java-security-private-ca/compare/v2.4.0...v2.5.0) (2022-07-01)
+
+
+### Features
+
+* Enable REST transport for most of Java and Go clients ([#426](https://github.com/googleapis/java-security-private-ca/issues/426)) ([aa33192](https://github.com/googleapis/java-security-private-ca/commit/aa33192a4e1ce895b167b2423f59234d4e83e6fd))
+
+
+### Bug Fixes
+
+* update gapic-generator-java with mock service generation fixes ([#428](https://github.com/googleapis/java-security-private-ca/issues/428)) ([a80a9f4](https://github.com/googleapis/java-security-private-ca/commit/a80a9f4380f0a81a539002f0030e97470a370ae4))
+
+
+### Dependencies
+
+* update dependency com.google.cloud:google-cloud-shared-dependencies to v2.13.0 ([#425](https://github.com/googleapis/java-security-private-ca/issues/425)) ([d219c1a](https://github.com/googleapis/java-security-private-ca/commit/d219c1a587d2f93ba36c654c5102a08a3139e0a0))
+
+## [2.4.0](https://github.com/googleapis/java-security-private-ca/compare/v2.3.1...v2.4.0) (2022-05-20)
+
+
+### Features
+
+* add build scripts for native image testing in Java 17 ([#1440](https://github.com/googleapis/java-security-private-ca/issues/1440)) ([#416](https://github.com/googleapis/java-security-private-ca/issues/416)) ([fbe3b63](https://github.com/googleapis/java-security-private-ca/commit/fbe3b6351165ca98e9b75bd27cced922d38d2efe))
+* AuditConfig for IAM v1 ([6585360](https://github.com/googleapis/java-security-private-ca/commit/6585360bf7a9fb0e0249cbe2ddbf7bea70bc9f29))
+
+
+### Dependencies
+
+* update dependency com.google.cloud:google-cloud-shared-dependencies to v2.12.0 ([#415](https://github.com/googleapis/java-security-private-ca/issues/415)) ([9ffc060](https://github.com/googleapis/java-security-private-ca/commit/9ffc0601d52090e44186fece6908df03e47eafe3))
+
+### [2.3.1](https://github.com/googleapis/java-security-private-ca/compare/v2.3.0...v2.3.1) (2022-04-15)
+
+
+### Dependencies
+
+* update dependency com.google.cloud:google-cloud-shared-dependencies to v2.10.0 ([#401](https://github.com/googleapis/java-security-private-ca/issues/401)) ([ff4e95b](https://github.com/googleapis/java-security-private-ca/commit/ff4e95b493f0e7c3ed2d529d9c44ded789b06833))
+
+## [2.3.0](https://github.com/googleapis/java-security-private-ca/compare/v2.2.5...v2.3.0) (2022-03-29)
+
+
+### Features
+
+* Add `skip_grace_period` flag to DeleteCertificateAuthority API ([#388](https://github.com/googleapis/java-security-private-ca/issues/388)) ([c69ce38](https://github.com/googleapis/java-security-private-ca/commit/c69ce3803c315689ffe4491625aae17cf0f3f92d))
+
+
+### Dependencies
+
+* update dependency com.google.cloud:google-cloud-shared-dependencies to v2.9.0 ([#395](https://github.com/googleapis/java-security-private-ca/issues/395)) ([b96a457](https://github.com/googleapis/java-security-private-ca/commit/b96a4577bc1a84ab39afb8dcf68fd8d050158eca))
+
+### [2.2.5](https://github.com/googleapis/java-security-private-ca/compare/v2.2.4...v2.2.5) (2022-03-09)
+
+
+### Dependencies
+
+* update dependency com.google.api.grpc:proto-google-iam-v1 to v1.2.8 ([#385](https://github.com/googleapis/java-security-private-ca/issues/385)) ([02702ba](https://github.com/googleapis/java-security-private-ca/commit/02702bafbab9c58f57c1c4f020b9c8d84959dd7c))
+* using shared deps for iam proto dependency version ([#387](https://github.com/googleapis/java-security-private-ca/issues/387)) ([dbb82c6](https://github.com/googleapis/java-security-private-ca/commit/dbb82c61ae099b0e9fdf50a33b10218b0e74da9b))
+
+### [2.2.4](https://github.com/googleapis/java-security-private-ca/compare/v2.2.3...v2.2.4) (2022-03-03)
+
+
+### Dependencies
+
+* update actions/github-script action to v6 ([#364](https://github.com/googleapis/java-security-private-ca/issues/364)) ([a0828d8](https://github.com/googleapis/java-security-private-ca/commit/a0828d84cafb15f882be31927f2e8015a85664fb))
+* update dependency com.google.api.grpc:grpc-google-iam-v1 to v1.2.7 ([#355](https://github.com/googleapis/java-security-private-ca/issues/355)) ([3cf8756](https://github.com/googleapis/java-security-private-ca/commit/3cf8756d468847d8808bfd7a409d5b3f5cbf35c4))
+* update dependency com.google.api.grpc:proto-google-iam-v1 to v1.2.2 ([#356](https://github.com/googleapis/java-security-private-ca/issues/356)) ([83baab2](https://github.com/googleapis/java-security-private-ca/commit/83baab20d23a35442e5b88a015d3e1eb02c1f569))
+* update dependency com.google.api.grpc:proto-google-iam-v1 to v1.2.7 ([#374](https://github.com/googleapis/java-security-private-ca/issues/374)) ([a353dad](https://github.com/googleapis/java-security-private-ca/commit/a353dad35a304c7d4035985b6be6224c0d8817c1))
+* update dependency com.google.cloud:google-cloud-shared-dependencies to v2.8.0 ([#377](https://github.com/googleapis/java-security-private-ca/issues/377)) ([4ed3947](https://github.com/googleapis/java-security-private-ca/commit/4ed3947469693b4b989abe56c3144c44b50d863d))
+
+### [2.2.3](https://github.com/googleapis/java-security-private-ca/compare/v2.2.2...v2.2.3) (2022-02-03)
+
+
+### Documentation
+
+* mark CaPool.lifetime as IMMUTABLE docs: add format requirements on `custom_sans` ([#352](https://github.com/googleapis/java-security-private-ca/issues/352)) ([0717859](https://github.com/googleapis/java-security-private-ca/commit/07178595dc099c757f6e15f6349128c74b2b8a21))
+
+
+### Dependencies
+
+* **java:** update actions/github-script action to v5 ([#1339](https://github.com/googleapis/java-security-private-ca/issues/1339)) ([#349](https://github.com/googleapis/java-security-private-ca/issues/349)) ([cf03371](https://github.com/googleapis/java-security-private-ca/commit/cf03371296eb974118cd2f876817e995f0e3fc89))
+* update dependency com.google.api.grpc:grpc-google-iam-v1 to v1.2.1 ([#326](https://github.com/googleapis/java-security-private-ca/issues/326)) ([e842575](https://github.com/googleapis/java-security-private-ca/commit/e842575a699623c616985d05e74b0b6d83ba7f3b))
+* update dependency com.google.api.grpc:proto-google-iam-v1 to v1.2.1 ([#327](https://github.com/googleapis/java-security-private-ca/issues/327)) ([845072c](https://github.com/googleapis/java-security-private-ca/commit/845072c79f46f6434a07ce59517b4bb90f115d78))
+* update dependency com.google.cloud:google-cloud-shared-dependencies to v2.7.0 ([#351](https://github.com/googleapis/java-security-private-ca/issues/351)) ([2045348](https://github.com/googleapis/java-security-private-ca/commit/2045348cf5d0f3f9be99dc9150f93e23c5fe24a0))
+
+### [2.2.2](https://www.github.com/googleapis/java-security-private-ca/compare/v2.2.1...v2.2.2) (2022-01-07)
+
+
+### Dependencies
+
+* update dependency com.google.cloud:google-cloud-shared-dependencies to v2.6.0 ([#334](https://www.github.com/googleapis/java-security-private-ca/issues/334)) ([1ce4095](https://www.github.com/googleapis/java-security-private-ca/commit/1ce4095ec2d06654575fbcf91838eacb54ac571f))
+
+### [2.2.1](https://www.github.com/googleapis/java-security-private-ca/compare/v2.2.0...v2.2.1) (2021-12-06)
+
+
+### Bug Fixes
+
+* **java:** add -ntp flag to native image testing command ([#1299](https://www.github.com/googleapis/java-security-private-ca/issues/1299)) ([#323](https://www.github.com/googleapis/java-security-private-ca/issues/323)) ([d4898ae](https://www.github.com/googleapis/java-security-private-ca/commit/d4898ae5bdb1e8f5f45b374c934d74e5747e0986))
+* **java:** java 17 dependency arguments ([#1266](https://www.github.com/googleapis/java-security-private-ca/issues/1266)) ([#303](https://www.github.com/googleapis/java-security-private-ca/issues/303)) ([c9ea1fa](https://www.github.com/googleapis/java-security-private-ca/commit/c9ea1fafeef93caaea41e2a3d22578d9533158ce))
+* **privateca:** include mixin protos as input for mixin rpcs ([#315](https://www.github.com/googleapis/java-security-private-ca/issues/315)) ([842d5ef](https://www.github.com/googleapis/java-security-private-ca/commit/842d5ef95de31ea26a26dd576c4dd4d65fa9feec))
+
+
+### Documentation
+
+* fix docstring formatting ([#305](https://www.github.com/googleapis/java-security-private-ca/issues/305)) ([24720c8](https://www.github.com/googleapis/java-security-private-ca/commit/24720c8d23aa890ac5d78509836743d9fdc8a210))
+
+
+### Dependencies
+
+* update dependency com.google.cloud:google-cloud-shared-dependencies to v2.5.0 ([#314](https://www.github.com/googleapis/java-security-private-ca/issues/314)) ([2b7ff21](https://www.github.com/googleapis/java-security-private-ca/commit/2b7ff21ecfb8828cce08e6df450142e3f0751795))
+* update dependency org.bouncycastle:bcpkix-jdk15on to v1.70 ([#320](https://www.github.com/googleapis/java-security-private-ca/issues/320)) ([8c4aeb6](https://www.github.com/googleapis/java-security-private-ca/commit/8c4aeb6e756c111285c6623c450117e360f1029f))
+
 ## [2.2.0](https://www.github.com/googleapis/java-security-private-ca/compare/v2.1.2...v2.2.0) (2021-10-19)
 
 

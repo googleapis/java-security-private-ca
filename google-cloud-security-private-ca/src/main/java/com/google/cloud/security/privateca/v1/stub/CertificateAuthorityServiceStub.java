@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,10 +21,15 @@ import static com.google.cloud.security.privateca.v1.CertificateAuthorityService
 import static com.google.cloud.security.privateca.v1.CertificateAuthorityServiceClient.ListCertificateRevocationListsPagedResponse;
 import static com.google.cloud.security.privateca.v1.CertificateAuthorityServiceClient.ListCertificateTemplatesPagedResponse;
 import static com.google.cloud.security.privateca.v1.CertificateAuthorityServiceClient.ListCertificatesPagedResponse;
+import static com.google.cloud.security.privateca.v1.CertificateAuthorityServiceClient.ListLocationsPagedResponse;
 
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.cloud.location.GetLocationRequest;
+import com.google.cloud.location.ListLocationsRequest;
+import com.google.cloud.location.ListLocationsResponse;
+import com.google.cloud.location.Location;
 import com.google.cloud.security.privateca.v1.ActivateCertificateAuthorityRequest;
 import com.google.cloud.security.privateca.v1.CaPool;
 import com.google.cloud.security.privateca.v1.Certificate;
@@ -67,6 +72,11 @@ import com.google.cloud.security.privateca.v1.UpdateCertificateAuthorityRequest;
 import com.google.cloud.security.privateca.v1.UpdateCertificateRequest;
 import com.google.cloud.security.privateca.v1.UpdateCertificateRevocationListRequest;
 import com.google.cloud.security.privateca.v1.UpdateCertificateTemplateRequest;
+import com.google.iam.v1.GetIamPolicyRequest;
+import com.google.iam.v1.Policy;
+import com.google.iam.v1.SetIamPolicyRequest;
+import com.google.iam.v1.TestIamPermissionsRequest;
+import com.google.iam.v1.TestIamPermissionsResponse;
 import com.google.longrunning.Operation;
 import com.google.longrunning.stub.OperationsStub;
 import com.google.protobuf.Empty;
@@ -82,7 +92,11 @@ import javax.annotation.Generated;
 public abstract class CertificateAuthorityServiceStub implements BackgroundResource {
 
   public OperationsStub getOperationsStub() {
-    throw new UnsupportedOperationException("Not implemented: getOperationsStub()");
+    return null;
+  }
+
+  public com.google.api.gax.httpjson.longrunning.stub.OperationsStub getHttpJsonOperationsStub() {
+    return null;
   }
 
   public UnaryCallable<CreateCertificateRequest, Certificate> createCertificateCallable() {
@@ -348,6 +362,32 @@ public abstract class CertificateAuthorityServiceStub implements BackgroundResou
   public UnaryCallable<UpdateCertificateTemplateRequest, Operation>
       updateCertificateTemplateCallable() {
     throw new UnsupportedOperationException("Not implemented: updateCertificateTemplateCallable()");
+  }
+
+  public UnaryCallable<ListLocationsRequest, ListLocationsPagedResponse>
+      listLocationsPagedCallable() {
+    throw new UnsupportedOperationException("Not implemented: listLocationsPagedCallable()");
+  }
+
+  public UnaryCallable<ListLocationsRequest, ListLocationsResponse> listLocationsCallable() {
+    throw new UnsupportedOperationException("Not implemented: listLocationsCallable()");
+  }
+
+  public UnaryCallable<GetLocationRequest, Location> getLocationCallable() {
+    throw new UnsupportedOperationException("Not implemented: getLocationCallable()");
+  }
+
+  public UnaryCallable<SetIamPolicyRequest, Policy> setIamPolicyCallable() {
+    throw new UnsupportedOperationException("Not implemented: setIamPolicyCallable()");
+  }
+
+  public UnaryCallable<GetIamPolicyRequest, Policy> getIamPolicyCallable() {
+    throw new UnsupportedOperationException("Not implemented: getIamPolicyCallable()");
+  }
+
+  public UnaryCallable<TestIamPermissionsRequest, TestIamPermissionsResponse>
+      testIamPermissionsCallable() {
+    throw new UnsupportedOperationException("Not implemented: testIamPermissionsCallable()");
   }
 
   @Override

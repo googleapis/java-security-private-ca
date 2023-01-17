@@ -124,12 +124,14 @@ public interface CertificateAuthorityOrBuilder
    *
    *
    * <pre>
-   * Required. The desired lifetime of the CA certificate. Used to create the
+   * Required. Immutable. The desired lifetime of the CA certificate. Used to create the
    * "not_before_time" and "not_after_time" fields inside an X.509
    * certificate.
    * </pre>
    *
-   * <code>.google.protobuf.Duration lifetime = 4 [(.google.api.field_behavior) = REQUIRED];</code>
+   * <code>
+   * .google.protobuf.Duration lifetime = 4 [(.google.api.field_behavior) = REQUIRED, (.google.api.field_behavior) = IMMUTABLE];
+   * </code>
    *
    * @return Whether the lifetime field is set.
    */
@@ -138,12 +140,14 @@ public interface CertificateAuthorityOrBuilder
    *
    *
    * <pre>
-   * Required. The desired lifetime of the CA certificate. Used to create the
+   * Required. Immutable. The desired lifetime of the CA certificate. Used to create the
    * "not_before_time" and "not_after_time" fields inside an X.509
    * certificate.
    * </pre>
    *
-   * <code>.google.protobuf.Duration lifetime = 4 [(.google.api.field_behavior) = REQUIRED];</code>
+   * <code>
+   * .google.protobuf.Duration lifetime = 4 [(.google.api.field_behavior) = REQUIRED, (.google.api.field_behavior) = IMMUTABLE];
+   * </code>
    *
    * @return The lifetime.
    */
@@ -152,12 +156,14 @@ public interface CertificateAuthorityOrBuilder
    *
    *
    * <pre>
-   * Required. The desired lifetime of the CA certificate. Used to create the
+   * Required. Immutable. The desired lifetime of the CA certificate. Used to create the
    * "not_before_time" and "not_after_time" fields inside an X.509
    * certificate.
    * </pre>
    *
-   * <code>.google.protobuf.Duration lifetime = 4 [(.google.api.field_behavior) = REQUIRED];</code>
+   * <code>
+   * .google.protobuf.Duration lifetime = 4 [(.google.api.field_behavior) = REQUIRED, (.google.api.field_behavior) = IMMUTABLE];
+   * </code>
    */
   com.google.protobuf.DurationOrBuilder getLifetimeOrBuilder();
 
@@ -736,7 +742,12 @@ public interface CertificateAuthorityOrBuilder
    *
    * <code>map&lt;string, string&gt; labels = 17 [(.google.api.field_behavior) = OPTIONAL];</code>
    */
-  java.lang.String getLabelsOrDefault(java.lang.String key, java.lang.String defaultValue);
+
+  /* nullable */
+  java.lang.String getLabelsOrDefault(
+      java.lang.String key,
+      /* nullable */
+      java.lang.String defaultValue);
   /**
    *
    *

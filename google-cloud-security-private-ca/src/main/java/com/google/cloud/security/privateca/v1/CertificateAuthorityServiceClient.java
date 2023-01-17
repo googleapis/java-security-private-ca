@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
 import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
+import com.google.api.gax.httpjson.longrunning.OperationsClient;
 import com.google.api.gax.longrunning.OperationFuture;
 import com.google.api.gax.paging.AbstractFixedSizeCollection;
 import com.google.api.gax.paging.AbstractPage;
@@ -27,11 +28,19 @@ import com.google.api.gax.paging.AbstractPagedListResponse;
 import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.PageContext;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.cloud.location.GetLocationRequest;
+import com.google.cloud.location.ListLocationsRequest;
+import com.google.cloud.location.ListLocationsResponse;
+import com.google.cloud.location.Location;
 import com.google.cloud.security.privateca.v1.stub.CertificateAuthorityServiceStub;
 import com.google.cloud.security.privateca.v1.stub.CertificateAuthorityServiceStubSettings;
 import com.google.common.util.concurrent.MoreExecutors;
+import com.google.iam.v1.GetIamPolicyRequest;
+import com.google.iam.v1.Policy;
+import com.google.iam.v1.SetIamPolicyRequest;
+import com.google.iam.v1.TestIamPermissionsRequest;
+import com.google.iam.v1.TestIamPermissionsResponse;
 import com.google.longrunning.Operation;
-import com.google.longrunning.OperationsClient;
 import com.google.protobuf.Empty;
 import com.google.protobuf.FieldMask;
 import java.io.IOException;
@@ -49,6 +58,11 @@ import javax.annotation.Generated;
  * calls that map to API methods. Sample code to get started:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated and should be regarded as a code template only.
+ * // It will require modifications to work:
+ * // - It may require correct/in-range values for request initialization.
+ * // - It may require specifying regional endpoints when creating the service client as shown in
+ * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
  * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
  *     CertificateAuthorityServiceClient.create()) {
  *   CaPoolName parent = CaPoolName.of("[PROJECT]", "[LOCATION]", "[CA_POOL]");
@@ -89,6 +103,11 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated and should be regarded as a code template only.
+ * // It will require modifications to work:
+ * // - It may require correct/in-range values for request initialization.
+ * // - It may require specifying regional endpoints when creating the service client as shown in
+ * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
  * CertificateAuthorityServiceSettings certificateAuthorityServiceSettings =
  *     CertificateAuthorityServiceSettings.newBuilder()
  *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
@@ -100,8 +119,32 @@ import javax.annotation.Generated;
  * <p>To customize the endpoint:
  *
  * <pre>{@code
+ * // This snippet has been automatically generated and should be regarded as a code template only.
+ * // It will require modifications to work:
+ * // - It may require correct/in-range values for request initialization.
+ * // - It may require specifying regional endpoints when creating the service client as shown in
+ * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
  * CertificateAuthorityServiceSettings certificateAuthorityServiceSettings =
  *     CertificateAuthorityServiceSettings.newBuilder().setEndpoint(myEndpoint).build();
+ * CertificateAuthorityServiceClient certificateAuthorityServiceClient =
+ *     CertificateAuthorityServiceClient.create(certificateAuthorityServiceSettings);
+ * }</pre>
+ *
+ * <p>To use REST (HTTP1.1/JSON) transport (instead of gRPC) for sending and receiving requests over
+ * the wire:
+ *
+ * <pre>{@code
+ * // This snippet has been automatically generated and should be regarded as a code template only.
+ * // It will require modifications to work:
+ * // - It may require correct/in-range values for request initialization.
+ * // - It may require specifying regional endpoints when creating the service client as shown in
+ * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+ * CertificateAuthorityServiceSettings certificateAuthorityServiceSettings =
+ *     CertificateAuthorityServiceSettings.newBuilder()
+ *         .setTransportChannelProvider(
+ *             CertificateAuthorityServiceSettings.defaultHttpJsonTransportProviderBuilder()
+ *                 .build())
+ *         .build();
  * CertificateAuthorityServiceClient certificateAuthorityServiceClient =
  *     CertificateAuthorityServiceClient.create(certificateAuthorityServiceSettings);
  * }</pre>
@@ -112,7 +155,8 @@ import javax.annotation.Generated;
 public class CertificateAuthorityServiceClient implements BackgroundResource {
   private final CertificateAuthorityServiceSettings settings;
   private final CertificateAuthorityServiceStub stub;
-  private final OperationsClient operationsClient;
+  private final OperationsClient httpJsonOperationsClient;
+  private final com.google.longrunning.OperationsClient operationsClient;
 
   /** Constructs an instance of CertificateAuthorityServiceClient with default settings. */
   public static final CertificateAuthorityServiceClient create() throws IOException {
@@ -133,7 +177,6 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * Constructs an instance of CertificateAuthorityServiceClient, using the given stub for making
    * calls. This is for advanced usage - prefer using create(CertificateAuthorityServiceSettings).
    */
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public static final CertificateAuthorityServiceClient create(
       CertificateAuthorityServiceStub stub) {
     return new CertificateAuthorityServiceClient(stub);
@@ -148,21 +191,23 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
       throws IOException {
     this.settings = settings;
     this.stub = ((CertificateAuthorityServiceStubSettings) settings.getStubSettings()).createStub();
-    this.operationsClient = OperationsClient.create(this.stub.getOperationsStub());
+    this.operationsClient =
+        com.google.longrunning.OperationsClient.create(this.stub.getOperationsStub());
+    this.httpJsonOperationsClient = OperationsClient.create(this.stub.getHttpJsonOperationsStub());
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   protected CertificateAuthorityServiceClient(CertificateAuthorityServiceStub stub) {
     this.settings = null;
     this.stub = stub;
-    this.operationsClient = OperationsClient.create(this.stub.getOperationsStub());
+    this.operationsClient =
+        com.google.longrunning.OperationsClient.create(this.stub.getOperationsStub());
+    this.httpJsonOperationsClient = OperationsClient.create(this.stub.getHttpJsonOperationsStub());
   }
 
   public final CertificateAuthorityServiceSettings getSettings() {
     return settings;
   }
 
-  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public CertificateAuthorityServiceStub getStub() {
     return stub;
   }
@@ -171,8 +216,17 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * Returns the OperationsClient that can be used to query the status of a long-running operation
    * returned by another API method call.
    */
-  public final OperationsClient getOperationsClient() {
+  public final com.google.longrunning.OperationsClient getOperationsClient() {
     return operationsClient;
+  }
+
+  /**
+   * Returns the OperationsClient that can be used to query the status of a long-running operation
+   * returned by another API method call.
+   */
+  @BetaApi
+  public final OperationsClient getHttpJsonOperationsClient() {
+    return httpJsonOperationsClient;
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
@@ -183,6 +237,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CaPoolName parent = CaPoolName.of("[PROJECT]", "[LOCATION]", "[CA_POOL]");
@@ -225,6 +284,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   String parent = CaPoolName.of("[PROJECT]", "[LOCATION]", "[CA_POOL]").toString();
@@ -267,6 +331,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CreateCertificateRequest request =
@@ -297,6 +366,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CreateCertificateRequest request =
@@ -326,6 +400,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CertificateName name =
@@ -351,6 +430,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   String name =
@@ -375,6 +459,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   GetCertificateRequest request =
@@ -401,6 +490,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   GetCertificateRequest request =
@@ -427,6 +521,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CaPoolName parent = CaPoolName.of("[PROJECT]", "[LOCATION]", "[CA_POOL]");
@@ -457,6 +556,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   String parent = CaPoolName.of("[PROJECT]", "[LOCATION]", "[CA_POOL]").toString();
@@ -485,6 +589,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   ListCertificatesRequest request =
@@ -516,6 +625,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   ListCertificatesRequest request =
@@ -547,6 +661,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   ListCertificatesRequest request =
@@ -560,7 +679,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    *   while (true) {
    *     ListCertificatesResponse response =
    *         certificateAuthorityServiceClient.listCertificatesCallable().call(request);
-   *     for (Certificate element : response.getResponsesList()) {
+   *     for (Certificate element : response.getCertificatesList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();
@@ -585,6 +704,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CertificateName name =
@@ -613,6 +737,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   String name =
@@ -638,6 +767,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   RevokeCertificateRequest request =
@@ -666,6 +800,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   RevokeCertificateRequest request =
@@ -696,6 +835,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   Certificate certificate = Certificate.newBuilder().build();
@@ -728,6 +872,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   UpdateCertificateRequest request =
@@ -756,6 +905,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   UpdateCertificateRequest request =
@@ -789,6 +943,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CertificateAuthorityName name =
@@ -827,6 +986,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   String name =
@@ -864,6 +1028,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   ActivateCertificateAuthorityRequest request =
@@ -903,6 +1072,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   ActivateCertificateAuthorityRequest request =
@@ -944,6 +1118,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   ActivateCertificateAuthorityRequest request =
@@ -978,6 +1157,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CaPoolName parent = CaPoolName.of("[PROJECT]", "[LOCATION]", "[CA_POOL]");
@@ -1023,6 +1207,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   String parent = CaPoolName.of("[PROJECT]", "[LOCATION]", "[CA_POOL]").toString();
@@ -1066,6 +1255,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CreateCertificateAuthorityRequest request =
@@ -1096,6 +1290,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CreateCertificateAuthorityRequest request =
@@ -1128,6 +1327,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CreateCertificateAuthorityRequest request =
@@ -1158,6 +1362,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CertificateAuthorityName name =
@@ -1189,6 +1398,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   String name =
@@ -1219,6 +1433,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   DisableCertificateAuthorityRequest request =
@@ -1249,6 +1468,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   DisableCertificateAuthorityRequest request =
@@ -1281,6 +1505,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   DisableCertificateAuthorityRequest request =
@@ -1312,6 +1541,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CertificateAuthorityName name =
@@ -1343,6 +1577,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   String name =
@@ -1373,6 +1612,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   EnableCertificateAuthorityRequest request =
@@ -1403,6 +1647,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   EnableCertificateAuthorityRequest request =
@@ -1435,6 +1684,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   EnableCertificateAuthorityRequest request =
@@ -1475,6 +1729,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CertificateAuthorityName name =
@@ -1515,6 +1774,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   String name =
@@ -1553,6 +1817,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   FetchCertificateAuthorityCsrRequest request =
@@ -1591,6 +1860,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   FetchCertificateAuthorityCsrRequest request =
@@ -1622,6 +1896,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CertificateAuthorityName name =
@@ -1652,6 +1931,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   String name =
@@ -1681,6 +1965,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   GetCertificateAuthorityRequest request =
@@ -1710,6 +1999,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   GetCertificateAuthorityRequest request =
@@ -1738,6 +2032,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CaPoolName parent = CaPoolName.of("[PROJECT]", "[LOCATION]", "[CA_POOL]");
@@ -1770,6 +2069,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   String parent = CaPoolName.of("[PROJECT]", "[LOCATION]", "[CA_POOL]").toString();
@@ -1799,6 +2103,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   ListCertificateAuthoritiesRequest request =
@@ -1831,6 +2140,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   ListCertificateAuthoritiesRequest request =
@@ -1865,6 +2179,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   ListCertificateAuthoritiesRequest request =
@@ -1878,7 +2197,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    *   while (true) {
    *     ListCertificateAuthoritiesResponse response =
    *         certificateAuthorityServiceClient.listCertificateAuthoritiesCallable().call(request);
-   *     for (CertificateAuthority element : response.getResponsesList()) {
+   *     for (CertificateAuthority element : response.getCertificateAuthoritiesList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();
@@ -1904,6 +2223,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CertificateAuthorityName name =
@@ -1936,6 +2260,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   String name =
@@ -1967,6 +2296,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   UndeleteCertificateAuthorityRequest request =
@@ -1998,6 +2332,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   UndeleteCertificateAuthorityRequest request =
@@ -2031,6 +2370,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   UndeleteCertificateAuthorityRequest request =
@@ -2062,6 +2406,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CertificateAuthorityName name =
@@ -2093,6 +2442,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   String name =
@@ -2123,6 +2477,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   DeleteCertificateAuthorityRequest request =
@@ -2133,6 +2492,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    *                   .toString())
    *           .setRequestId("requestId693933066")
    *           .setIgnoreActiveCertificates(true)
+   *           .setSkipGracePeriod(true)
    *           .build();
    *   CertificateAuthority response =
    *       certificateAuthorityServiceClient.deleteCertificateAuthorityAsync(request).get();
@@ -2154,6 +2514,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   DeleteCertificateAuthorityRequest request =
@@ -2164,6 +2529,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    *                   .toString())
    *           .setRequestId("requestId693933066")
    *           .setIgnoreActiveCertificates(true)
+   *           .setSkipGracePeriod(true)
    *           .build();
    *   OperationFuture<CertificateAuthority, OperationMetadata> future =
    *       certificateAuthorityServiceClient
@@ -2187,6 +2553,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   DeleteCertificateAuthorityRequest request =
@@ -2197,6 +2568,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    *                   .toString())
    *           .setRequestId("requestId693933066")
    *           .setIgnoreActiveCertificates(true)
+   *           .setSkipGracePeriod(true)
    *           .build();
    *   ApiFuture<Operation> future =
    *       certificateAuthorityServiceClient
@@ -2219,6 +2591,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CertificateAuthority certificateAuthority = CertificateAuthority.newBuilder().build();
@@ -2254,6 +2631,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   UpdateCertificateAuthorityRequest request =
@@ -2282,6 +2664,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   UpdateCertificateAuthorityRequest request =
@@ -2312,6 +2699,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   UpdateCertificateAuthorityRequest request =
@@ -2341,6 +2733,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
@@ -2378,6 +2775,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   String parent = LocationName.of("[PROJECT]", "[LOCATION]").toString();
@@ -2415,6 +2817,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CreateCaPoolRequest request =
@@ -2443,6 +2850,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CreateCaPoolRequest request =
@@ -2471,6 +2883,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CreateCaPoolRequest request =
@@ -2498,6 +2915,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CaPool caPool = CaPool.newBuilder().build();
@@ -2526,6 +2948,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   UpdateCaPoolRequest request =
@@ -2553,6 +2980,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   UpdateCaPoolRequest request =
@@ -2580,6 +3012,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   UpdateCaPoolRequest request =
@@ -2606,6 +3043,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CaPoolName name = CaPoolName.of("[PROJECT]", "[LOCATION]", "[CA_POOL]");
@@ -2630,6 +3072,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   String name = CaPoolName.of("[PROJECT]", "[LOCATION]", "[CA_POOL]").toString();
@@ -2653,6 +3100,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   GetCaPoolRequest request =
@@ -2677,6 +3129,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   GetCaPoolRequest request =
@@ -2701,6 +3158,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
@@ -2730,6 +3192,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   String parent = LocationName.of("[PROJECT]", "[LOCATION]").toString();
@@ -2756,6 +3223,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   ListCaPoolsRequest request =
@@ -2786,6 +3258,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   ListCaPoolsRequest request =
@@ -2817,6 +3294,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   ListCaPoolsRequest request =
@@ -2830,7 +3312,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    *   while (true) {
    *     ListCaPoolsResponse response =
    *         certificateAuthorityServiceClient.listCaPoolsCallable().call(request);
-   *     for (CaPool element : response.getResponsesList()) {
+   *     for (CaPool element : response.getCaPoolsList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();
@@ -2854,6 +3336,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CaPoolName name = CaPoolName.of("[PROJECT]", "[LOCATION]", "[CA_POOL]");
@@ -2879,6 +3366,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   String name = CaPoolName.of("[PROJECT]", "[LOCATION]", "[CA_POOL]").toString();
@@ -2903,6 +3395,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   DeleteCaPoolRequest request =
@@ -2929,6 +3426,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   DeleteCaPoolRequest request =
@@ -2955,6 +3457,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   DeleteCaPoolRequest request =
@@ -2983,6 +3490,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CaPoolName caPool = CaPoolName.of("[PROJECT]", "[LOCATION]", "[CA_POOL]");
@@ -3013,6 +3525,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   String caPool = CaPoolName.of("[PROJECT]", "[LOCATION]", "[CA_POOL]").toString();
@@ -3040,6 +3557,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   FetchCaCertsRequest request =
@@ -3068,6 +3590,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   FetchCaCertsRequest request =
@@ -3094,6 +3621,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CertificateRevocationListName name =
@@ -3131,6 +3663,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   String name =
@@ -3166,6 +3703,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   GetCertificateRevocationListRequest request =
@@ -3200,6 +3742,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   GetCertificateRevocationListRequest request =
@@ -3235,6 +3782,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CertificateAuthorityName parent =
@@ -3269,6 +3821,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   String parent =
@@ -3302,6 +3859,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   ListCertificateRevocationListsRequest request =
@@ -3338,6 +3900,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   ListCertificateRevocationListsRequest request =
@@ -3376,6 +3943,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   ListCertificateRevocationListsRequest request =
@@ -3394,7 +3966,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    *         certificateAuthorityServiceClient
    *             .listCertificateRevocationListsCallable()
    *             .call(request);
-   *     for (CertificateRevocationList element : response.getResponsesList()) {
+   *     for (CertificateRevocationList element : response.getCertificateRevocationListsList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();
@@ -3421,6 +3993,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CertificateRevocationList certificateRevocationList =
@@ -3458,6 +4035,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   UpdateCertificateRevocationListRequest request =
@@ -3487,6 +4069,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   UpdateCertificateRevocationListRequest request =
@@ -3518,6 +4105,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   UpdateCertificateRevocationListRequest request =
@@ -3548,6 +4140,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
@@ -3592,6 +4189,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   String parent = LocationName.of("[PROJECT]", "[LOCATION]").toString();
@@ -3634,6 +4236,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CreateCertificateTemplateRequest request =
@@ -3664,6 +4271,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CreateCertificateTemplateRequest request =
@@ -3696,6 +4308,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CreateCertificateTemplateRequest request =
@@ -3725,6 +4342,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CertificateTemplateName name =
@@ -3755,6 +4377,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   String name =
@@ -3784,6 +4411,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   DeleteCertificateTemplateRequest request =
@@ -3813,6 +4445,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   DeleteCertificateTemplateRequest request =
@@ -3844,6 +4481,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   DeleteCertificateTemplateRequest request =
@@ -3872,6 +4514,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CertificateTemplateName name =
@@ -3900,6 +4547,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   String name =
@@ -3927,6 +4579,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   GetCertificateTemplateRequest request =
@@ -3954,6 +4611,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   GetCertificateTemplateRequest request =
@@ -3981,6 +4643,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
@@ -4011,6 +4678,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   String parent = LocationName.of("[PROJECT]", "[LOCATION]").toString();
@@ -4039,6 +4711,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   ListCertificateTemplatesRequest request =
@@ -4071,6 +4748,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   ListCertificateTemplatesRequest request =
@@ -4104,6 +4786,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   ListCertificateTemplatesRequest request =
@@ -4117,7 +4804,7 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    *   while (true) {
    *     ListCertificateTemplatesResponse response =
    *         certificateAuthorityServiceClient.listCertificateTemplatesCallable().call(request);
-   *     for (CertificateTemplate element : response.getResponsesList()) {
+   *     for (CertificateTemplate element : response.getCertificateTemplatesList()) {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();
@@ -4142,6 +4829,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   CertificateTemplate certificateTemplate = CertificateTemplate.newBuilder().build();
@@ -4177,6 +4869,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   UpdateCertificateTemplateRequest request =
@@ -4205,6 +4902,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   UpdateCertificateTemplateRequest request =
@@ -4235,6 +4937,11 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
    * <p>Sample code:
    *
    * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
    *     CertificateAuthorityServiceClient.create()) {
    *   UpdateCertificateTemplateRequest request =
@@ -4253,6 +4960,369 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
   public final UnaryCallable<UpdateCertificateTemplateRequest, Operation>
       updateCertificateTemplateCallable() {
     return stub.updateCertificateTemplateCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Lists information about the supported locations for this service.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
+   *     CertificateAuthorityServiceClient.create()) {
+   *   ListLocationsRequest request =
+   *       ListLocationsRequest.newBuilder()
+   *           .setName("name3373707")
+   *           .setFilter("filter-1274492040")
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   for (Location element :
+   *       certificateAuthorityServiceClient.listLocations(request).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final ListLocationsPagedResponse listLocations(ListLocationsRequest request) {
+    return listLocationsPagedCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Lists information about the supported locations for this service.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
+   *     CertificateAuthorityServiceClient.create()) {
+   *   ListLocationsRequest request =
+   *       ListLocationsRequest.newBuilder()
+   *           .setName("name3373707")
+   *           .setFilter("filter-1274492040")
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   ApiFuture<Location> future =
+   *       certificateAuthorityServiceClient.listLocationsPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (Location element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<ListLocationsRequest, ListLocationsPagedResponse>
+      listLocationsPagedCallable() {
+    return stub.listLocationsPagedCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Lists information about the supported locations for this service.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
+   *     CertificateAuthorityServiceClient.create()) {
+   *   ListLocationsRequest request =
+   *       ListLocationsRequest.newBuilder()
+   *           .setName("name3373707")
+   *           .setFilter("filter-1274492040")
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   while (true) {
+   *     ListLocationsResponse response =
+   *         certificateAuthorityServiceClient.listLocationsCallable().call(request);
+   *     for (Location element : response.getLocationsList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<ListLocationsRequest, ListLocationsResponse> listLocationsCallable() {
+    return stub.listLocationsCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Gets information about a location.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
+   *     CertificateAuthorityServiceClient.create()) {
+   *   GetLocationRequest request = GetLocationRequest.newBuilder().setName("name3373707").build();
+   *   Location response = certificateAuthorityServiceClient.getLocation(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final Location getLocation(GetLocationRequest request) {
+    return getLocationCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Gets information about a location.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
+   *     CertificateAuthorityServiceClient.create()) {
+   *   GetLocationRequest request = GetLocationRequest.newBuilder().setName("name3373707").build();
+   *   ApiFuture<Location> future =
+   *       certificateAuthorityServiceClient.getLocationCallable().futureCall(request);
+   *   // Do something.
+   *   Location response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<GetLocationRequest, Location> getLocationCallable() {
+    return stub.getLocationCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sets the access control policy on the specified resource. Replacesany existing policy.
+   *
+   * <p>Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED`errors.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
+   *     CertificateAuthorityServiceClient.create()) {
+   *   SetIamPolicyRequest request =
+   *       SetIamPolicyRequest.newBuilder()
+   *           .setResource(CaPoolName.of("[PROJECT]", "[LOCATION]", "[CA_POOL]").toString())
+   *           .setPolicy(Policy.newBuilder().build())
+   *           .setUpdateMask(FieldMask.newBuilder().build())
+   *           .build();
+   *   Policy response = certificateAuthorityServiceClient.setIamPolicy(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final Policy setIamPolicy(SetIamPolicyRequest request) {
+    return setIamPolicyCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sets the access control policy on the specified resource. Replacesany existing policy.
+   *
+   * <p>Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED`errors.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
+   *     CertificateAuthorityServiceClient.create()) {
+   *   SetIamPolicyRequest request =
+   *       SetIamPolicyRequest.newBuilder()
+   *           .setResource(CaPoolName.of("[PROJECT]", "[LOCATION]", "[CA_POOL]").toString())
+   *           .setPolicy(Policy.newBuilder().build())
+   *           .setUpdateMask(FieldMask.newBuilder().build())
+   *           .build();
+   *   ApiFuture<Policy> future =
+   *       certificateAuthorityServiceClient.setIamPolicyCallable().futureCall(request);
+   *   // Do something.
+   *   Policy response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<SetIamPolicyRequest, Policy> setIamPolicyCallable() {
+    return stub.setIamPolicyCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Gets the access control policy for a resource. Returns an empty policyif the resource exists
+   * and does not have a policy set.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
+   *     CertificateAuthorityServiceClient.create()) {
+   *   GetIamPolicyRequest request =
+   *       GetIamPolicyRequest.newBuilder()
+   *           .setResource(CaPoolName.of("[PROJECT]", "[LOCATION]", "[CA_POOL]").toString())
+   *           .setOptions(GetPolicyOptions.newBuilder().build())
+   *           .build();
+   *   Policy response = certificateAuthorityServiceClient.getIamPolicy(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final Policy getIamPolicy(GetIamPolicyRequest request) {
+    return getIamPolicyCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Gets the access control policy for a resource. Returns an empty policyif the resource exists
+   * and does not have a policy set.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
+   *     CertificateAuthorityServiceClient.create()) {
+   *   GetIamPolicyRequest request =
+   *       GetIamPolicyRequest.newBuilder()
+   *           .setResource(CaPoolName.of("[PROJECT]", "[LOCATION]", "[CA_POOL]").toString())
+   *           .setOptions(GetPolicyOptions.newBuilder().build())
+   *           .build();
+   *   ApiFuture<Policy> future =
+   *       certificateAuthorityServiceClient.getIamPolicyCallable().futureCall(request);
+   *   // Do something.
+   *   Policy response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<GetIamPolicyRequest, Policy> getIamPolicyCallable() {
+    return stub.getIamPolicyCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Returns permissions that a caller has on the specified resource. If theresource does not exist,
+   * this will return an empty set ofpermissions, not a `NOT_FOUND` error.
+   *
+   * <p>Note: This operation is designed to be used for buildingpermission-aware UIs and
+   * command-line tools, not for authorizationchecking. This operation may "fail open" without
+   * warning.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
+   *     CertificateAuthorityServiceClient.create()) {
+   *   TestIamPermissionsRequest request =
+   *       TestIamPermissionsRequest.newBuilder()
+   *           .setResource(CaPoolName.of("[PROJECT]", "[LOCATION]", "[CA_POOL]").toString())
+   *           .addAllPermissions(new ArrayList<String>())
+   *           .build();
+   *   TestIamPermissionsResponse response =
+   *       certificateAuthorityServiceClient.testIamPermissions(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final TestIamPermissionsResponse testIamPermissions(TestIamPermissionsRequest request) {
+    return testIamPermissionsCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Returns permissions that a caller has on the specified resource. If theresource does not exist,
+   * this will return an empty set ofpermissions, not a `NOT_FOUND` error.
+   *
+   * <p>Note: This operation is designed to be used for buildingpermission-aware UIs and
+   * command-line tools, not for authorizationchecking. This operation may "fail open" without
+   * warning.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (CertificateAuthorityServiceClient certificateAuthorityServiceClient =
+   *     CertificateAuthorityServiceClient.create()) {
+   *   TestIamPermissionsRequest request =
+   *       TestIamPermissionsRequest.newBuilder()
+   *           .setResource(CaPoolName.of("[PROJECT]", "[LOCATION]", "[CA_POOL]").toString())
+   *           .addAllPermissions(new ArrayList<String>())
+   *           .build();
+   *   ApiFuture<TestIamPermissionsResponse> future =
+   *       certificateAuthorityServiceClient.testIamPermissionsCallable().futureCall(request);
+   *   // Do something.
+   *   TestIamPermissionsResponse response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<TestIamPermissionsRequest, TestIamPermissionsResponse>
+      testIamPermissionsCallable() {
+    return stub.testIamPermissionsCallable();
   }
 
   @Override
@@ -4721,6 +5791,82 @@ public class CertificateAuthorityServiceClient implements BackgroundResource {
     protected ListCertificateTemplatesFixedSizeCollection createCollection(
         List<ListCertificateTemplatesPage> pages, int collectionSize) {
       return new ListCertificateTemplatesFixedSizeCollection(pages, collectionSize);
+    }
+  }
+
+  public static class ListLocationsPagedResponse
+      extends AbstractPagedListResponse<
+          ListLocationsRequest,
+          ListLocationsResponse,
+          Location,
+          ListLocationsPage,
+          ListLocationsFixedSizeCollection> {
+
+    public static ApiFuture<ListLocationsPagedResponse> createAsync(
+        PageContext<ListLocationsRequest, ListLocationsResponse, Location> context,
+        ApiFuture<ListLocationsResponse> futureResponse) {
+      ApiFuture<ListLocationsPage> futurePage =
+          ListLocationsPage.createEmptyPage().createPageAsync(context, futureResponse);
+      return ApiFutures.transform(
+          futurePage,
+          input -> new ListLocationsPagedResponse(input),
+          MoreExecutors.directExecutor());
+    }
+
+    private ListLocationsPagedResponse(ListLocationsPage page) {
+      super(page, ListLocationsFixedSizeCollection.createEmptyCollection());
+    }
+  }
+
+  public static class ListLocationsPage
+      extends AbstractPage<
+          ListLocationsRequest, ListLocationsResponse, Location, ListLocationsPage> {
+
+    private ListLocationsPage(
+        PageContext<ListLocationsRequest, ListLocationsResponse, Location> context,
+        ListLocationsResponse response) {
+      super(context, response);
+    }
+
+    private static ListLocationsPage createEmptyPage() {
+      return new ListLocationsPage(null, null);
+    }
+
+    @Override
+    protected ListLocationsPage createPage(
+        PageContext<ListLocationsRequest, ListLocationsResponse, Location> context,
+        ListLocationsResponse response) {
+      return new ListLocationsPage(context, response);
+    }
+
+    @Override
+    public ApiFuture<ListLocationsPage> createPageAsync(
+        PageContext<ListLocationsRequest, ListLocationsResponse, Location> context,
+        ApiFuture<ListLocationsResponse> futureResponse) {
+      return super.createPageAsync(context, futureResponse);
+    }
+  }
+
+  public static class ListLocationsFixedSizeCollection
+      extends AbstractFixedSizeCollection<
+          ListLocationsRequest,
+          ListLocationsResponse,
+          Location,
+          ListLocationsPage,
+          ListLocationsFixedSizeCollection> {
+
+    private ListLocationsFixedSizeCollection(List<ListLocationsPage> pages, int collectionSize) {
+      super(pages, collectionSize);
+    }
+
+    private static ListLocationsFixedSizeCollection createEmptyCollection() {
+      return new ListLocationsFixedSizeCollection(null, 0);
+    }
+
+    @Override
+    protected ListLocationsFixedSizeCollection createCollection(
+        List<ListLocationsPage> pages, int collectionSize) {
+      return new ListLocationsFixedSizeCollection(pages, collectionSize);
     }
   }
 }

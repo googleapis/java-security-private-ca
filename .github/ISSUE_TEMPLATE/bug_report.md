@@ -4,6 +4,11 @@ about: Create a report to help us improve
 
 ---
 
+:bus: This library has moved to
+[google-cloud-java/java-security-private-ca](
+https://github.com/googleapis/google-cloud-java/tree/main/java-security-private-ca).
+This repository will be archived in the future.
+
 Thanks for stopping by to let us know something could be better!
 
 **PLEASE READ**: If you have a support contract with Google, please create an issue in the [support console](https://cloud.google.com/support/) instead of filing on GitHub. This will ensure a timely response.
@@ -21,7 +26,7 @@ If you are still having issues, please include as much information as possible:
    General, Core, and Other are also allowed as types
 2. OS type and version:
 3. Java version:
-4. security-private-ca version(s):
+4.  version(s):
 
 #### Steps to reproduce
 

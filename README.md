@@ -9,6 +9,13 @@ Java idiomatic client for [Certificate Authority Service][product-docs].
 - [Client Library Documentation][javadocs]
 
 
+:bus: In October 2022, this library has moved to
+[google-cloud-java/java-security-private-ca](
+https://github.com/googleapis/google-cloud-java/tree/main/java-security-private-ca).
+This repository will be archived in the future.
+Future releases will appear in the new repository (https://github.com/googleapis/google-cloud-java/releases).
+The Maven artifact coordinates (`com.google.cloud:google-cloud-security-private-ca`) remain the same.
+
 ## Quickstart
 
 
@@ -23,13 +30,13 @@ If you are using Maven, add this to your pom.xml file:
 </dependency>
 ```
 
-If you are using Gradle without BOM, add this to your dependencies
+If you are using Gradle without BOM, add this to your dependencies:
 
 ```Groovy
 implementation 'com.google.cloud:google-cloud-security-private-ca:2.10.0'
 ```
 
-If you are using SBT, add this to your dependencies
+If you are using SBT, add this to your dependencies:
 
 ```Scala
 libraryDependencies += "com.google.cloud" % "google-cloud-security-private-ca" % "2.10.0"
@@ -81,7 +88,7 @@ Certificate Authority Service uses gRPC for the transport layer.
 
 ## Supported Java Versions
 
-Java 7 or above is required for using this client.
+Java 8 or above is required for using this client.
 
 Google's Java client libraries,
 [Google Cloud Client Libraries][cloudlibs]
@@ -150,7 +157,6 @@ Apache 2.0 - See [LICENSE][license] for more information.
 
 Java Version | Status
 ------------ | ------
-Java 7 | [![Kokoro CI][kokoro-badge-image-1]][kokoro-badge-link-1]
 Java 8 | [![Kokoro CI][kokoro-badge-image-2]][kokoro-badge-link-2]
 Java 8 OSX | [![Kokoro CI][kokoro-badge-image-3]][kokoro-badge-link-3]
 Java 8 Windows | [![Kokoro CI][kokoro-badge-image-4]][kokoro-badge-link-4]
@@ -170,7 +176,7 @@ Java is a registered trademark of Oracle and/or its affiliates.
 [kokoro-badge-link-4]: http://storage.googleapis.com/cloud-devrel-public/java/badges/java-security-private-ca/java8-win.html
 [kokoro-badge-image-5]: http://storage.googleapis.com/cloud-devrel-public/java/badges/java-security-private-ca/java11.svg
 [kokoro-badge-link-5]: http://storage.googleapis.com/cloud-devrel-public/java/badges/java-security-private-ca/java11.html
-[stability-image]: https://img.shields.io/badge/stability-ga-green
+[stability-image]: https://img.shields.io/badge/stability-stable-green
 [maven-version-image]: https://img.shields.io/maven-central/v/com.google.cloud/google-cloud-security-private-ca.svg
 [maven-version-link]: https://search.maven.org/search?q=g:com.google.cloud%20AND%20a:google-cloud-security-private-ca&core=gav
 [authentication]: https://github.com/googleapis/google-cloud-java#authentication

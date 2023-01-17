@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -70,7 +70,11 @@ import javax.annotation.Generated;
 public abstract class CertificateAuthorityServiceStub implements BackgroundResource {
 
   public OperationsStub getOperationsStub() {
-    throw new UnsupportedOperationException("Not implemented: getOperationsStub()");
+    return null;
+  }
+
+  public com.google.api.gax.httpjson.longrunning.stub.OperationsStub getHttpJsonOperationsStub() {
+    return null;
   }
 
   public UnaryCallable<CreateCertificateRequest, Certificate> createCertificateCallable() {

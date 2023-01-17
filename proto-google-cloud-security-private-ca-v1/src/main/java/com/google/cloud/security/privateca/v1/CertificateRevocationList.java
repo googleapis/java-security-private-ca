@@ -59,146 +59,6 @@ public final class CertificateRevocationList extends com.google.protobuf.Generat
     return this.unknownFields;
   }
 
-  private CertificateRevocationList(
-      com.google.protobuf.CodedInputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    this();
-    if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
-    }
-    int mutable_bitField0_ = 0;
-    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-        com.google.protobuf.UnknownFieldSet.newBuilder();
-    try {
-      boolean done = false;
-      while (!done) {
-        int tag = input.readTag();
-        switch (tag) {
-          case 0:
-            done = true;
-            break;
-          case 10:
-            {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              name_ = s;
-              break;
-            }
-          case 16:
-            {
-              sequenceNumber_ = input.readInt64();
-              break;
-            }
-          case 26:
-            {
-              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
-                revokedCertificates_ =
-                    new java.util.ArrayList<
-                        com.google.cloud.security.privateca.v1.CertificateRevocationList
-                            .RevokedCertificate>();
-                mutable_bitField0_ |= 0x00000001;
-              }
-              revokedCertificates_.add(
-                  input.readMessage(
-                      com.google.cloud.security.privateca.v1.CertificateRevocationList
-                          .RevokedCertificate.parser(),
-                      extensionRegistry));
-              break;
-            }
-          case 34:
-            {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              pemCrl_ = s;
-              break;
-            }
-          case 42:
-            {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              accessUrl_ = s;
-              break;
-            }
-          case 48:
-            {
-              int rawValue = input.readEnum();
-
-              state_ = rawValue;
-              break;
-            }
-          case 58:
-            {
-              com.google.protobuf.Timestamp.Builder subBuilder = null;
-              if (createTime_ != null) {
-                subBuilder = createTime_.toBuilder();
-              }
-              createTime_ =
-                  input.readMessage(com.google.protobuf.Timestamp.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(createTime_);
-                createTime_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
-          case 66:
-            {
-              com.google.protobuf.Timestamp.Builder subBuilder = null;
-              if (updateTime_ != null) {
-                subBuilder = updateTime_.toBuilder();
-              }
-              updateTime_ =
-                  input.readMessage(com.google.protobuf.Timestamp.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(updateTime_);
-                updateTime_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
-          case 74:
-            {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              revisionId_ = s;
-              break;
-            }
-          case 82:
-            {
-              if (!((mutable_bitField0_ & 0x00000002) != 0)) {
-                labels_ =
-                    com.google.protobuf.MapField.newMapField(LabelsDefaultEntryHolder.defaultEntry);
-                mutable_bitField0_ |= 0x00000002;
-              }
-              com.google.protobuf.MapEntry<java.lang.String, java.lang.String> labels__ =
-                  input.readMessage(
-                      LabelsDefaultEntryHolder.defaultEntry.getParserForType(), extensionRegistry);
-              labels_.getMutableMap().put(labels__.getKey(), labels__.getValue());
-              break;
-            }
-          default:
-            {
-              if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-        }
-      }
-    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-      throw e.setUnfinishedMessage(this);
-    } catch (java.io.IOException e) {
-      throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
-    } finally {
-      if (((mutable_bitField0_ & 0x00000001) != 0)) {
-        revokedCertificates_ = java.util.Collections.unmodifiableList(revokedCertificates_);
-      }
-      this.unknownFields = unknownFields.build();
-      makeExtensionsImmutable();
-    }
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.cloud.security.privateca.v1.PrivateCaResourcesProto
         .internal_static_google_cloud_security_privateca_v1_CertificateRevocationList_descriptor;
@@ -503,64 +363,6 @@ public final class CertificateRevocationList extends com.google.protobuf.Generat
       return this.unknownFields;
     }
 
-    private RevokedCertificate(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-
-                certificate_ = s;
-                break;
-              }
-            case 18:
-              {
-                java.lang.String s = input.readStringRequireUtf8();
-
-                hexSerialNumber_ = s;
-                break;
-              }
-            case 24:
-              {
-                int rawValue = input.readEnum();
-
-                revocationReason_ = rawValue;
-                break;
-              }
-            default:
-              {
-                if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
-                  done = true;
-                }
-                break;
-              }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
       return com.google.cloud.security.privateca.v1.PrivateCaResourcesProto
           .internal_static_google_cloud_security_privateca_v1_CertificateRevocationList_RevokedCertificate_descriptor;
@@ -741,7 +543,7 @@ public final class CertificateRevocationList extends com.google.protobuf.Generat
               .getNumber()) {
         output.writeEnum(3, revocationReason_);
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
     @java.lang.Override
@@ -761,7 +563,7 @@ public final class CertificateRevocationList extends com.google.protobuf.Generat
               .getNumber()) {
         size += com.google.protobuf.CodedOutputStream.computeEnumSize(3, revocationReason_);
       }
-      size += unknownFields.getSerializedSize();
+      size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -782,7 +584,7 @@ public final class CertificateRevocationList extends com.google.protobuf.Generat
       if (!getCertificate().equals(other.getCertificate())) return false;
       if (!getHexSerialNumber().equals(other.getHexSerialNumber())) return false;
       if (revocationReason_ != other.revocationReason_) return false;
-      if (!unknownFields.equals(other.unknownFields)) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
       return true;
     }
 
@@ -799,7 +601,7 @@ public final class CertificateRevocationList extends com.google.protobuf.Generat
       hash = (53 * hash) + getHexSerialNumber().hashCode();
       hash = (37 * hash) + REVOCATION_REASON_FIELD_NUMBER;
       hash = (53 * hash) + revocationReason_;
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -955,17 +757,10 @@ public final class CertificateRevocationList extends com.google.protobuf.Generat
 
       // Construct using
       // com.google.cloud.security.privateca.v1.CertificateRevocationList.RevokedCertificate.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
+      private Builder() {}
 
       private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
-        maybeForceBuilderInitialization();
-      }
-
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {}
       }
 
       @java.lang.Override
@@ -1083,7 +878,7 @@ public final class CertificateRevocationList extends com.google.protobuf.Generat
         if (other.revocationReason_ != 0) {
           setRevocationReasonValue(other.getRevocationReasonValue());
         }
-        this.mergeUnknownFields(other.unknownFields);
+        this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
       }
@@ -1098,20 +893,49 @@ public final class CertificateRevocationList extends com.google.protobuf.Generat
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.google.cloud.security.privateca.v1.CertificateRevocationList.RevokedCertificate
-            parsedMessage = null;
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
         try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10:
+                {
+                  certificate_ = input.readStringRequireUtf8();
+
+                  break;
+                } // case 10
+              case 18:
+                {
+                  hexSerialNumber_ = input.readStringRequireUtf8();
+
+                  break;
+                } // case 18
+              case 24:
+                {
+                  revocationReason_ = input.readEnum();
+
+                  break;
+                } // case 24
+              default:
+                {
+                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                    done = true; // was an endgroup tag
+                  }
+                  break;
+                } // default:
+            } // switch (tag)
+          } // while (!done)
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage =
-              (com.google.cloud.security.privateca.v1.CertificateRevocationList.RevokedCertificate)
-                  e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
+          onChanged();
+        } // finally
         return this;
       }
 
@@ -1464,7 +1288,19 @@ public final class CertificateRevocationList extends com.google.protobuf.Generat
               com.google.protobuf.CodedInputStream input,
               com.google.protobuf.ExtensionRegistryLite extensionRegistry)
               throws com.google.protobuf.InvalidProtocolBufferException {
-            return new RevokedCertificate(input, extensionRegistry);
+            Builder builder = newBuilder();
+            try {
+              builder.mergeFrom(input, extensionRegistry);
+            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+              throw e.setUnfinishedMessage(builder.buildPartial());
+            } catch (com.google.protobuf.UninitializedMessageException e) {
+              throw e.asInvalidProtocolBufferException()
+                  .setUnfinishedMessage(builder.buildPartial());
+            } catch (java.io.IOException e) {
+              throw new com.google.protobuf.InvalidProtocolBufferException(e)
+                  .setUnfinishedMessage(builder.buildPartial());
+            }
+            return builder.buildPartial();
           }
         };
 
@@ -1974,7 +1810,7 @@ public final class CertificateRevocationList extends com.google.protobuf.Generat
   @java.lang.Override
   public boolean containsLabels(java.lang.String key) {
     if (key == null) {
-      throw new java.lang.NullPointerException();
+      throw new NullPointerException("map key");
     }
     return internalGetLabels().getMap().containsKey(key);
   }
@@ -2009,7 +1845,7 @@ public final class CertificateRevocationList extends com.google.protobuf.Generat
   @java.lang.Override
   public java.lang.String getLabelsOrDefault(java.lang.String key, java.lang.String defaultValue) {
     if (key == null) {
-      throw new java.lang.NullPointerException();
+      throw new NullPointerException("map key");
     }
     java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels().getMap();
     return map.containsKey(key) ? map.get(key) : defaultValue;
@@ -2026,7 +1862,7 @@ public final class CertificateRevocationList extends com.google.protobuf.Generat
   @java.lang.Override
   public java.lang.String getLabelsOrThrow(java.lang.String key) {
     if (key == null) {
-      throw new java.lang.NullPointerException();
+      throw new NullPointerException("map key");
     }
     java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels().getMap();
     if (!map.containsKey(key)) {
@@ -2080,7 +1916,7 @@ public final class CertificateRevocationList extends com.google.protobuf.Generat
     }
     com.google.protobuf.GeneratedMessageV3.serializeStringMapTo(
         output, internalGetLabels(), LabelsDefaultEntryHolder.defaultEntry, 10);
-    unknownFields.writeTo(output);
+    getUnknownFields().writeTo(output);
   }
 
   @java.lang.Override
@@ -2129,7 +1965,7 @@ public final class CertificateRevocationList extends com.google.protobuf.Generat
               .build();
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(10, labels__);
     }
-    size += unknownFields.getSerializedSize();
+    size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -2161,7 +1997,7 @@ public final class CertificateRevocationList extends com.google.protobuf.Generat
     }
     if (!getRevisionId().equals(other.getRevisionId())) return false;
     if (!internalGetLabels().equals(other.internalGetLabels())) return false;
-    if (!unknownFields.equals(other.unknownFields)) return false;
+    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
 
@@ -2200,7 +2036,7 @@ public final class CertificateRevocationList extends com.google.protobuf.Generat
       hash = (37 * hash) + LABELS_FIELD_NUMBER;
       hash = (53 * hash) + internalGetLabels().hashCode();
     }
-    hash = (29 * hash) + unknownFields.hashCode();
+    hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -2352,19 +2188,10 @@ public final class CertificateRevocationList extends com.google.protobuf.Generat
     }
 
     // Construct using com.google.cloud.security.privateca.v1.CertificateRevocationList.newBuilder()
-    private Builder() {
-      maybeForceBuilderInitialization();
-    }
+    private Builder() {}
 
     private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
-      maybeForceBuilderInitialization();
-    }
-
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-        getRevokedCertificatesFieldBuilder();
-      }
     }
 
     @java.lang.Override
@@ -2376,10 +2203,11 @@ public final class CertificateRevocationList extends com.google.protobuf.Generat
 
       if (revokedCertificatesBuilder_ == null) {
         revokedCertificates_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
       } else {
+        revokedCertificates_ = null;
         revokedCertificatesBuilder_.clear();
       }
+      bitField0_ = (bitField0_ & ~0x00000001);
       pemCrl_ = "";
 
       accessUrl_ = "";
@@ -2565,7 +2393,7 @@ public final class CertificateRevocationList extends com.google.protobuf.Generat
         onChanged();
       }
       internalGetMutableLabels().mergeFrom(other.internalGetLabels());
-      this.mergeUnknownFields(other.unknownFields);
+      this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
       return this;
     }
@@ -2580,19 +2408,106 @@ public final class CertificateRevocationList extends com.google.protobuf.Generat
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.cloud.security.privateca.v1.CertificateRevocationList parsedMessage = null;
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       try {
-        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10:
+              {
+                name_ = input.readStringRequireUtf8();
+
+                break;
+              } // case 10
+            case 16:
+              {
+                sequenceNumber_ = input.readInt64();
+
+                break;
+              } // case 16
+            case 26:
+              {
+                com.google.cloud.security.privateca.v1.CertificateRevocationList.RevokedCertificate
+                    m =
+                        input.readMessage(
+                            com.google.cloud.security.privateca.v1.CertificateRevocationList
+                                .RevokedCertificate.parser(),
+                            extensionRegistry);
+                if (revokedCertificatesBuilder_ == null) {
+                  ensureRevokedCertificatesIsMutable();
+                  revokedCertificates_.add(m);
+                } else {
+                  revokedCertificatesBuilder_.addMessage(m);
+                }
+                break;
+              } // case 26
+            case 34:
+              {
+                pemCrl_ = input.readStringRequireUtf8();
+
+                break;
+              } // case 34
+            case 42:
+              {
+                accessUrl_ = input.readStringRequireUtf8();
+
+                break;
+              } // case 42
+            case 48:
+              {
+                state_ = input.readEnum();
+
+                break;
+              } // case 48
+            case 58:
+              {
+                input.readMessage(getCreateTimeFieldBuilder().getBuilder(), extensionRegistry);
+
+                break;
+              } // case 58
+            case 66:
+              {
+                input.readMessage(getUpdateTimeFieldBuilder().getBuilder(), extensionRegistry);
+
+                break;
+              } // case 66
+            case 74:
+              {
+                revisionId_ = input.readStringRequireUtf8();
+
+                break;
+              } // case 74
+            case 82:
+              {
+                com.google.protobuf.MapEntry<java.lang.String, java.lang.String> labels__ =
+                    input.readMessage(
+                        LabelsDefaultEntryHolder.defaultEntry.getParserForType(),
+                        extensionRegistry);
+                internalGetMutableLabels()
+                    .getMutableMap()
+                    .put(labels__.getKey(), labels__.getValue());
+                break;
+              } // case 82
+            default:
+              {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+          } // switch (tag)
+        } // while (!done)
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage =
-            (com.google.cloud.security.privateca.v1.CertificateRevocationList)
-                e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        if (parsedMessage != null) {
-          mergeFrom(parsedMessage);
-        }
-      }
+        onChanged();
+      } // finally
       return this;
     }
 
@@ -4076,7 +3991,7 @@ public final class CertificateRevocationList extends com.google.protobuf.Generat
     @java.lang.Override
     public boolean containsLabels(java.lang.String key) {
       if (key == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException("map key");
       }
       return internalGetLabels().getMap().containsKey(key);
     }
@@ -4112,7 +4027,7 @@ public final class CertificateRevocationList extends com.google.protobuf.Generat
     public java.lang.String getLabelsOrDefault(
         java.lang.String key, java.lang.String defaultValue) {
       if (key == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException("map key");
       }
       java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels().getMap();
       return map.containsKey(key) ? map.get(key) : defaultValue;
@@ -4129,7 +4044,7 @@ public final class CertificateRevocationList extends com.google.protobuf.Generat
     @java.lang.Override
     public java.lang.String getLabelsOrThrow(java.lang.String key) {
       if (key == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException("map key");
       }
       java.util.Map<java.lang.String, java.lang.String> map = internalGetLabels().getMap();
       if (!map.containsKey(key)) {
@@ -4153,7 +4068,7 @@ public final class CertificateRevocationList extends com.google.protobuf.Generat
      */
     public Builder removeLabels(java.lang.String key) {
       if (key == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException("map key");
       }
       internalGetMutableLabels().getMutableMap().remove(key);
       return this;
@@ -4174,11 +4089,12 @@ public final class CertificateRevocationList extends com.google.protobuf.Generat
      */
     public Builder putLabels(java.lang.String key, java.lang.String value) {
       if (key == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException("map key");
       }
       if (value == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException("map value");
       }
+
       internalGetMutableLabels().getMutableMap().put(key, value);
       return this;
     }
@@ -4230,7 +4146,18 @@ public final class CertificateRevocationList extends com.google.protobuf.Generat
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-          return new CertificateRevocationList(input, extensionRegistry);
+          Builder builder = newBuilder();
+          try {
+            builder.mergeFrom(input, extensionRegistry);
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            throw e.setUnfinishedMessage(builder.buildPartial());
+          } catch (com.google.protobuf.UninitializedMessageException e) {
+            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+          } catch (java.io.IOException e) {
+            throw new com.google.protobuf.InvalidProtocolBufferException(e)
+                .setUnfinishedMessage(builder.buildPartial());
+          }
+          return builder.buildPartial();
         }
       };
 
